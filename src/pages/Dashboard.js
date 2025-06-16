@@ -34,58 +34,53 @@ function Dashboard() {
 
   return (
     <Layout>
-      <div style={{ padding: '2rem' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          
+      <div style={{ 
+        padding: '2rem',
+        background: 'linear-gradient(135deg, #fafafa 0%, #f5f5f7 100%)',
+        minHeight: '100vh',
+        width: '100%'
+      }}>
+        <div style={{ width: '100%' }}>
           {/* Header */}
           <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
             marginBottom: '2rem'
           }}>
             <h1 style={{
-              fontSize: '2.5rem',
+              fontSize: '2.75rem',
               fontWeight: '700',
-              color: '#1d1d1f',
-              margin: 0,
-              letterSpacing: '-0.02em'
+              margin: '0 0 1rem 0',
+              letterSpacing: '-0.025em',
+              fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
+              background: 'linear-gradient(135deg, #1d1d1f 0%, #86868b 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent'
             }}>
               Dashboard
             </h1>
-            <div style={{
-              background: 'white',
-              borderRadius: '12px',
-              padding: '1rem 1.5rem',
-              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
-              border: '1px solid rgba(0, 0, 0, 0.05)'
+            <p style={{
+              fontSize: '1.125rem',
+              color: '#86868b',
+              margin: 0,
+              fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+              fontWeight: '400',
+              lineHeight: '1.4'
             }}>
-              <div style={{ fontSize: '0.85rem', color: '#86868b', marginBottom: '0.25rem' }}>
-                Costo mensile totale
-              </div>
-              <div style={{
-                fontSize: '1.5rem',
-                fontWeight: '700',
-                color: '#007AFF'
-              }}>
-                €{calcolaCostoMensile()}
-              </div>
-            </div>
+              Panoramica dei tuoi abbonamenti e spese
+            </p>
           </div>
 
           {/* Stats Cards */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-            gap: '1rem',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '1.5rem',
             marginBottom: '2rem'
           }}>
             <div style={{
-              background: 'white',
+              background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(88, 86, 214, 0.1) 100%)',
               borderRadius: '16px',
               padding: '1.5rem',
-              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
-              border: '1px solid rgba(0, 0, 0, 0.05)'
+              border: '1px solid rgba(0, 122, 255, 0.2)'
             }}>
               <div style={{ fontSize: '1.8rem', marginBottom: '0.5rem' }}>📊</div>
               <div style={{
@@ -96,17 +91,16 @@ function Dashboard() {
               }}>
                 {subscriptions.length}
               </div>
-              <div style={{ fontSize: '0.9rem', color: '#86868b' }}>
+              <div style={{ fontSize: '0.9375rem', color: '#86868b' }}>
                 Abbonamenti attivi
               </div>
             </div>
 
             <div style={{
-              background: 'white',
+              background: 'linear-gradient(135deg, rgba(52, 199, 89, 0.1) 0%, rgba(48, 209, 88, 0.1) 100%)',
               borderRadius: '16px',
               padding: '1.5rem',
-              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
-              border: '1px solid rgba(0, 0, 0, 0.05)'
+              border: '1px solid rgba(52, 199, 89, 0.2)'
             }}>
               <div style={{ fontSize: '1.8rem', marginBottom: '0.5rem' }}>💰</div>
               <div style={{
@@ -117,17 +111,16 @@ function Dashboard() {
               }}>
                 €{(calcolaCostoMensile() * 12).toFixed(2)}
               </div>
-              <div style={{ fontSize: '0.9rem', color: '#86868b' }}>
+              <div style={{ fontSize: '0.9375rem', color: '#86868b' }}>
                 Spesa annuale stimata
               </div>
             </div>
 
             <div style={{
-              background: 'white',
+              background: 'linear-gradient(135deg, rgba(255, 149, 0, 0.1) 0%, rgba(255, 123, 0, 0.1) 100%)',
               borderRadius: '16px',
               padding: '1.5rem',
-              boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
-              border: '1px solid rgba(0, 0, 0, 0.05)'
+              border: '1px solid rgba(255, 149, 0, 0.2)'
             }}>
               <div style={{ fontSize: '1.8rem', marginBottom: '0.5rem' }}>⏰</div>
               <div style={{
@@ -144,7 +137,7 @@ function Dashboard() {
                   return diffDays <= 7 && diffDays >= 0;
                 }).length}
               </div>
-              <div style={{ fontSize: '0.9rem', color: '#86868b' }}>
+              <div style={{ fontSize: '0.9375rem', color: '#86868b' }}>
                 In scadenza questa settimana
               </div>
             </div>
@@ -155,7 +148,7 @@ function Dashboard() {
             background: 'white',
             borderRadius: '16px',
             padding: '2rem',
-            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
+            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.05)',
             border: '1px solid rgba(0, 0, 0, 0.05)',
             marginBottom: '2rem',
             display: 'flex',
@@ -190,7 +183,7 @@ function Dashboard() {
             background: 'white',
             borderRadius: '16px',
             padding: '2rem',
-            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.1)',
+            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.05)',
             border: '1px solid rgba(0, 0, 0, 0.05)'
           }}>
             <h2 style={{

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { IoChevronBack } from 'react-icons/io5';
 
@@ -12,9 +12,13 @@ function Sidebar({ isCollapsed, onToggle }) {
     { name: 'I miei abbonamenti', path: '/abbonamenti', icon: '📱' }
   ];
 
-  const expandableMenus = [];
-
   const isActive = (path) => location.pathname === path;
+
+  const handleNavigation = (path) => {
+    if (location.pathname !== path) {
+      navigate(path);
+    }
+  };
 
   return (
     <div style={{
@@ -37,76 +41,87 @@ function Sidebar({ isCollapsed, onToggle }) {
       {/* Logo section */}
       <div style={{
         display: 'flex',
-        alignItems: 'center',
+        flexDirection: 'column',
+        alignItems: isCollapsed ? 'center' : 'flex-start',
         gap: '12px',
         padding: isCollapsed ? '0 1rem' : '0 2rem',
         marginBottom: '2rem'
       }}>
+        <button
+          onClick={onToggle}
+          style={{
+            background: 'none',
+            border: 'none',
+            padding: '8px',
+            cursor: 'pointer',
+            color: '#86868b',
+            fontSize: '1.25rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: '8px',
+            transition: 'all 0.2s ease',
+            alignSelf: isCollapsed ? 'center' : 'flex-end',
+            marginBottom: '8px',
+            transform: isCollapsed ? 'rotate(180deg)' : 'none'
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.background = 'rgba(0, 0, 0, 0.05)';
+            e.target.style.color = '#1d1d1f';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.background = 'none';
+            e.target.style.color = '#86868b';
+          }}
+        >
+          <IoChevronBack size={20} />
+        </button>
         <div style={{
-          width: '40px',
-          height: '40px',
-          background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
-          borderRadius: '10px',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center',
-          boxShadow: '0 4px 12px rgba(0, 122, 255, 0.3)'
+          gap: '12px',
+          width: '100%',
+          justifyContent: isCollapsed ? 'center' : 'flex-start'
         }}>
-          <span style={{
-            fontSize: '18px',
-            fontWeight: '700',
-            color: 'white',
-            letterSpacing: '-0.5px'
+          <div style={{
+            width: '40px',
+            height: '40px',
+            background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
+            borderRadius: '10px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 4px 12px rgba(0, 122, 255, 0.3)'
           }}>
-            MS
-          </span>
+            <span style={{
+              fontSize: '18px',
+              fontWeight: '700',
+              color: 'white',
+              letterSpacing: '-0.5px'
+            }}>
+              MS
+            </span>
+          </div>
+          {!isCollapsed && (
+            <span style={{
+              fontSize: '1.2rem',
+              fontWeight: '600',
+              color: '#1d1d1f',
+              letterSpacing: '-0.01em'
+            }}>
+              MagicSubs
+            </span>
+          )}
         </div>
-        {!isCollapsed && (
-          <span style={{
-            fontSize: '1.2rem',
-            fontWeight: '600',
-            color: '#1d1d1f',
-            letterSpacing: '-0.01em'
-          }}>
-            MagicSubs
-          </span>
-        )}
-        {!isCollapsed && (
-          <button
-            onClick={onToggle}
-            style={{
-              marginLeft: 'auto',
-              background: 'none',
-              border: 'none',
-              padding: '8px',
-              cursor: 'pointer',
-              color: '#86868b',
-              fontSize: '1.25rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: '8px',
-              transition: 'all 0.2s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.background = 'rgba(0, 0, 0, 0.05)';
-              e.target.style.color = '#1d1d1f';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.background = 'none';
-              e.target.style.color = '#86868b';
-            }}
-          >
-            <IoChevronBack size={20} />
-          </button>
-        )}
       </div>
 
       {/* Menu section */}
       <div style={{ 
-        padding: '0 2rem', 
+        padding: isCollapsed ? '0 1rem' : '0 2rem', 
         marginBottom: '1rem',
-        height: '44px' // Altezza fissa che corrisponde all'altezza del titolo "Menu" + margini
+        height: '44px',
+        display: 'flex',
+        justifyContent: isCollapsed ? 'center' : 'flex-start'
       }}>
         {!isCollapsed && (
           <h3 style={{
@@ -123,17 +138,24 @@ function Sidebar({ isCollapsed, onToggle }) {
       </div>
 
       {/* Regular menu items */}
-      <div style={{ flex: 1, padding: isCollapsed ? '0 1rem' : '0 2rem' }}>
+      <div style={{ 
+        flex: 1, 
+        padding: isCollapsed ? '0 1rem' : '0 2rem',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: isCollapsed ? 'center' : 'flex-start'
+      }}>
         {menuItems.map((item) => (
           <button
             key={item.path}
-            onClick={() => navigate(item.path)}
+            onClick={() => handleNavigation(item.path)}
             style={{
-              width: '100%',
+              width: isCollapsed ? '44px' : '100%',
+              height: isCollapsed ? '44px' : 'auto',
               display: 'flex',
               alignItems: 'center',
               gap: '12px',
-              padding: isCollapsed ? '12px' : '12px 16px',
+              padding: isCollapsed ? '0' : '12px 16px',
               margin: '0 0 4px 0',
               background: isActive(item.path) ? 'rgba(0, 122, 255, 0.1)' : 'transparent',
               border: 'none',
@@ -172,16 +194,19 @@ function Sidebar({ isCollapsed, onToggle }) {
       {/* Footer con Impostazioni */}
       <div style={{
         padding: isCollapsed ? '0 1rem' : '0 2rem',
-        marginTop: '2rem'
+        marginTop: '2rem',
+        display: 'flex',
+        justifyContent: isCollapsed ? 'center' : 'flex-start'
       }}>
         <button
-          onClick={() => navigate('/impostazioni')}
+          onClick={() => handleNavigation('/impostazioni')}
           style={{
-            width: '100%',
+            width: isCollapsed ? '44px' : '100%',
+            height: isCollapsed ? '44px' : 'auto',
             display: 'flex',
             alignItems: 'center',
             gap: '12px',
-            padding: isCollapsed ? '12px' : '12px 16px',
+            padding: isCollapsed ? '0' : '12px 16px',
             margin: '0 0 4px 0',
             background: isActive('/impostazioni') ? 'rgba(0, 122, 255, 0.1)' : 'transparent',
             border: 'none',

@@ -36,7 +36,7 @@
 }
 
 input:checked + .slider {
-  background-color: #34C759;
+  background-color: #007AFF;
 }
 
 input:checked + .slider:before {
@@ -45,12 +45,12 @@ input:checked + .slider:before {
 
 /* Effetto hover */
 .slider:hover {
-  box-shadow: 0 0 1px #34C759;
+  box-shadow: 0 0 1px #007AFF;
 }
 
 /* Effetto focus */
 input:focus + .slider {
-  box-shadow: 0 0 1px #34C759;
+  box-shadow: 0 0 1px #007AFF;
 }
 
 .view-button {

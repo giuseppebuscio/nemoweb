@@ -322,22 +322,12 @@ function Pagamenti() {
                         boxShadow: '0 4px 16px rgba(0, 0, 0, 0.05)',
                         border: '1px solid rgba(0, 122, 255, 0.1)',
                         transition: 'all 0.3s ease',
-                        cursor: 'pointer',
                         position: 'relative',
                         overflow: 'hidden',
                         display: viewMode === 'list' ? 'flex' : 'block',
                         alignItems: viewMode === 'list' ? 'center' : 'stretch',
                         gap: viewMode === 'list' ? '1.5rem' : '0'
                       }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-4px)';
-                        e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.1)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.05)';
-                      }}
-                      onClick={() => navigate(`/abbonamento/${subscription.id}`)}
                     >
                       {/* Sfondo decorativo solo in modalità grid */}
                       {viewMode === 'grid' && (

@@ -26,6 +26,7 @@ const SubscriptionDetail = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [pagamentiPersone, setPagamentiPersone] = useState({});
+  const [mesiMancanti, setMesiMancanti] = useState([]);
   
   // Calcola il totale direttamente dai pagamenti
   const calcolaTotale = () => {
@@ -63,6 +64,66 @@ const SubscriptionDetail = () => {
     }
   }, [quote, id, subscription]);
 
+  // Calcola i mesi mancanti quando cambiano i pagamenti o la data di inizio
+  useEffect(() => {
+    if (!subscription?.dataInizio) return;
+    
+    const dataInizio = new Date(subscription.dataInizio);
+    const oggi = new Date();
+    const mesiMancanti = [];
+
+    // Funzione per ottenere una stringa YYYY-MM da una data
+    const getYearMonth = (date) => {
+      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+    };
+
+    // Funzione per ottenere solo l'anno da una data
+    const getYear = (date) => {
+      return date.getFullYear();
+    };
+
+    // Funzione per verificare se esiste un pagamento per una data specifica
+    const esistePagamento = (data, isAnnuale) => {
+      return pagamenti.some(pagamento => {
+        const dataPagamento = new Date(pagamento.data);
+        if (isAnnuale) {
+          return getYear(dataPagamento) === getYear(data);
+        }
+        return getYearMonth(dataPagamento) === getYearMonth(data);
+      });
+    };
+
+    let currentDate = new Date(dataInizio.getFullYear(), dataInizio.getMonth(), dataInizio.getDate());
+    const isAnnuale = subscription.frequenza === 'annuale';
+    
+    // Per abbonamenti annuali, incrementiamo di anno in anno
+    if (isAnnuale) {
+      while (currentDate <= oggi) {
+        if (!esistePagamento(currentDate, true)) {
+          mesiMancanti.push({
+            mese: 'Anno',
+            anno: currentDate.getFullYear()
+          });
+        }
+        currentDate.setFullYear(currentDate.getFullYear() + 1);
+      }
+    } else {
+      // Per abbonamenti mensili, incrementiamo di mese in mese
+      const lastMonth = new Date(oggi.getFullYear(), oggi.getMonth(), dataInizio.getDate());
+      while (currentDate <= lastMonth) {
+        if (!esistePagamento(currentDate, false)) {
+          mesiMancanti.push({
+            mese: currentDate.toLocaleDateString('it-IT', { month: 'long' }),
+            anno: currentDate.getFullYear()
+          });
+        }
+        currentDate.setMonth(currentDate.getMonth() + 1);
+      }
+    }
+
+    setMesiMancanti(mesiMancanti);
+  }, [subscription?.dataInizio, subscription?.frequenza, pagamenti]);
+
   const formatTotale = (numero) => {
     // Assicuriamoci che numero sia effettivamente un numero
     const numeroFloat = parseFloat(numero);
@@ -77,7 +138,7 @@ const SubscriptionDetail = () => {
     const data = new Date(dataString);
     return data.toLocaleDateString('it-IT', {
       day: '2-digit',
-      month: '2-digit',
+      month: 'long',
       year: 'numeric'
     });
   };
@@ -212,16 +273,51 @@ const SubscriptionDetail = () => {
   };
 
   const shouldShowPaymentReminder = () => {
-    const oggi = new Date();
-    const meseCorrente = oggi.getMonth();
-    const annoCorrente = oggi.getFullYear();
+    return mesiMancanti.length > 0;
+  };
 
-    // Controlla se esiste già un pagamento per questo mese
-    return !pagamenti.some(pagamento => {
-      const dataPagamento = new Date(pagamento.data);
-      return dataPagamento.getMonth() === meseCorrente && 
-             dataPagamento.getFullYear() === annoCorrente;
-    });
+  // Modifica il formato del testo dei mesi mancanti
+  const formatMesiMancanti = () => {
+    if (!mesiMancanti || mesiMancanti.length === 0) return '';
+
+    const isAnnuale = subscription.frequenza === 'annuale';
+
+    if (mesiMancanti.length === 1) {
+      const { mese, anno } = mesiMancanti[0];
+      return isAnnuale ? `Anno ${anno}` : `${mese} ${anno}`;
+    }
+
+    // Raggruppa i periodi per anno
+    const periodiPerAnno = mesiMancanti.reduce((acc, { mese, anno }) => {
+      if (!acc[anno]) acc[anno] = [];
+      acc[anno].push(mese);
+      return acc;
+    }, {});
+
+    return Object.entries(periodiPerAnno)
+      .map(([anno, periodi]) => {
+        if (isAnnuale) return `Anno ${anno}`;
+        if (periodi.length === 1) return `${periodi[0]} ${anno}`;
+        if (periodi.length === 2) return `${periodi.join(' e ')} ${anno}`;
+        return `da ${periodi[0]} a ${periodi[periodi.length - 1]} ${anno}`;
+      })
+      .join(', ');
+  };
+
+  // Modifica il testo del promemoria
+  const getTestoPromemoria = () => {
+    if (!mesiMancanti || mesiMancanti.length === 0) return '';
+    
+    const isAnnuale = subscription.frequenza === 'annuale';
+    if (isAnnuale) {
+      return mesiMancanti.length === 1 
+        ? `Manca il pagamento dell'anno ${mesiMancanti[0].anno}`
+        : `Mancano i pagamenti per gli anni: ${mesiMancanti.map(m => m.anno).join(', ')}`;
+    }
+
+    return mesiMancanti.length === 1 
+      ? `Manca il pagamento di ${formatMesiMancanti()}`
+      : `Mancano i pagamenti dei seguenti mesi: ${formatMesiMancanti()}`;
   };
 
   const registraPagamento = () => {
@@ -322,28 +418,58 @@ const SubscriptionDetail = () => {
             marginBottom: '2rem',
             width: '100%'
           }}>
-            <div>
-              <h1 style={{
-                fontSize: '2.5rem',
-                fontWeight: '700',
-                color: '#1d1d1f',
-                margin: '0 0 0.5rem 0',
-                letterSpacing: '-0.025em',
-                fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
-                textAlign: 'left'
-              }}>
-                {subscription.nome}
-              </h1>
-              <p style={{
-                fontSize: '1.125rem',
-                color: '#86868b',
-                margin: 0,
-                fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                fontWeight: '400',
-                textAlign: 'left'
-              }}>
-                {formatFrequency(subscription)}
-              </p>
+            <div style={{
+              display: 'flex',
+              gap: '1.5rem',
+              alignItems: 'center'
+            }}>
+              {subscription.logo && (
+                <div style={{
+                  width: '80px',
+                  height: '80px',
+                  borderRadius: '18px',
+                  overflow: 'hidden',
+                  background: 'white',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+                  border: '1px solid rgba(0, 0, 0, 0.1)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  <img 
+                    src={subscription.logo} 
+                    alt={`Logo ${subscription.nome}`}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover'
+                    }}
+                  />
+                </div>
+              )}
+              <div>
+                <h1 style={{
+                  fontSize: '2.5rem',
+                  fontWeight: '700',
+                  color: '#1d1d1f',
+                  margin: '0 0 0.5rem 0',
+                  letterSpacing: '-0.025em',
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
+                  textAlign: 'left'
+                }}>
+                  {subscription.nome}
+                </h1>
+                <p style={{
+                  fontSize: '1.125rem',
+                  color: '#86868b',
+                  margin: 0,
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                  fontWeight: '400',
+                  textAlign: 'left'
+                }}>
+                  {formatFrequency(subscription)}
+                </p>
+              </div>
             </div>
 
             {/* Pulsanti azione */}
@@ -504,6 +630,56 @@ const SubscriptionDetail = () => {
                     }}>€{formatTotale(subscription.prezzo)}</p>
                   </div>
 
+                  {/* Tipo di Pagamento */}
+                  <div style={{
+                    background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(88, 86, 214, 0.1) 100%)',
+                    borderRadius: '16px',
+                    padding: '1.5rem',
+                    border: '1px solid rgba(0, 122, 255, 0.2)',
+                    width: '100%'
+                  }}>
+                    <h4 style={{
+                      fontSize: '0.9375rem',
+                      color: '#007AFF',
+                      marginBottom: '0.5rem',
+                      fontWeight: '600',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.02em',
+                      textAlign: 'left'
+                    }}>
+                      Tipo di Pagamento
+                    </h4>
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.75rem'
+                    }}>
+                      <span style={{
+                        fontSize: '1.5rem',
+                        color: subscription.tipoPagamento === 'fisso' ? '#007AFF' : '#FF9500'
+                      }}>
+                        {subscription.tipoPagamento === 'fisso' ? '💰' : '📊'}
+                      </span>
+                      <span style={{
+                        fontSize: '1.25rem',
+                        color: '#1d1d1f',
+                        fontWeight: '600'
+                      }}>
+                        {subscription.tipoPagamento === 'fisso' ? 'Spesa Fissa' : 'Spesa Variabile'}
+                      </span>
+                    </div>
+                    <p style={{
+                      fontSize: '0.875rem',
+                      color: '#86868b',
+                      margin: '0.75rem 0 0 0',
+                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                    }}>
+                      {subscription.tipoPagamento === 'fisso' 
+                        ? 'Importo costante ogni mese'
+                        : 'Importo che può variare nel tempo'}
+                    </p>
+                  </div>
+
                   {/* Quota per Persona */}
                   <div style={{
                     background: 'linear-gradient(135deg, rgba(88, 86, 214, 0.1) 0%, rgba(0, 122, 255, 0.1) 100%)',
@@ -565,13 +741,13 @@ const SubscriptionDetail = () => {
                       color: '#86868b',
                       marginBottom: '0.5rem',
                       fontWeight: '600'
-                    }}>Data Creazione</h4>
+                    }}>Data Inizio Abbonamento</h4>
                     <p style={{
                       fontSize: '1rem',
                       color: '#1d1d1f',
                       fontWeight: '500',
                       margin: 0
-                    }}>{formatData(subscription.createdAt)}</p>
+                    }}>{formatData(subscription.dataInizio)}</p>
                   </div>
 
                   {/* Ultimo Pagamento */}
@@ -652,33 +828,64 @@ const SubscriptionDetail = () => {
 
             {activeTab === 'pagamenti' && (
               <div style={{ padding: '2rem' }}>
-                {/* Card Totale Pagamenti */}
+                {/* Cards Totali */}
                 <div style={{
-                  background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(88, 86, 214, 0.1) 100%)',
-                  borderRadius: '16px',
-                  padding: '1.5rem',
-                  border: '1px solid rgba(0, 122, 255, 0.2)',
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                  gap: '1.5rem',
                   marginBottom: '2rem'
                 }}>
-                  <h4 style={{
-                    fontSize: '0.9375rem',
-                    color: '#007AFF',
-                    marginBottom: '0.5rem',
-                    fontWeight: '600',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.02em'
-                  }}>Totale Pagamenti</h4>
-                  <p style={{
-                    fontSize: '2rem',
-                    color: '#1d1d1f',
-                    fontWeight: '700',
-                    margin: 0,
-                    letterSpacing: '-0.02em'
-                  }}>€{formatTotale(calcolaTotale())}</p>
+                  {/* Card Totale Pagamenti */}
+                  <div style={{
+                    background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(88, 86, 214, 0.1) 100%)',
+                    borderRadius: '16px',
+                    padding: '1.5rem',
+                    border: '1px solid rgba(0, 122, 255, 0.2)'
+                  }}>
+                    <h4 style={{
+                      fontSize: '0.9375rem',
+                      color: '#007AFF',
+                      marginBottom: '0.5rem',
+                      fontWeight: '600',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.02em'
+                    }}>Totale Pagamenti</h4>
+                    <p style={{
+                      fontSize: '2rem',
+                      color: '#1d1d1f',
+                      fontWeight: '700',
+                      margin: 0,
+                      letterSpacing: '-0.02em'
+                    }}>€{formatTotale(calcolaTotale())}</p>
+                  </div>
+
+                  {/* Card Mesi Pagati */}
+                  <div style={{
+                    background: 'linear-gradient(135deg, rgba(52, 199, 89, 0.1) 0%, rgba(48, 209, 88, 0.1) 100%)',
+                    borderRadius: '16px',
+                    padding: '1.5rem',
+                    border: '1px solid rgba(52, 199, 89, 0.2)'
+                  }}>
+                    <h4 style={{
+                      fontSize: '0.9375rem',
+                      color: '#34C759',
+                      marginBottom: '0.5rem',
+                      fontWeight: '600',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.02em'
+                    }}>{subscription.frequenza === 'annuale' ? 'Anni Pagati' : 'Mesi Pagati'}</h4>
+                    <p style={{
+                      fontSize: '2rem',
+                      color: '#1d1d1f',
+                      fontWeight: '700',
+                      margin: 0,
+                      letterSpacing: '-0.02em'
+                    }}>{pagamenti.length}</p>
+                  </div>
                 </div>
 
                 {/* Info Box Promemoria Pagamento */}
-                {!isPagamentoEffettuato() && (
+                {shouldShowPaymentReminder() && (
                   <div style={{
                     background: 'linear-gradient(135deg, rgba(255, 149, 0, 0.1) 0%, rgba(255, 123, 0, 0.1) 100%)',
                     borderRadius: '16px',
@@ -688,61 +895,90 @@ const SubscriptionDetail = () => {
                   }}>
                     <div style={{
                       display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center'
+                      alignItems: 'center',
+                      gap: '0.75rem',
+                      marginBottom: '0.5rem'
                     }}>
-                      <div style={{ flex: 1 }}>
-                        <div style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.75rem',
-                          marginBottom: '0.5rem'
-                        }}>
-                          <span style={{ fontSize: '1.5rem' }}>⏰</span>
-                          <h3 style={{
-                            fontSize: '1.25rem',
+                      <span style={{ fontSize: '1.5rem' }}>⚠️</span>
+                      <h3 style={{
+                        fontSize: '1.25rem',
+                        fontWeight: '600',
+                        color: '#1d1d1f',
+                        margin: 0
+                      }}>
+                        Pagamenti mancanti
+                      </h3>
+                    </div>
+                    <p style={{
+                      fontSize: '1rem',
+                      color: '#86868b',
+                      margin: '0 0 1rem 0',
+                      lineHeight: '1.4'
+                    }}>
+                      {getTestoPromemoria()}
+                    </p>
+                    <div style={{
+                      display: 'flex',
+                      gap: '1rem',
+                      flexWrap: 'wrap'
+                    }}>
+                      {mesiMancanti.map(({ mese, anno }, index) => (
+                        <button
+                          key={`${mese}-${anno}`}
+                          onClick={() => {
+                            const isAnnuale = subscription.frequenza === 'annuale';
+                            let data;
+                            
+                            if (isAnnuale) {
+                              // Per abbonamenti annuali, usa la data di inizio dell'anno
+                              const dataInizio = new Date(subscription.dataInizio);
+                              data = new Date(anno, dataInizio.getMonth(), dataInizio.getDate());
+                            } else {
+                              // Per abbonamenti mensili, usa la logica esistente
+                              const mesiMap = {
+                                'gennaio': 0, 'febbraio': 1, 'marzo': 2, 'aprile': 3,
+                                'maggio': 4, 'giugno': 5, 'luglio': 6, 'agosto': 7,
+                                'settembre': 8, 'ottobre': 9, 'novembre': 10, 'dicembre': 11
+                              };
+                              const meseIndex = mesiMap[mese.toLowerCase()];
+                              const dataInizio = new Date(subscription.dataInizio);
+                              const giorno = dataInizio.getDate();
+                              data = new Date(anno, meseIndex, giorno);
+                            }
+                            
+                            const nuovoPagamento = {
+                              data: data.toISOString(),
+                              importo: parseFloat(subscription.prezzo)
+                            };
+                            setPagamenti([...pagamenti, nuovoPagamento]);
+                          }}
+                          style={{
+                            padding: '0.75rem 1rem',
+                            fontSize: '0.9375rem',
                             fontWeight: '600',
-                            color: '#1d1d1f',
-                            margin: 0
-                          }}>
-                            Promemoria pagamento
-                          </h3>
-                        </div>
-                        <p style={{
-                          fontSize: '1rem',
-                          color: '#86868b',
-                          margin: 0,
-                          lineHeight: '1.4'
-                        }}>
-                          Ricordati di pagare l'abbonamento questo mese
-                        </p>
-                      </div>
-                      <button
-                        onClick={registraPagamento}
-                        style={{
-                          padding: '0.75rem 1.5rem',
-                          fontSize: '1rem',
-                          fontWeight: '600',
-                          border: 'none',
-                          borderRadius: '12px',
-                          background: 'linear-gradient(135deg, #FF9500 0%, #FF7B00 100%)',
-                          color: 'white',
-                          cursor: 'pointer',
-                          transition: 'all 0.2s ease',
-                          whiteSpace: 'nowrap',
-                          flexShrink: 0
-                        }}
-                        onMouseEnter={(e) => {
-                          e.target.style.transform = 'translateY(-1px)';
-                          e.target.style.boxShadow = '0 4px 12px rgba(255, 149, 0, 0.3)';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.target.style.transform = 'none';
-                          e.target.style.boxShadow = 'none';
-                        }}
-                      >
-                        Pagato
-                      </button>
+                            border: 'none',
+                            borderRadius: '10px',
+                            background: 'linear-gradient(135deg, #FF9500 0%, #FF7B00 100%)',
+                            color: 'white',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s ease',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.5rem'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.target.style.transform = 'translateY(-1px)';
+                            e.target.style.boxShadow = '0 4px 12px rgba(255, 149, 0, 0.3)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.target.style.transform = 'none';
+                            e.target.style.boxShadow = 'none';
+                          }}
+                        >
+                          <span>✓</span>
+                          {subscription.frequenza === 'annuale' ? `Paga Anno ${anno}` : `Paga ${mese} ${anno}`}
+                        </button>
+                      ))}
                     </div>
                   </div>
                 )}
@@ -850,18 +1086,19 @@ const SubscriptionDetail = () => {
                             <div>
                               <p style={{
                                 fontSize: '0.9375rem',
-                                fontWeight: '600',
-                                color: '#1d1d1f',
+                                fontWeight: '500',
+                                color: '#86868b',
                                 margin: '0 0 0.25rem 0'
                               }}>
-                                €{formatTotale(pagamento.importo)}
+                                {formatData(pagamento.data)}
                               </p>
                               <p style={{
-                                fontSize: '0.8125rem',
-                                color: '#86868b',
+                                fontSize: '1rem',
+                                fontWeight: '600',
+                                color: '#1d1d1f',
                                 margin: 0
                               }}>
-                                {formatData(pagamento.data)}
+                                €{formatTotale(pagamento.importo)}
                               </p>
                             </div>
                           </div>
@@ -871,23 +1108,19 @@ const SubscriptionDetail = () => {
                               setShowDeletePaymentModal(true);
                             }}
                             style={{
-                              padding: '8px',
-                              fontSize: '0.9375rem',
+                              background: 'none',
                               border: 'none',
-                              borderRadius: '8px',
-                              background: 'transparent',
-                              color: '#FF3B30',
+                              padding: '8px',
                               cursor: 'pointer',
-                              transition: 'all 0.2s ease',
-                              opacity: 0.8
+                              color: '#FF3B30',
+                              borderRadius: '8px',
+                              transition: 'all 0.2s ease'
                             }}
                             onMouseEnter={(e) => {
-                              e.target.style.background = 'rgba(255, 59, 48, 0.1)';
-                              e.target.style.opacity = '1';
+                              e.currentTarget.style.background = 'rgba(255, 59, 48, 0.1)';
                             }}
                             onMouseLeave={(e) => {
-                              e.target.style.background = 'transparent';
-                              e.target.style.opacity = '0.8';
+                              e.currentTarget.style.background = 'none';
                             }}
                           >
                             🗑️
@@ -902,7 +1135,7 @@ const SubscriptionDetail = () => {
 
             {activeTab === 'quote' && (
               <div style={{ padding: '2rem' }}>
-                {/* Card Totale Quote */}
+                {/* Card Totale Quotes */}
                 <div style={{
                   background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(88, 86, 214, 0.1) 100%)',
                   borderRadius: '16px',

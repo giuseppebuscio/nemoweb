@@ -15,11 +15,15 @@ function AggiungiAbbonamento() {
       unita: 'giorni'
     },
     persone: [],
-    prezzo: ''
+    prezzo: '',
+    logo: null,
+    tipoPagamento: 'fisso' // 'fisso' o 'variabile'
   });
 
   const [currentPersonInput, setCurrentPersonInput] = useState('');
   const [showCancelModal, setShowCancelModal] = useState(false);
+  const [logoPreview, setLogoPreview] = useState(null);
+  const [logoError, setLogoError] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -38,6 +42,38 @@ function AggiungiAbbonamento() {
         [name]: value
       }));
     }
+  };
+
+  const handleLogoChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Verifica il formato del file
+      const validFormats = ['image/jpeg', 'image/png', 'image/webp'];
+      if (!validFormats.includes(file.type)) {
+        setLogoError('Impossibile caricare. Formato sbagliato');
+        return;
+      }
+
+      setLogoError('');
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setLogoPreview(reader.result);
+        setFormData(prev => ({
+          ...prev,
+          logo: reader.result
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeLogo = () => {
+    setLogoPreview(null);
+    setLogoError('');
+    setFormData(prev => ({
+      ...prev,
+      logo: null
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -61,7 +97,9 @@ function AggiungiAbbonamento() {
           unita: 'giorni'
         },
         persone: [],
-        prezzo: ''
+        prezzo: '',
+        logo: null,
+        tipoPagamento: 'fisso'
       });
       setCurrentPersonInput('');
       
@@ -456,135 +494,102 @@ function AggiungiAbbonamento() {
                  }}>
                    Persone coinvolte
                  </label>
-                 
                  <div style={{
-                   border: '1px solid #d2d2d7',
-                   borderRadius: '12px',
-                   background: 'rgba(255, 255, 255, 0.8)',
-                   padding: '12px',
-                   minHeight: '52px',
                    display: 'flex',
-                   flexWrap: 'wrap',
-                   gap: '8px',
-                   alignItems: 'center',
-                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                   cursor: 'text',
-                   backdropFilter: 'blur(10px)',
-                   WebkitBackdropFilter: 'blur(10px)'
-                 }}
-                 onClick={() => document.getElementById('personInput').focus()}
-                 onFocus={(e) => {
-                   e.currentTarget.style.borderColor = '#007AFF';
-                   e.currentTarget.style.background = 'rgba(255, 255, 255, 0.95)';
-                   e.currentTarget.style.boxShadow = '0 0 0 4px rgba(0, 122, 255, 0.1)';
-                   e.currentTarget.style.transform = 'translateY(-1px)';
-                 }}
-                 onBlur={(e) => {
-                   if (!e.currentTarget.contains(e.relatedTarget)) {
-                     e.currentTarget.style.borderColor = '#d2d2d7';
-                     e.currentTarget.style.background = 'rgba(255, 255, 255, 0.8)';
-                     e.currentTarget.style.boxShadow = 'none';
-                     e.currentTarget.style.transform = 'translateY(0)';
-                   }
-                 }}
-                 tabIndex={0}
-               >
-                 {/* Tag delle persone */}
-                 {formData.persone.map((persona, index) => (
-                   <div
-                     key={index}
-                     style={{
-                       display: 'flex',
-                       alignItems: 'center',
-                       gap: '8px',
-                       background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
-                       color: 'white',
-                       padding: '8px 12px',
-                       borderRadius: '20px',
-                       fontSize: '0.9rem',
-                       fontWeight: '500',
-                       fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                       boxShadow: '0 2px 8px rgba(0, 122, 255, 0.25)',
-                       transition: 'all 0.2s ease'
-                     }}
-                   >
-                     <span>{persona}</span>
-                     <button
-                       type="button"
-                       onClick={(e) => {
-                         e.stopPropagation();
-                         removePerson(index);
-                       }}
+                   flexDirection: 'column',
+                   gap: '1rem'
+                 }}>
+                   <div style={{
+                     display: 'flex',
+                     flexWrap: 'wrap',
+                     gap: '0.5rem',
+                     padding: '0.5rem',
+                     minHeight: '48px',
+                     border: '1px solid #d2d2d7',
+                     borderRadius: '12px',
+                     background: 'rgba(255, 255, 255, 0.8)',
+                     backdropFilter: 'blur(10px)',
+                     WebkitBackdropFilter: 'blur(10px)'
+                   }}>
+                     {formData.persone.map((person, index) => (
+                       <div
+                         key={index}
+                         style={{
+                           display: 'flex',
+                           alignItems: 'center',
+                           gap: '0.5rem',
+                           padding: '8px 12px',
+                           background: 'rgba(0, 122, 255, 0.1)',
+                           borderRadius: '8px',
+                           fontSize: '0.9rem',
+                           color: '#007AFF',
+                           fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                         }}
+                       >
+                         <span>{person}</span>
+                         <button
+                           type="button"
+                           onClick={() => removePerson(index)}
+                           style={{
+                             background: 'none',
+                             border: 'none',
+                             padding: '0',
+                             cursor: 'pointer',
+                             color: '#007AFF',
+                             fontSize: '1.1rem',
+                             display: 'flex',
+                             alignItems: 'center',
+                             justifyContent: 'center',
+                             width: '16px',
+                             height: '16px',
+                             borderRadius: '50%',
+                             transition: 'all 0.2s ease'
+                           }}
+                           onMouseEnter={(e) => {
+                             e.target.style.background = 'rgba(0, 122, 255, 0.2)';
+                           }}
+                           onMouseLeave={(e) => {
+                             e.target.style.background = 'none';
+                           }}
+                         >
+                           ×
+                         </button>
+                       </div>
+                     ))}
+                     <input
+                       type="text"
+                       value={currentPersonInput}
+                       onChange={(e) => setCurrentPersonInput(e.target.value)}
+                       onKeyDown={handlePersonInputKeyDown}
+                       placeholder={formData.persone.length === 0 ? "Inserisci il tuo nome..." : "Aggiungi un'altra persona..."}
                        style={{
-                         background: 'rgba(255, 255, 255, 0.2)',
                          border: 'none',
-                         color: 'white',
-                         cursor: 'pointer',
-                         padding: '2px',
-                         fontSize: '12px',
-                         lineHeight: '1',
-                         borderRadius: '50%',
-                         width: '18px',
-                         height: '18px',
-                         display: 'flex',
-                         alignItems: 'center',
-                         justifyContent: 'center',
-                         transition: 'all 0.2s ease'
+                         outline: 'none',
+                         background: 'none',
+                         fontSize: '0.9rem',
+                         color: '#1d1d1f',
+                         fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                         flex: 1,
+                         minWidth: '200px'
                        }}
-                       onMouseEnter={(e) => {
-                         e.target.style.background = 'rgba(255, 255, 255, 0.3)';
-                         e.target.style.transform = 'scale(1.1)';
-                       }}
-                       onMouseLeave={(e) => {
-                         e.target.style.background = 'rgba(255, 255, 255, 0.2)';
-                         e.target.style.transform = 'scale(1)';
-                       }}
-                     >
-                       ×
-                     </button>
+                     />
                    </div>
-                 ))}
-                 
-                 {/* Input per nuova persona */}
-                 <input
-                   id="personInput"
-                   type="text"
-                   value={currentPersonInput}
-                   onChange={(e) => setCurrentPersonInput(e.target.value)}
-                   onKeyDown={handlePersonInputKeyDown}
-                   onBlur={() => {
-                     if (currentPersonInput.trim()) {
-                       addPerson(currentPersonInput);
-                     }
-                   }}
-                   placeholder={formData.persone.length === 0 ? "Aggiungi persone (opzionale)" : "Aggiungi altra persona..."}
-                   style={{
-                     border: 'none',
-                     outline: 'none',
-                     background: 'transparent',
-                     fontSize: '1.0625rem',
+                   <p style={{
+                     fontSize: '0.875rem',
+                     color: '#86868b',
+                     margin: 0,
                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                     flex: 1,
-                     minWidth: '200px',
-                     padding: '6px 0',
-                     color: '#1d1d1f'
-                   }}
-                 />
-               </div>
-               
-               <p style={{
-                 fontSize: '0.875rem',
-                 color: '#86868b',
-                 margin: '0.75rem 0 0 0',
-                 fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                 fontWeight: '400'
-               }}>
-                 💡 Usa virgola, TAB o Invio per aggiungere una persona. Clicca × per rimuovere.
-                                </p>
+                     display: 'flex',
+                     alignItems: 'center',
+                     gap: '0.5rem'
+                   }}>
+                     💡 Usa virgola, TAB o Invio per aggiungere una persona. Clicca × per rimuovere.
+                   </p>
+                 </div>
                </div>
 
-               {/* Prezzo */}
-               <div style={{ marginBottom: '2.5rem' }}>
+               {/* Tipo di Pagamento */}
+               <div style={{ marginBottom: '2rem' }}>
                  <label style={{
                    display: 'block',
                    fontSize: '1rem',
@@ -593,98 +598,269 @@ function AggiungiAbbonamento() {
                    marginBottom: '0.75rem',
                    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
                  }}>
-                   Prezzo dell'abbonamento <span style={{ color: '#FF3B30' }}>*</span>
+                   Tipo di Pagamento
                  </label>
-                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                   <div style={{ position: 'relative', flex: 1 }}>
-                     <span style={{
-                       position: 'absolute',
-                       left: '20px',
-                       top: '50%',
-                       transform: 'translateY(-50%)',
-                       fontSize: '1.0625rem',
-                       color: '#86868b',
-                       fontWeight: '500',
-                       fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                     }}>
-                       €
-                     </span>
-                     <input
-                       type="number"
-                       name="prezzo"
-                       value={formData.prezzo}
-                       onChange={handleInputChange}
-                       placeholder="0.00"
-                       step="0.01"
-                       min="0"
-                       style={{
-                         width: '100%',
-                         padding: '16px 20px 16px 40px',
-                         fontSize: '1.0625rem',
-                         border: '1px solid #d2d2d7',
-                         borderRadius: '12px',
-                         background: 'rgba(255, 255, 255, 0.8)',
-                         fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                         outline: 'none',
-                         boxSizing: 'border-box',
-                         backdropFilter: 'blur(10px)',
-                         WebkitBackdropFilter: 'blur(10px)'
-                       }}
-                       onFocus={(e) => {
-                         e.target.style.borderColor = '#007AFF';
-                         e.target.style.background = 'rgba(255, 255, 255, 0.95)';
-                         e.target.style.boxShadow = '0 0 0 4px rgba(0, 122, 255, 0.1)';
-                         e.target.style.transform = 'translateY(-1px)';
-                       }}
-                       onBlur={(e) => {
-                         e.target.style.borderColor = '#d2d2d7';
-                         e.target.style.background = 'rgba(255, 255, 255, 0.8)';
-                         e.target.style.boxShadow = 'none';
-                         e.target.style.transform = 'translateY(0)';
-                       }}
-                       onKeyDown={(e) => {
-                         // Disabilita i tasti freccia su/giù
-                         if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
-                           e.preventDefault();
-                         }
-                       }}
-                       onWheel={(e) => {
-                         // Disabilita lo scroll del mouse quando il campo è in focus
-                         e.target.blur();
-                       }}
-                     />
-                   </div>
-                 </div>
-                 
-                 {/* Mostra calcolo costo per persona */}
-                 {formData.prezzo && prezzoTotale > 0 && (
-                   <div style={{
-                     marginTop: '1rem',
-                     padding: '1rem 1.25rem',
-                     background: 'linear-gradient(135deg, rgba(52, 199, 89, 0.08) 0%, rgba(52, 199, 89, 0.12) 100%)',
+                 <div style={{
+                   display: 'flex',
+                   gap: '1rem'
+                 }}>
+                   <label style={{
+                     flex: 1,
+                     padding: '1rem',
+                     border: `2px solid ${formData.tipoPagamento === 'fisso' ? '#007AFF' : '#d2d2d7'}`,
                      borderRadius: '12px',
-                     border: '1px solid rgba(52, 199, 89, 0.2)',
-                     backdropFilter: 'blur(10px)',
-                     WebkitBackdropFilter: 'blur(10px)'
+                     cursor: 'pointer',
+                     background: formData.tipoPagamento === 'fisso' ? 'rgba(0, 122, 255, 0.05)' : 'rgba(255, 255, 255, 0.8)',
+                     transition: 'all 0.3s ease',
+                     display: 'flex',
+                     alignItems: 'center',
+                     gap: '0.75rem'
                    }}>
-                     <div style={{
-                       fontSize: '0.9375rem',
-                       color: '#34C759',
-                       fontWeight: '600',
-                       fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                     <input
+                       type="radio"
+                       name="tipoPagamento"
+                       value="fisso"
+                       checked={formData.tipoPagamento === 'fisso'}
+                       onChange={handleInputChange}
+                       style={{ display: 'none' }}
+                     />
+                     <span style={{ 
+                       fontSize: '1.25rem',
+                       color: formData.tipoPagamento === 'fisso' ? '#007AFF' : '#86868b'
+                     }}>💰</span>
+                     <div>
+                       <div style={{
+                         fontSize: '1rem',
+                         fontWeight: '600',
+                         color: formData.tipoPagamento === 'fisso' ? '#007AFF' : '#1d1d1f'
+                       }}>
+                         Spesa Fissa
+                       </div>
+                       <div style={{
+                         fontSize: '0.875rem',
+                         color: formData.tipoPagamento === 'fisso' ? '#007AFF' : '#86868b'
+                       }}>
+                         Importo costante ogni mese
+                       </div>
+                     </div>
+                   </label>
+
+                   <label style={{
+                     flex: 1,
+                     padding: '1rem',
+                     border: `2px solid ${formData.tipoPagamento === 'variabile' ? '#007AFF' : '#d2d2d7'}`,
+                     borderRadius: '12px',
+                     cursor: 'pointer',
+                     background: formData.tipoPagamento === 'variabile' ? 'rgba(0, 122, 255, 0.05)' : 'rgba(255, 255, 255, 0.8)',
+                     transition: 'all 0.3s ease',
+                     display: 'flex',
+                     alignItems: 'center',
+                     gap: '0.75rem'
+                   }}>
+                     <input
+                       type="radio"
+                       name="tipoPagamento"
+                       value="variabile"
+                       checked={formData.tipoPagamento === 'variabile'}
+                       onChange={handleInputChange}
+                       style={{ display: 'none' }}
+                     />
+                     <span style={{ 
+                       fontSize: '1.25rem',
+                       color: formData.tipoPagamento === 'variabile' ? '#007AFF' : '#86868b'
+                     }}>📊</span>
+                     <div>
+                       <div style={{
+                         fontSize: '1rem',
+                         fontWeight: '600',
+                         color: formData.tipoPagamento === 'variabile' ? '#007AFF' : '#1d1d1f'
+                       }}>
+                         Spesa Variabile
+                       </div>
+                       <div style={{
+                         fontSize: '0.875rem',
+                         color: formData.tipoPagamento === 'variabile' ? '#007AFF' : '#86868b'
+                       }}>
+                         Importo che può variare
+                       </div>
+                     </div>
+                   </label>
+                 </div>
+               </div>
+
+               {/* Prezzo */}
+               <div style={{ marginBottom: '2rem' }}>
+                 <label style={{
+                   display: 'block',
+                   fontSize: '1rem',
+                   fontWeight: '600',
+                   color: '#1d1d1f',
+                   marginBottom: '0.75rem',
+                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                 }}>
+                   Prezzo dell'abbonamento
+                 </label>
+                 <input
+                   type="number"
+                   name="prezzo"
+                   value={formData.prezzo}
+                   onChange={handleInputChange}
+                   placeholder="0.00"
+                   step="0.01"
+                   min="0"
+                   disabled={formData.tipoPagamento === 'variabile'}
+                   style={{
+                     width: '100%',
+                     padding: '1rem',
+                     fontSize: '1rem',
+                     border: '2px solid #d2d2d7',
+                     borderRadius: '12px',
+                     background: formData.tipoPagamento === 'variabile' ? 'rgba(0, 0, 0, 0.05)' : 'rgba(255, 255, 255, 0.8)',
+                     color: formData.tipoPagamento === 'variabile' ? '#86868b' : '#1d1d1f',
+                     transition: 'all 0.3s ease',
+                     outline: 'none',
+                     boxSizing: 'border-box',
+                     fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                     opacity: formData.tipoPagamento === 'variabile' ? 0.5 : 1,
+                     cursor: formData.tipoPagamento === 'variabile' ? 'not-allowed' : 'text'
+                   }}
+                 />
+                 {formData.tipoPagamento === 'variabile' && (
+                   <p style={{
+                     fontSize: '0.875rem',
+                     color: '#86868b',
+                     margin: '0.75rem 0 0 0',
+                     fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                   }}>
+                     Per le spese variabili, il prezzo verrà registrato al momento del pagamento
+                   </p>
+                 )}
+                 {/* Mostra calcolo costo per persona */}
+                {formData.prezzo && prezzoTotale > 0 && (
+                  <div style={{
+                    marginTop: '1rem',
+                    padding: '1rem 1.25rem',
+                    background: 'linear-gradient(135deg, rgba(52, 199, 89, 0.08) 0%, rgba(52, 199, 89, 0.12) 100%)',
+                    borderRadius: '12px',
+                    border: '1px solid rgba(52, 199, 89, 0.2)',
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)'
+                  }}>
+                    <div style={{
+                      fontSize: '0.9375rem',
+                      color: '#34C759',
+                      fontWeight: '600',
+                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem'
+                    }}>
+                      <span style={{ fontSize: '1.125rem' }}>💰</span>
+                      {formData.persone.length === 0 ? (
+                        "Solo tu pagherai questo abbonamento"
+                      ) : (
+                        `La quota per persona sarà di €${(prezzoTotale / (formData.persone.length + 1)).toFixed(2)}`
+                      )}
+                    </div>
+                  </div>
+                )}
+               </div>
+
+               {/* Logo */}
+               <div style={{ marginBottom: '2rem' }}>
+                 <label style={{
+                   display: 'block',
+                   fontSize: '1rem',
+                   fontWeight: '600',
+                   color: '#1d1d1f',
+                   marginBottom: '0.75rem',
+                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                 }}>
+                   Logo dell'abbonamento
+                 </label>
+                 <div style={{ 
+                   width: '60px', 
+                   height: '60px', 
+                   border: '2px dashed #d2d2d7',
+                   borderRadius: '12px',
+                   display: 'flex',
+                   alignItems: 'center',
+                   justifyContent: 'center',
+                   cursor: 'pointer',
+                   position: 'relative',
+                   overflow: 'hidden',
+                   background: logoPreview ? 'none' : 'rgba(255, 255, 255, 0.8)',
+                   transition: 'all 0.3s ease',
+                   borderColor: logoError ? '#FF3B30' : '#d2d2d7'
+                 }}>
+                   {logoPreview ? (
+                     <>
+                       <img 
+                         src={logoPreview} 
+                         alt="Logo preview" 
+                         style={{
+                           width: '100%',
+                           height: '100%',
+                           objectFit: 'cover'
+                         }}
+                       />
+                       <button
+                         type="button"
+                         onClick={removeLogo}
+                         style={{
+                           position: 'absolute',
+                           top: '4px',
+                           right: '4px',
+                           background: 'rgba(0, 0, 0, 0.5)',
+                           border: 'none',
+                           borderRadius: '50%',
+                           width: '20px',
+                           height: '20px',
+                           display: 'flex',
+                           alignItems: 'center',
+                           justifyContent: 'center',
+                           cursor: 'pointer',
+                           color: 'white',
+                           fontSize: '12px',
+                           padding: 0
+                         }}
+                       >
+                         ×
+                       </button>
+                     </>
+                   ) : (
+                     <label style={{
+                       width: '100%',
+                       height: '100%',
                        display: 'flex',
                        alignItems: 'center',
-                       gap: '0.5rem'
+                       justifyContent: 'center',
+                       cursor: 'pointer'
                      }}>
-                       <span style={{ fontSize: '1.125rem' }}>💰</span>
-                       {formData.persone.length === 0 ? (
-                         "Solo tu pagherai questo abbonamento"
-                       ) : (
-                         `La quota per persona sarà di €${(prezzoTotale / (formData.persone.length + 1)).toFixed(2)}`
-                       )}
-                     </div>
-                   </div>
+                       <input
+                         type="file"
+                         accept=".jpg,.jpeg,.png,.webp"
+                         onChange={handleLogoChange}
+                         style={{ display: 'none' }}
+                       />
+                       <span style={{ 
+                         fontSize: '24px',
+                         color: logoError ? '#FF3B30' : '#86868b'
+                       }}>
+                         +
+                       </span>
+                     </label>
+                   )}
+                 </div>
+                 {logoError && (
+                   <p style={{
+                     margin: '0.5rem 0 0 0',
+                     fontSize: '0.875rem',
+                     color: '#FF3B30',
+                     fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                   }}>
+                     {logoError}
+                   </p>
                  )}
                </div>
 

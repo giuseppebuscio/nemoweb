@@ -12,6 +12,59 @@ function Abbonamenti() {
   const [subscriptionToDelete, setSubscriptionToDelete] = useState(null);
   const [viewMode, setViewMode] = useState('grid'); // 'grid' o 'list'
 
+  // Funzione per verificare se l'abbonamento è in pari
+  const isInPari = (subscription) => {
+    if (!subscription.dataInizio) return true;
+    
+    const oggi = new Date();
+    const dataInizio = new Date(subscription.dataInizio);
+    const pagamenti = subscription.payments || [];
+
+    // Funzione per ottenere una stringa YYYY-MM da una data
+    const getYearMonth = (date) => {
+      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+    };
+
+    // Funzione per ottenere solo l'anno da una data
+    const getYear = (date) => {
+      return date.getFullYear();
+    };
+
+    // Funzione per verificare se esiste un pagamento per una data specifica
+    const esistePagamento = (data, isAnnuale) => {
+      return pagamenti.some(pagamento => {
+        const dataPagamento = new Date(pagamento.data);
+        if (isAnnuale) {
+          return getYear(dataPagamento) === getYear(data);
+        }
+        return getYearMonth(dataPagamento) === getYearMonth(data);
+      });
+    };
+
+    let currentDate = new Date(dataInizio.getFullYear(), dataInizio.getMonth(), dataInizio.getDate());
+    const isAnnuale = subscription.frequenza === 'annuale';
+    
+    // Per abbonamenti annuali, controlliamo anno per anno
+    if (isAnnuale) {
+      while (currentDate <= oggi) {
+        if (!esistePagamento(currentDate, true)) {
+          return false;
+        }
+        currentDate.setFullYear(currentDate.getFullYear() + 1);
+      }
+    } else {
+      // Per abbonamenti mensili, controlliamo mese per mese
+      const lastMonth = new Date(oggi.getFullYear(), oggi.getMonth(), dataInizio.getDate());
+      while (currentDate <= lastMonth) {
+        if (!esistePagamento(currentDate, false)) {
+          return false;
+        }
+        currentDate.setMonth(currentDate.getMonth() + 1);
+      }
+    }
+
+    return true;
+  };
 
   const handleDeleteClick = (subscription) => {
     setSubscriptionToDelete(subscription);
@@ -241,7 +294,10 @@ function Abbonamenti() {
                     }
                   }}
                 >
-                  <span style={{ fontSize: '1rem' }}>☰</span>
+                  <span style={{ 
+                    fontSize: '1rem',
+                    color: 'inherit'
+                  }}>☰</span>
                   Elenco
                 </button>
               </div>
@@ -371,6 +427,29 @@ function Abbonamenti() {
                           }}>€{Math.ceil(parseFloat(subscription.prezzo) / ((subscription.persone?.length || 0) + 1))}</span>
                         </div>
 
+                        {/* Switch e Stato Pagamenti */}
+                        <div style={{
+                          flex: '0.5',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'flex-end'
+                        }}>
+                          <div className="switch" onClick={(e) => {
+                            e.stopPropagation();
+                            handleToggle(subscription);
+                          }}>
+                            <input
+                              type="checkbox"
+                              checked={subscription.isActive}
+                              onChange={(e) => {
+                                e.stopPropagation();
+                                handleToggle(subscription);
+                              }}
+                            />
+                            <span className="slider"></span>
+                          </div>
+                        </div>
+
                         {/* Pulsante Visualizza */}
                         <button
                           onClick={() => navigate(`/abbonamenti/${subscription.id}`)}
@@ -392,31 +471,6 @@ function Abbonamenti() {
                         >
                           Visualizza
                         </button>
-
-                        {/* Switch */}
-                        <div style={{
-                          flex: '0.5',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center'
-                        }}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleToggle(subscription);
-                          }}
-                        >
-                          <div className="switch">
-                            <input
-                              type="checkbox"
-                              checked={subscription.isActive}
-                              onChange={(e) => {
-                                e.stopPropagation();
-                                handleToggle(subscription);
-                              }}
-                            />
-                            <span className="slider"></span>
-                          </div>
-                        </div>
                       </>
                     ) : (
                       <>
@@ -526,16 +580,29 @@ function Abbonamenti() {
                             handleToggle(subscription);
                           }}
                         >
-                          <div className="switch">
-                            <input
-                              type="checkbox"
-                              checked={subscription.isActive}
-                              onChange={(e) => {
-                                e.stopPropagation();
-                                handleToggle(subscription);
-                              }}
-                            />
-                            <span className="slider"></span>
+                          <div style={{
+                            flex: '0.5',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '0.75rem'
+                          }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleToggle(subscription);
+                            }}
+                          >
+                            <div className="switch">
+                              <input
+                                type="checkbox"
+                                checked={subscription.isActive}
+                                onChange={(e) => {
+                                  e.stopPropagation();
+                                  handleToggle(subscription);
+                                }}
+                              />
+                              <span className="slider"></span>
+                            </div>
                           </div>
                         </div>
 
