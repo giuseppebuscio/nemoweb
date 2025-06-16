@@ -96,7 +96,7 @@ function Abbonamenti() {
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent'
                 }}>
-                  I miei Abbonamenti
+                  I miei Abbonamentixxx
                 </h1>
                 <p style={{
                   fontSize: '1.125rem',
