@@ -1,0 +1,84 @@
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 51px;
+  height: 31px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #E9E9EA;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 27px;
+  width: 27px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #34C759;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* Effetto hover */
+.slider:hover {
+  box-shadow: 0 0 1px #34C759;
+}
+
+/* Effetto focus */
+input:focus + .slider {
+  box-shadow: 0 0 1px #34C759;
+}
+
+.view-button {
+  background: #007AFF;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  border: none;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  margin-top: 1.25rem;
+}
+
+.view-button:hover {
+  background: #0051D5;
+  transform: translateY(-1px);
+}
+
+.view-button:active {
+  transform: translateY(0);
+}
+
+/* Stile specifico per la vista a lista */
+.list-view .view-button {
+  width: auto;
+  margin-top: 0;
+  padding: 0.5rem 1rem;
+} 
