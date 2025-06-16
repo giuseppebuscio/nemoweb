@@ -698,7 +698,7 @@ function AggiungiAbbonamento() {
                    marginBottom: '0.75rem',
                    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
                  }}>
-                   Prezzo dell'abbonamento
+                   {formData.tipoPagamento === 'variabile' ? 'Prezzo prima rata' : 'Prezzo dell\'abbonamento'}
                  </label>
                  <input
                    type="number"
@@ -708,21 +708,18 @@ function AggiungiAbbonamento() {
                    placeholder="0.00"
                    step="0.01"
                    min="0"
-                   disabled={formData.tipoPagamento === 'variabile'}
                    style={{
                      width: '100%',
                      padding: '1rem',
                      fontSize: '1rem',
                      border: '2px solid #d2d2d7',
                      borderRadius: '12px',
-                     background: formData.tipoPagamento === 'variabile' ? 'rgba(0, 0, 0, 0.05)' : 'rgba(255, 255, 255, 0.8)',
-                     color: formData.tipoPagamento === 'variabile' ? '#86868b' : '#1d1d1f',
+                     background: 'rgba(255, 255, 255, 0.8)',
+                     color: '#1d1d1f',
                      transition: 'all 0.3s ease',
                      outline: 'none',
                      boxSizing: 'border-box',
-                     fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                     opacity: formData.tipoPagamento === 'variabile' ? 0.5 : 1,
-                     cursor: formData.tipoPagamento === 'variabile' ? 'not-allowed' : 'text'
+                     fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
                    }}
                  />
                  {formData.tipoPagamento === 'variabile' && (
@@ -732,7 +729,7 @@ function AggiungiAbbonamento() {
                      margin: '0.75rem 0 0 0',
                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
                    }}>
-                     Per le spese variabili, il prezzo verrà registrato al momento del pagamento
+                     Per le spese variabili, il prezzo delle rate successive potrà essere modificato al momento del pagamento
                    </p>
                  )}
                  {/* Mostra calcolo costo per persona */}

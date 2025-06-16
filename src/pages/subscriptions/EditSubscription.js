@@ -22,8 +22,13 @@ function EditSubscription() {
       unita: 'giorni'
     },
     persone: [],
-    prezzo: ''
+    prezzo: '',
+    logo: null,
+    tipoPagamento: 'fisso' // 'fisso' o 'variabile'
   });
+
+  const [logoPreview, setLogoPreview] = useState(null);
+  const [logoError, setLogoError] = useState('');
 
   // Carica i dati dell'abbonamento
   useEffect(() => {
@@ -43,8 +48,13 @@ function EditSubscription() {
               unita: 'giorni'
             },
             persone: data.persone || [],
-            prezzo: data.prezzo || ''
+            prezzo: data.prezzo || '',
+            logo: data.logo || null,
+            tipoPagamento: data.tipoPagamento || 'fisso'
           });
+          if (data.logo) {
+            setLogoPreview(data.logo);
+          }
         } else {
           setError('Abbonamento non trovato');
         }
@@ -222,6 +232,38 @@ function EditSubscription() {
 
   const continueEditing = () => {
     setShowCancelModal(false);
+  };
+
+  const handleLogoChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Verifica il formato del file
+      const validFormats = ['image/jpeg', 'image/png', 'image/webp'];
+      if (!validFormats.includes(file.type)) {
+        setLogoError('Impossibile caricare. Formato sbagliato');
+        return;
+      }
+
+      setLogoError('');
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setLogoPreview(reader.result);
+        setFormData(prev => ({
+          ...prev,
+          logo: reader.result
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeLogo = () => {
+    setLogoPreview(null);
+    setLogoError('');
+    setFormData(prev => ({
+      ...prev,
+      logo: null
+    }));
   };
 
   return (
@@ -679,8 +721,8 @@ function EditSubscription() {
               </p>
               </div>
 
-              {/* Prezzo */}
-              <div style={{ marginBottom: '2.5rem' }}>
+              {/* Tipo di Pagamento */}
+              <div style={{ marginBottom: '2rem' }}>
                 <label style={{
                   display: 'block',
                   fontSize: '1rem',
@@ -689,70 +731,140 @@ function EditSubscription() {
                   marginBottom: '0.75rem',
                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
                 }}>
-                  Prezzo dell'abbonamento <span style={{ color: '#FF3B30' }}>*</span>
+                  Tipo di Pagamento
                 </label>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <div style={{ position: 'relative', flex: 1 }}>
-                    <span style={{
-                      position: 'absolute',
-                      left: '20px',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      fontSize: '1.0625rem',
-                      color: '#86868b',
-                      fontWeight: '500',
-                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                    }}>
-                      €
-                    </span>
+                <div style={{
+                  display: 'flex',
+                  gap: '1rem'
+                }}>
+                  <label style={{
+                    flex: 1,
+                    padding: '1rem',
+                    border: `2px solid ${formData.tipoPagamento === 'fisso' ? '#007AFF' : '#d2d2d7'}`,
+                    borderRadius: '12px',
+                    cursor: 'pointer',
+                    background: formData.tipoPagamento === 'fisso' ? 'rgba(0, 122, 255, 0.05)' : 'rgba(255, 255, 255, 0.8)',
+                    transition: 'all 0.3s ease',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.75rem'
+                  }}>
                     <input
-                      type="number"
-                      name="prezzo"
-                      value={formData.prezzo}
+                      type="radio"
+                      name="tipoPagamento"
+                      value="fisso"
+                      checked={formData.tipoPagamento === 'fisso'}
                       onChange={handleInputChange}
-                      placeholder="0.00"
-                      step="0.01"
-                      min="0"
-                      style={{
-                        width: '100%',
-                        padding: '16px 20px 16px 40px',
-                        fontSize: '1.0625rem',
-                        border: '1px solid #d2d2d7',
-                        borderRadius: '12px',
-                        background: 'rgba(255, 255, 255, 0.8)',
-                        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                        outline: 'none',
-                        boxSizing: 'border-box',
-                        backdropFilter: 'blur(10px)',
-                        WebkitBackdropFilter: 'blur(10px)'
-                      }}
-                      onFocus={(e) => {
-                        e.target.style.borderColor = '#007AFF';
-                        e.target.style.background = 'rgba(255, 255, 255, 0.95)';
-                        e.target.style.boxShadow = '0 0 0 4px rgba(0, 122, 255, 0.1)';
-                        e.target.style.transform = 'translateY(-1px)';
-                      }}
-                      onBlur={(e) => {
-                        e.target.style.borderColor = '#d2d2d7';
-                        e.target.style.background = 'rgba(255, 255, 255, 0.8)';
-                        e.target.style.boxShadow = 'none';
-                        e.target.style.transform = 'translateY(0)';
-                      }}
-                      onKeyDown={(e) => {
-                        // Disabilita i tasti freccia su/giù
-                        if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
-                          e.preventDefault();
-                        }
-                      }}
-                      onWheel={(e) => {
-                        // Disabilita lo scroll del mouse quando il campo è in focus
-                        e.target.blur();
-                      }}
+                      style={{ display: 'none' }}
                     />
-                  </div>
+                    <span style={{ 
+                      fontSize: '1.25rem',
+                      color: formData.tipoPagamento === 'fisso' ? '#007AFF' : '#86868b'
+                    }}>💰</span>
+                    <div>
+                      <div style={{
+                        fontSize: '1rem',
+                        fontWeight: '600',
+                        color: formData.tipoPagamento === 'fisso' ? '#007AFF' : '#1d1d1f'
+                      }}>
+                        Spesa Fissa
+                      </div>
+                      <div style={{
+                        fontSize: '0.875rem',
+                        color: formData.tipoPagamento === 'fisso' ? '#007AFF' : '#86868b'
+                      }}>
+                        Importo costante ogni mese
+                      </div>
+                    </div>
+                  </label>
+
+                  <label style={{
+                    flex: 1,
+                    padding: '1rem',
+                    border: `2px solid ${formData.tipoPagamento === 'variabile' ? '#007AFF' : '#d2d2d7'}`,
+                    borderRadius: '12px',
+                    cursor: 'pointer',
+                    background: formData.tipoPagamento === 'variabile' ? 'rgba(0, 122, 255, 0.05)' : 'rgba(255, 255, 255, 0.8)',
+                    transition: 'all 0.3s ease',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.75rem'
+                  }}>
+                    <input
+                      type="radio"
+                      name="tipoPagamento"
+                      value="variabile"
+                      checked={formData.tipoPagamento === 'variabile'}
+                      onChange={handleInputChange}
+                      style={{ display: 'none' }}
+                    />
+                    <span style={{ 
+                      fontSize: '1.25rem',
+                      color: formData.tipoPagamento === 'variabile' ? '#007AFF' : '#86868b'
+                    }}>📊</span>
+                    <div>
+                      <div style={{
+                        fontSize: '1rem',
+                        fontWeight: '600',
+                        color: formData.tipoPagamento === 'variabile' ? '#007AFF' : '#1d1d1f'
+                      }}>
+                        Spesa Variabile
+                      </div>
+                      <div style={{
+                        fontSize: '0.875rem',
+                        color: formData.tipoPagamento === 'variabile' ? '#007AFF' : '#86868b'
+                      }}>
+                        Importo che può variare
+                      </div>
+                    </div>
+                  </label>
                 </div>
-                
+              </div>
+
+              {/* Prezzo */}
+              <div style={{ marginBottom: '2rem' }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  color: '#1d1d1f',
+                  marginBottom: '0.75rem',
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                }}>
+                  {formData.tipoPagamento === 'variabile' ? 'Prezzo prima rata' : 'Prezzo dell\'abbonamento'}
+                </label>
+                <input
+                  type="number"
+                  name="prezzo"
+                  value={formData.prezzo}
+                  onChange={handleInputChange}
+                  placeholder="0.00"
+                  step="0.01"
+                  min="0"
+                  style={{
+                    width: '100%',
+                    padding: '1rem',
+                    fontSize: '1rem',
+                    border: '2px solid #d2d2d7',
+                    borderRadius: '12px',
+                    background: 'rgba(255, 255, 255, 0.8)',
+                    color: '#1d1d1f',
+                    transition: 'all 0.3s ease',
+                    outline: 'none',
+                    boxSizing: 'border-box',
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                  }}
+                />
+                {formData.tipoPagamento === 'variabile' && (
+                  <p style={{
+                    fontSize: '0.875rem',
+                    color: '#86868b',
+                    margin: '0.75rem 0 0 0',
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                  }}>
+                    Per le spese variabili, il prezzo delle rate successive potrà essere modificato al momento del pagamento
+                  </p>
+                )}
                 {/* Mostra calcolo costo per persona */}
                 {formData.prezzo && prezzoTotale > 0 && (
                   <div style={{
@@ -781,6 +893,104 @@ function EditSubscription() {
                       )}
                     </div>
                   </div>
+                )}
+              </div>
+
+              {/* Logo */}
+              <div style={{ marginBottom: '2rem' }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  color: '#1d1d1f',
+                  marginBottom: '0.75rem',
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                }}>
+                  Logo dell'abbonamento
+                </label>
+                <div style={{ 
+                  width: '60px', 
+                  height: '60px', 
+                  border: '2px dashed #d2d2d7',
+                  borderRadius: '12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  background: logoPreview ? 'none' : 'rgba(255, 255, 255, 0.8)',
+                  transition: 'all 0.3s ease',
+                  borderColor: logoError ? '#FF3B30' : '#d2d2d7'
+                }}>
+                  {logoPreview ? (
+                    <>
+                      <img 
+                        src={logoPreview} 
+                        alt="Logo preview" 
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover'
+                        }}
+                      />
+                      <button
+                        type="button"
+                        onClick={removeLogo}
+                        style={{
+                          position: 'absolute',
+                          top: '4px',
+                          right: '4px',
+                          background: 'rgba(0, 0, 0, 0.5)',
+                          border: 'none',
+                          borderRadius: '50%',
+                          width: '20px',
+                          height: '20px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          cursor: 'pointer',
+                          color: 'white',
+                          fontSize: '12px',
+                          padding: 0
+                        }}
+                      >
+                        ×
+                      </button>
+                    </>
+                  ) : (
+                    <label style={{
+                      width: '100%',
+                      height: '100%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer'
+                    }}>
+                      <input
+                        type="file"
+                        accept=".jpg,.jpeg,.png,.webp"
+                        onChange={handleLogoChange}
+                        style={{ display: 'none' }}
+                      />
+                      <span style={{ 
+                        fontSize: '24px',
+                        color: logoError ? '#FF3B30' : '#86868b'
+                      }}>
+                        +
+                      </span>
+                    </label>
+                  )}
+                </div>
+                {logoError && (
+                  <p style={{
+                    margin: '0.5rem 0 0 0',
+                    fontSize: '0.875rem',
+                    color: '#FF3B30',
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                  }}>
+                    {logoError}
+                  </p>
                 )}
               </div>
 

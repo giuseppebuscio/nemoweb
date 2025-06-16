@@ -4,14 +4,17 @@ import Layout from '../../components/Layout';
 import {
   getSubscription,
   updateSubscriptionPayments,
-  updateSubscriptionQuotes
+  updateSubscriptionQuotes,
+  getSubscriptionById,
+  deleteSubscription,
+  updateSubscription
 } from '../../services/subscriptionService';
 import { useSubscriptions } from '../../context/SubscriptionContext';
 
 const SubscriptionDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { getSubscription: getSubscriptionContext, deleteSubscription } = useSubscriptions();
+  const { getSubscription: getSubscriptionContext, deleteSubscription: deleteSubscriptionContext } = useSubscriptions();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [activeTab, setActiveTab] = useState('informazioni');
   const [subscription, setSubscription] = useState(null);
@@ -27,6 +30,10 @@ const SubscriptionDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [pagamentiPersone, setPagamentiPersone] = useState({});
   const [mesiMancanti, setMesiMancanti] = useState([]);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState('');
+  const [paymentAmount, setPaymentAmount] = useState('');
+  const [editingPayment, setEditingPayment] = useState(null);
   
   // Calcola il totale direttamente dai pagamenti
   const calcolaTotale = () => {
@@ -263,7 +270,7 @@ const SubscriptionDetail = () => {
   };
 
   const handleDelete = () => {
-    deleteSubscription(id);
+    deleteSubscriptionContext(id);
     navigate('/abbonamenti');
   };
 
@@ -397,6 +404,56 @@ const SubscriptionDetail = () => {
       });
       return newPagamenti;
     });
+  };
+
+  const handleAddPayment = () => {
+    setShowPaymentModal(true);
+    setSelectedMonth('');
+    setPaymentAmount('');
+    setEditingPayment(null);
+  };
+
+  const handlePaymentSubmit = async () => {
+    if (!selectedMonth || !paymentAmount) {
+      alert('Per favore, compila tutti i campi');
+      return;
+    }
+
+    try {
+      const newPayment = {
+        dataPagamento: selectedMonth,
+        importo: parseFloat(paymentAmount),
+        pagato: true
+      };
+
+      const updatedPayments = editingPayment
+        ? subscription.pagamenti.map(p => 
+            p === editingPayment ? newPayment : p
+          )
+        : [...(subscription.pagamenti || []), newPayment];
+
+      const updatedSubscription = {
+        ...subscription,
+        pagamenti: updatedPayments
+      };
+
+      await updateSubscription(subscription.id, updatedSubscription);
+      setSubscription(updatedSubscription);
+      setShowPaymentModal(false);
+      setSelectedMonth('');
+      setPaymentAmount('');
+      setEditingPayment(null);
+    } catch (error) {
+      console.error('Errore durante il salvataggio della rata:', error);
+      alert('Si è verificato un errore durante il salvataggio della rata');
+    }
+  };
+
+  const handleEditPayment = (pagamento) => {
+    setShowPaymentModal(true);
+    setSelectedMonth(new Date(pagamento.dataPagamento).toISOString().split('T')[0]);
+    setPaymentAmount(pagamento.importo);
+    setEditingPayment(pagamento);
   };
 
   return (
@@ -559,7 +616,11 @@ const SubscriptionDetail = () => {
             width: 'fit-content',
             alignSelf: 'flex-start'
           }}>
-            {['informazioni', 'pagamenti', 'quote'].map((tab) => (
+            {[
+              'informazioni',
+              ...(subscription.tipoPagamento === 'fisso' ? ['pagamenti'] : ['rate']),
+              ...(subscription.persone && subscription.persone.length > 0 ? ['quote'] : [])
+            ].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -1133,6 +1194,241 @@ const SubscriptionDetail = () => {
               </div>
             )}
 
+            {activeTab === 'rate' && (
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1.5rem',
+                width: '100%'
+              }}>
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  width: '100%'
+                }}>
+                  <h2 style={{
+                    fontSize: '1.5rem',
+                    fontWeight: '600',
+                    color: '#1d1d1f',
+                    margin: 0
+                  }}>
+                    Rate
+                  </h2>
+                  <button
+                    onClick={handleAddPayment}
+                    style={{
+                      padding: '8px 16px',
+                      fontSize: '0.9375rem',
+                      fontWeight: '600',
+                      border: 'none',
+                      borderRadius: '8px',
+                      background: 'linear-gradient(135deg, #007AFF, #5856D6)',
+                      color: 'white',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      boxShadow: '0 2px 8px rgba(0, 122, 255, 0.2)'
+                    }}
+                  >
+                    <span style={{ fontSize: '1.2rem' }}>+</span>
+                    Aggiungi rata
+                  </button>
+                </div>
+
+                {/* Cards Totali */}
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                  gap: '1.5rem',
+                  marginBottom: '1.5rem'
+                }}>
+                  {/* Card Totale Pagamenti */}
+                  <div style={{
+                    background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(88, 86, 214, 0.1) 100%)',
+                    borderRadius: '16px',
+                    padding: '1.5rem',
+                    border: '1px solid rgba(0, 122, 255, 0.2)'
+                  }}>
+                    <h4 style={{
+                      fontSize: '0.9375rem',
+                      color: '#007AFF',
+                      marginBottom: '0.5rem',
+                      fontWeight: '600',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.02em'
+                    }}>Totale Pagamenti</h4>
+                    <p style={{
+                      fontSize: '2rem',
+                      color: '#1d1d1f',
+                      fontWeight: '700',
+                      margin: 0,
+                      letterSpacing: '-0.02em'
+                    }}>€{formatTotale(calcolaTotale())}</p>
+                  </div>
+
+                  {/* Card Numero Rate */}
+                  <div style={{
+                    background: 'linear-gradient(135deg, rgba(52, 199, 89, 0.1) 0%, rgba(48, 209, 88, 0.1) 100%)',
+                    borderRadius: '16px',
+                    padding: '1.5rem',
+                    border: '1px solid rgba(52, 199, 89, 0.2)'
+                  }}>
+                    <h4 style={{
+                      fontSize: '0.9375rem',
+                      color: '#34C759',
+                      marginBottom: '0.5rem',
+                      fontWeight: '600',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.02em'
+                    }}>Rate Effettuate</h4>
+                    <p style={{
+                      fontSize: '2rem',
+                      color: '#1d1d1f',
+                      fontWeight: '700',
+                      margin: 0,
+                      letterSpacing: '-0.02em'
+                    }}>{subscription.pagamenti?.filter(p => p.pagato).length || 0}</p>
+                  </div>
+                </div>
+
+                {/* Storico Pagamenti */}
+                <div style={{
+                  background: 'white',
+                  borderRadius: '16px',
+                  padding: '1.5rem',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
+                }}>
+                  <h3 style={{
+                    fontSize: '1.125rem',
+                    fontWeight: '600',
+                    color: '#1d1d1f',
+                    margin: '0 0 1.5rem 0'
+                  }}>
+                    Storico pagamenti
+                  </h3>
+
+                  {subscription.pagamenti?.filter(p => p.pagato).length > 0 ? (
+                    <div style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '1rem'
+                    }}>
+                      {subscription.pagamenti
+                        .filter(p => p.pagato)
+                        .sort((a, b) => new Date(b.dataPagamento) - new Date(a.dataPagamento))
+                        .map((pagamento, index) => (
+                          <div
+                            key={index}
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              alignItems: 'center',
+                              padding: '1rem',
+                              background: 'rgba(0, 0, 0, 0.02)',
+                              borderRadius: '12px',
+                              transition: 'all 0.2s ease'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.background = 'rgba(0, 0, 0, 0.04)';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.background = 'rgba(0, 0, 0, 0.02)';
+                            }}
+                          >
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                              <div style={{
+                                width: '40px',
+                                height: '40px',
+                                borderRadius: '10px',
+                                background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(88, 86, 214, 0.1) 100%)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontSize: '1.25rem'
+                              }}>
+                                💰
+                              </div>
+                              <div>
+                                <p style={{
+                                  fontSize: '0.9375rem',
+                                  fontWeight: '500',
+                                  color: '#86868b',
+                                  margin: '0 0 0.25rem 0'
+                                }}>
+                                  {new Date(pagamento.dataPagamento).toLocaleDateString('it-IT', {
+                                    day: '2-digit',
+                                    month: 'long',
+                                    year: 'numeric'
+                                  })}
+                                </p>
+                                <p style={{
+                                  fontSize: '1rem',
+                                  fontWeight: '600',
+                                  color: '#1d1d1f',
+                                  margin: 0
+                                }}>
+                                  €{formatTotale(pagamento.importo)}
+                                </p>
+                              </div>
+                            </div>
+                            <button
+                              onClick={() => handleEditPayment(pagamento)}
+                              style={{
+                                padding: '8px',
+                                border: 'none',
+                                background: 'transparent',
+                                color: '#86868b',
+                                cursor: 'pointer',
+                                fontSize: '1.2rem',
+                                transition: 'color 0.2s ease',
+                                borderRadius: '8px'
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.background = 'rgba(0, 0, 0, 0.05)';
+                                e.currentTarget.style.color = '#007AFF';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.background = 'transparent';
+                                e.currentTarget.style.color = '#86868b';
+                              }}
+                              title="Modifica rata"
+                            >
+                              ✏️
+                            </button>
+                          </div>
+                        ))}
+                    </div>
+                  ) : (
+                    <div style={{
+                      padding: '3rem 2rem',
+                      textAlign: 'center',
+                      background: 'rgba(0, 0, 0, 0.02)',
+                      borderRadius: '12px'
+                    }}>
+                      <div style={{
+                        fontSize: '3rem',
+                        marginBottom: '1rem',
+                        color: '#86868b'
+                      }}>
+                        💸
+                      </div>
+                      <p style={{
+                        fontSize: '1rem',
+                        color: '#86868b',
+                        margin: 0,
+                        lineHeight: '1.5'
+                      }}>
+                        Nessun pagamento registrato
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
             {activeTab === 'quote' && (
               <div style={{ padding: '2rem' }}>
                 {/* Card Totale Quotes */}
@@ -1601,6 +1897,145 @@ const SubscriptionDetail = () => {
               >
                 Elimina
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modale per aggiungere/modificare una rata */}
+      {showPaymentModal && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0, 0, 0, 0.5)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 1000,
+          backdropFilter: 'blur(4px)'
+        }}>
+          <div style={{
+            background: 'white',
+            padding: '2rem',
+            borderRadius: '16px',
+            width: '100%',
+            maxWidth: '400px',
+            boxShadow: '0 4px 24px rgba(0, 0, 0, 0.1)'
+          }}>
+            <h3 style={{
+              fontSize: '1.25rem',
+              fontWeight: '600',
+              color: '#1d1d1f',
+              margin: '0 0 1.5rem 0'
+            }}>
+              {editingPayment ? 'Modifica rata' : 'Aggiungi rata'}
+            </h3>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div>
+                <label style={{
+                  display: 'block',
+                  fontSize: '0.875rem',
+                  fontWeight: '500',
+                  color: '#1d1d1f',
+                  marginBottom: '0.5rem'
+                }}>
+                  Data pagamento
+                </label>
+                <input
+                  type="date"
+                  value={selectedMonth}
+                  onChange={(e) => setSelectedMonth(e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    border: '1px solid #d2d2d7',
+                    borderRadius: '8px',
+                    fontSize: '0.9375rem',
+                    color: '#1d1d1f',
+                    background: 'white',
+                    transition: 'all 0.2s ease'
+                  }}
+                />
+              </div>
+
+              <div>
+                <label style={{
+                  display: 'block',
+                  fontSize: '0.875rem',
+                  fontWeight: '500',
+                  color: '#1d1d1f',
+                  marginBottom: '0.5rem'
+                }}>
+                  Importo
+                </label>
+                <input
+                  type="number"
+                  value={paymentAmount}
+                  onChange={(e) => setPaymentAmount(e.target.value)}
+                  placeholder="Inserisci l'importo"
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem',
+                    border: '1px solid #d2d2d7',
+                    borderRadius: '8px',
+                    fontSize: '0.9375rem',
+                    color: '#1d1d1f',
+                    background: 'white',
+                    transition: 'all 0.2s ease'
+                  }}
+                />
+              </div>
+
+              <div style={{
+                display: 'flex',
+                gap: '1rem',
+                marginTop: '1rem'
+              }}>
+                <button
+                  onClick={() => {
+                    setShowPaymentModal(false);
+                    setSelectedMonth('');
+                    setPaymentAmount('');
+                    setEditingPayment(null);
+                  }}
+                  style={{
+                    flex: 1,
+                    padding: '0.75rem',
+                    border: '1px solid #d2d2d7',
+                    borderRadius: '8px',
+                    background: 'white',
+                    color: '#1d1d1f',
+                    fontSize: '0.9375rem',
+                    fontWeight: '500',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  Annulla
+                </button>
+                <button
+                  onClick={handlePaymentSubmit}
+                  style={{
+                    flex: 1,
+                    padding: '0.75rem',
+                    border: 'none',
+                    borderRadius: '8px',
+                    background: 'linear-gradient(135deg, #007AFF, #5856D6)',
+                    color: 'white',
+                    fontSize: '0.9375rem',
+                    fontWeight: '500',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    boxShadow: '0 2px 8px rgba(0, 122, 255, 0.2)'
+                  }}
+                >
+                  {editingPayment ? 'Salva modifiche' : 'Aggiungi rata'}
+                </button>
+              </div>
             </div>
           </div>
         </div>
