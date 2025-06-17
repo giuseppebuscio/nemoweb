@@ -5,7 +5,7 @@ import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import Abbonamenti from './pages/Abbonamenti';
 import AggiungiAbbonamento from './pages/AggiungiAbbonamento';
-import Pagamenti from './pages/Pagamenti';
+import Contabilita from './pages/Contabilita';
 import Impostazioni from './pages/Impostazioni';
 import SubscriptionDetail from './pages/subscriptions/SubscriptionDetail';
 import EditSubscription from './pages/subscriptions/EditSubscription';
@@ -21,7 +21,7 @@ function App() {
           <Route path="/aggiungi-abbonamento" element={<AggiungiAbbonamento />} />
           <Route path="/abbonamenti/:id" element={<SubscriptionDetail />} />
           <Route path="/abbonamenti/:id/modifica" element={<EditSubscription />} />
-          <Route path="/pagamenti" element={<Pagamenti />} />
+          <Route path="/contabilita" element={<Contabilita />} />
           <Route path="/impostazioni" element={<Impostazioni />} />
         </Routes>
       </Router>

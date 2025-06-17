@@ -757,7 +757,7 @@ function EditSubscription() {
                       onChange={handleInputChange}
                       style={{ display: 'none' }}
                     />
-                    <span style={{ 
+                    <span style={{
                       fontSize: '1.25rem',
                       color: formData.tipoPagamento === 'fisso' ? '#007AFF' : '#86868b'
                     }}>💰</span>
@@ -829,29 +829,29 @@ function EditSubscription() {
                   fontWeight: '600',
                   color: '#1d1d1f',
                   marginBottom: '0.75rem',
-                  fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                }}>
+                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                    }}>
                   {formData.tipoPagamento === 'variabile' ? 'Prezzo prima rata' : 'Prezzo dell\'abbonamento'}
                 </label>
-                <input
-                  type="number"
-                  name="prezzo"
-                  value={formData.prezzo}
-                  onChange={handleInputChange}
-                  placeholder="0.00"
-                  step="0.01"
-                  min="0"
-                  style={{
-                    width: '100%',
+                    <input
+                      type="number"
+                      name="prezzo"
+                      value={formData.prezzo}
+                      onChange={handleInputChange}
+                      placeholder="0.00"
+                      step="0.01"
+                      min="0"
+                      style={{
+                        width: '100%',
                     padding: '1rem',
                     fontSize: '1rem',
                     border: '2px solid #d2d2d7',
-                    borderRadius: '12px',
-                    background: 'rgba(255, 255, 255, 0.8)',
+                        borderRadius: '12px',
+                        background: 'rgba(255, 255, 255, 0.8)',
                     color: '#1d1d1f',
                     transition: 'all 0.3s ease',
-                    outline: 'none',
-                    boxSizing: 'border-box',
+                        outline: 'none',
+                        boxSizing: 'border-box',
                     fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
                   }}
                 />

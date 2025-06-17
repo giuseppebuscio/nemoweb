@@ -64,7 +64,7 @@ function Dashboard() {
               fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
               fontWeight: '400',
               lineHeight: '1.4'
-            }}>
+              }}>
               Panoramica dei tuoi abbonamenti e spese
             </p>
           </div>

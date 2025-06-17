@@ -8,7 +8,7 @@ function Sidebar({ isCollapsed, onToggle }) {
 
   const menuItems = [
     { name: 'Dashboard', path: '/dashboard', icon: '📊' },
-    { name: 'Pagamenti', path: '/pagamenti', icon: '💰' },
+    { name: 'Contabilità', path: '/contabilita', icon: '💰' },
     { name: 'I miei abbonamenti', path: '/abbonamenti', icon: '📱' }
   ];
 
@@ -82,36 +82,36 @@ function Sidebar({ isCollapsed, onToggle }) {
           gap: '12px',
           width: '100%',
           justifyContent: isCollapsed ? 'center' : 'flex-start'
+      }}>
+        <div style={{
+          width: '40px',
+          height: '40px',
+          background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
+          borderRadius: '10px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 4px 12px rgba(0, 122, 255, 0.3)'
         }}>
-          <div style={{
-            width: '40px',
-            height: '40px',
-            background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
-            borderRadius: '10px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 4px 12px rgba(0, 122, 255, 0.3)'
+          <span style={{
+            fontSize: '18px',
+            fontWeight: '700',
+            color: 'white',
+            letterSpacing: '-0.5px'
           }}>
-            <span style={{
-              fontSize: '18px',
-              fontWeight: '700',
-              color: 'white',
-              letterSpacing: '-0.5px'
-            }}>
-              MS
-            </span>
-          </div>
-          {!isCollapsed && (
-            <span style={{
-              fontSize: '1.2rem',
-              fontWeight: '600',
-              color: '#1d1d1f',
-              letterSpacing: '-0.01em'
-            }}>
-              MagicSubs
-            </span>
-          )}
+            MS
+          </span>
+        </div>
+        {!isCollapsed && (
+          <span style={{
+            fontSize: '1.2rem',
+            fontWeight: '600',
+            color: '#1d1d1f',
+            letterSpacing: '-0.01em'
+          }}>
+            MagicSubs
+          </span>
+        )}
         </div>
       </div>
 

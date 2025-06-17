@@ -397,15 +397,15 @@ function Abbonamenti() {
                           <span style={{
                             fontSize: '0.9375rem',
                             color: '#86868b'
-                          }}>Costo totale</span>
+                          }}>Costo</span>
                           <span style={{
                             fontSize: '1rem',
                             fontWeight: '600',
                             color: '#1d1d1f'
-                          }}>€{Math.ceil(parseFloat(subscription.prezzo))}</span>
+                          }}>€{parseFloat(subscription.prezzo).toFixed(2)}</span>
                         </div>
 
-                        {/* La tua quota */}
+                        {/* Totale pagato */}
                         <div style={{
                           flex: '1',
                           display: 'flex',
@@ -419,12 +419,14 @@ function Abbonamenti() {
                           <span style={{
                             fontSize: '0.9375rem',
                             color: '#007AFF'
-                          }}>La tua quota</span>
+                          }}>Totale pagato</span>
                           <span style={{
                             fontSize: '1rem',
                             fontWeight: '600',
                             color: '#007AFF'
-                          }}>€{Math.ceil(parseFloat(subscription.prezzo) / ((subscription.persone?.length || 0) + 1))}</span>
+                          }}>€{subscription.tipoPagamento === 'variabile' 
+                            ? (subscription.pagamenti ? subscription.pagamenti.reduce((totale, pagamento) => totale + parseFloat(pagamento.importo), 0).toFixed(2) : '0.00')
+                            : (subscription.payments ? subscription.payments.reduce((acc, pagamento) => acc + parseFloat(pagamento.importo), 0).toFixed(2) : '0.00')}</span>
                         </div>
 
                         {/* Switch e Stato Pagamenti */}
@@ -517,12 +519,12 @@ function Abbonamenti() {
                               <span style={{
                                 fontSize: '0.9375rem',
                                 color: '#86868b'
-                              }}>Costo totale</span>
+                              }}>Costo</span>
                               <span style={{
                                 fontSize: '1rem',
                                 fontWeight: '600',
                                 color: '#1d1d1f'
-                              }}>€{Math.ceil(parseFloat(subscription.prezzo))}</span>
+                              }}>€{parseFloat(subscription.prezzo).toFixed(2)}</span>
                             </div>
 
                             <div style={{
@@ -532,17 +534,20 @@ function Abbonamenti() {
                               padding: '0.75rem',
                               background: 'rgba(0, 122, 255, 0.05)',
                               borderRadius: '12px',
-                              border: '1px solid rgba(0, 122, 255, 0.1)'
+                              border: '1px solid rgba(0, 122, 255, 0.1)',
+                              alignItems: 'flex-start'
                             }}>
                               <span style={{
                                 fontSize: '0.9375rem',
                                 color: '#007AFF'
-                              }}>La tua quota</span>
+                              }}>Totale pagato</span>
                               <span style={{
                                 fontSize: '1rem',
                                 fontWeight: '600',
                                 color: '#007AFF'
-                              }}>€{Math.ceil(parseFloat(subscription.prezzo) / ((subscription.persone?.length || 0) + 1))}</span>
+                              }}>€{subscription.tipoPagamento === 'variabile' 
+                                ? (subscription.pagamenti ? subscription.pagamenti.reduce((totale, pagamento) => totale + parseFloat(pagamento.importo), 0).toFixed(2) : '0.00')
+                                : (subscription.payments ? subscription.payments.reduce((acc, pagamento) => acc + parseFloat(pagamento.importo), 0).toFixed(2) : '0.00')}</span>
                             </div>
                           </div>
 
@@ -586,22 +591,22 @@ function Abbonamenti() {
                             alignItems: 'center',
                             justifyContent: 'center',
                             gap: '0.75rem'
+                        }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleToggle(subscription);
                           }}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleToggle(subscription);
-                            }}
-                          >
-                            <div className="switch">
-                              <input
-                                type="checkbox"
-                                checked={subscription.isActive}
-                                onChange={(e) => {
-                                  e.stopPropagation();
-                                  handleToggle(subscription);
-                                }}
-                              />
-                              <span className="slider"></span>
+                        >
+                          <div className="switch">
+                            <input
+                              type="checkbox"
+                              checked={subscription.isActive}
+                              onChange={(e) => {
+                                e.stopPropagation();
+                                handleToggle(subscription);
+                              }}
+                            />
+                            <span className="slider"></span>
                             </div>
                           </div>
                         </div>

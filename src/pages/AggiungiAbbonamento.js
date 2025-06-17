@@ -505,86 +505,86 @@ function AggiungiAbbonamento() {
                      gap: '0.5rem',
                      padding: '0.5rem',
                      minHeight: '48px',
-                     border: '1px solid #d2d2d7',
-                     borderRadius: '12px',
-                     background: 'rgba(255, 255, 255, 0.8)',
-                     backdropFilter: 'blur(10px)',
-                     WebkitBackdropFilter: 'blur(10px)'
+                   border: '1px solid #d2d2d7',
+                   borderRadius: '12px',
+                   background: 'rgba(255, 255, 255, 0.8)',
+                   backdropFilter: 'blur(10px)',
+                   WebkitBackdropFilter: 'blur(10px)'
                    }}>
                      {formData.persone.map((person, index) => (
-                       <div
-                         key={index}
-                         style={{
-                           display: 'flex',
-                           alignItems: 'center',
+                   <div
+                     key={index}
+                     style={{
+                       display: 'flex',
+                       alignItems: 'center',
                            gap: '0.5rem',
-                           padding: '8px 12px',
+                       padding: '8px 12px',
                            background: 'rgba(0, 122, 255, 0.1)',
                            borderRadius: '8px',
-                           fontSize: '0.9rem',
+                       fontSize: '0.9rem',
                            color: '#007AFF',
                            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                         }}
-                       >
+                     }}
+                   >
                          <span>{person}</span>
-                         <button
-                           type="button"
+                     <button
+                       type="button"
                            onClick={() => removePerson(index)}
-                           style={{
+                       style={{
                              background: 'none',
-                             border: 'none',
+                         border: 'none',
                              padding: '0',
-                             cursor: 'pointer',
+                         cursor: 'pointer',
                              color: '#007AFF',
                              fontSize: '1.1rem',
-                             display: 'flex',
-                             alignItems: 'center',
-                             justifyContent: 'center',
+                         display: 'flex',
+                         alignItems: 'center',
+                         justifyContent: 'center',
                              width: '16px',
                              height: '16px',
                              borderRadius: '50%',
-                             transition: 'all 0.2s ease'
-                           }}
-                           onMouseEnter={(e) => {
+                         transition: 'all 0.2s ease'
+                       }}
+                       onMouseEnter={(e) => {
                              e.target.style.background = 'rgba(0, 122, 255, 0.2)';
-                           }}
-                           onMouseLeave={(e) => {
+                       }}
+                       onMouseLeave={(e) => {
                              e.target.style.background = 'none';
-                           }}
-                         >
-                           ×
-                         </button>
-                       </div>
-                     ))}
-                     <input
-                       type="text"
-                       value={currentPersonInput}
-                       onChange={(e) => setCurrentPersonInput(e.target.value)}
-                       onKeyDown={handlePersonInputKeyDown}
+                       }}
+                     >
+                       ×
+                     </button>
+                   </div>
+                 ))}
+                 <input
+                   type="text"
+                   value={currentPersonInput}
+                   onChange={(e) => setCurrentPersonInput(e.target.value)}
+                   onKeyDown={handlePersonInputKeyDown}
                        placeholder={formData.persone.length === 0 ? "Inserisci il tuo nome..." : "Aggiungi un'altra persona..."}
-                       style={{
-                         border: 'none',
-                         outline: 'none',
+                   style={{
+                     border: 'none',
+                     outline: 'none',
                          background: 'none',
                          fontSize: '0.9rem',
                          color: '#1d1d1f',
-                         fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                         flex: 1,
-                         minWidth: '200px'
-                       }}
-                     />
-                   </div>
-                   <p style={{
-                     fontSize: '0.875rem',
-                     color: '#86868b',
-                     margin: 0,
                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                     flex: 1,
+                         minWidth: '200px'
+                   }}
+                 />
+               </div>
+               <p style={{
+                 fontSize: '0.875rem',
+                 color: '#86868b',
+                     margin: 0,
+                 fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
                      display: 'flex',
                      alignItems: 'center',
                      gap: '0.5rem'
-                   }}>
-                     💡 Usa virgola, TAB o Invio per aggiungere una persona. Clicca × per rimuovere.
-                   </p>
+               }}>
+                 💡 Usa virgola, TAB o Invio per aggiungere una persona. Clicca × per rimuovere.
+                                </p>
                  </div>
                </div>
 
@@ -624,7 +624,7 @@ function AggiungiAbbonamento() {
                        onChange={handleInputChange}
                        style={{ display: 'none' }}
                      />
-                     <span style={{ 
+                     <span style={{
                        fontSize: '1.25rem',
                        color: formData.tipoPagamento === 'fisso' ? '#007AFF' : '#86868b'
                      }}>💰</span>
@@ -696,29 +696,29 @@ function AggiungiAbbonamento() {
                    fontWeight: '600',
                    color: '#1d1d1f',
                    marginBottom: '0.75rem',
-                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                 }}>
+                       fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                     }}>
                    {formData.tipoPagamento === 'variabile' ? 'Prezzo prima rata' : 'Prezzo dell\'abbonamento'}
                  </label>
-                 <input
-                   type="number"
-                   name="prezzo"
-                   value={formData.prezzo}
-                   onChange={handleInputChange}
-                   placeholder="0.00"
-                   step="0.01"
-                   min="0"
-                   style={{
-                     width: '100%',
+                     <input
+                       type="number"
+                       name="prezzo"
+                       value={formData.prezzo}
+                       onChange={handleInputChange}
+                       placeholder="0.00"
+                       step="0.01"
+                       min="0"
+                       style={{
+                         width: '100%',
                      padding: '1rem',
                      fontSize: '1rem',
                      border: '2px solid #d2d2d7',
-                     borderRadius: '12px',
-                     background: 'rgba(255, 255, 255, 0.8)',
+                         borderRadius: '12px',
+                         background: 'rgba(255, 255, 255, 0.8)',
                      color: '#1d1d1f',
                      transition: 'all 0.3s ease',
-                     outline: 'none',
-                     boxSizing: 'border-box',
+                         outline: 'none',
+                         boxSizing: 'border-box',
                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
                    }}
                  />
@@ -733,33 +733,33 @@ function AggiungiAbbonamento() {
                    </p>
                  )}
                  {/* Mostra calcolo costo per persona */}
-                {formData.prezzo && prezzoTotale > 0 && (
-                  <div style={{
-                    marginTop: '1rem',
-                    padding: '1rem 1.25rem',
-                    background: 'linear-gradient(135deg, rgba(52, 199, 89, 0.08) 0%, rgba(52, 199, 89, 0.12) 100%)',
-                    borderRadius: '12px',
-                    border: '1px solid rgba(52, 199, 89, 0.2)',
-                    backdropFilter: 'blur(10px)',
-                    WebkitBackdropFilter: 'blur(10px)'
-                  }}>
-                    <div style={{
-                      fontSize: '0.9375rem',
-                      color: '#34C759',
-                      fontWeight: '600',
-                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.5rem'
-                    }}>
-                      <span style={{ fontSize: '1.125rem' }}>💰</span>
-                      {formData.persone.length === 0 ? (
-                        "Solo tu pagherai questo abbonamento"
-                      ) : (
-                        `La quota per persona sarà di €${(prezzoTotale / (formData.persone.length + 1)).toFixed(2)}`
-                      )}
-                    </div>
-                  </div>
+                 {formData.prezzo && prezzoTotale > 0 && (
+                   <div style={{
+                     marginTop: '1rem',
+                     padding: '1rem 1.25rem',
+                     background: 'linear-gradient(135deg, rgba(52, 199, 89, 0.08) 0%, rgba(52, 199, 89, 0.12) 100%)',
+                     borderRadius: '12px',
+                     border: '1px solid rgba(52, 199, 89, 0.2)',
+                     backdropFilter: 'blur(10px)',
+                     WebkitBackdropFilter: 'blur(10px)'
+                   }}>
+                     <div style={{
+                       fontSize: '0.9375rem',
+                       color: '#34C759',
+                       fontWeight: '600',
+                       fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                       display: 'flex',
+                       alignItems: 'center',
+                       gap: '0.5rem'
+                     }}>
+                       <span style={{ fontSize: '1.125rem' }}>💰</span>
+                       {formData.persone.length === 0 ? (
+                         "Solo tu pagherai questo abbonamento"
+                       ) : (
+                         `La quota per persona sarà di €${(prezzoTotale / (formData.persone.length + 1)).toFixed(2)}`
+                       )}
+                     </div>
+                   </div>
                 )}
                </div>
 
