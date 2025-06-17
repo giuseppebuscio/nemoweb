@@ -81,37 +81,48 @@ function Sidebar({ isCollapsed, onToggle }) {
           alignItems: 'center',
           gap: '12px',
           width: '100%',
-          justifyContent: isCollapsed ? 'center' : 'flex-start'
-      }}>
-        <div style={{
-          width: '40px',
-          height: '40px',
-          background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
-          borderRadius: '10px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          boxShadow: '0 4px 12px rgba(0, 122, 255, 0.3)'
-        }}>
-          <span style={{
-            fontSize: '18px',
-            fontWeight: '700',
-            color: 'white',
-            letterSpacing: '-0.5px'
-          }}>
-            MS
-          </span>
-        </div>
-        {!isCollapsed && (
-          <span style={{
-            fontSize: '1.2rem',
-            fontWeight: '600',
-            color: '#1d1d1f',
-            letterSpacing: '-0.01em'
-          }}>
-            MagicSubs
-          </span>
-        )}
+          justifyContent: isCollapsed ? 'center' : 'flex-start',
+          cursor: 'pointer'
+        }}
+        onClick={() => handleNavigation('/')}
+        >
+          <div style={{
+            width: '40px',
+            height: '40px',
+            background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
+            borderRadius: '10px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 4px 12px rgba(0, 122, 255, 0.3)',
+            transition: 'transform 0.2s ease'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'scale(1.05)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'scale(1)';
+          }}
+          >
+            <span style={{
+              fontSize: '18px',
+              fontWeight: '700',
+              color: 'white',
+              letterSpacing: '-0.5px'
+            }}>
+              MS
+            </span>
+          </div>
+          {!isCollapsed && (
+            <span style={{
+              fontSize: '1.2rem',
+              fontWeight: '600',
+              color: '#1d1d1f',
+              letterSpacing: '-0.01em'
+            }}>
+              MagicSubs
+            </span>
+          )}
         </div>
       </div>
 

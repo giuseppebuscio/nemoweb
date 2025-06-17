@@ -7,29 +7,58 @@ function Dashboard() {
   const navigate = useNavigate();
   const { subscriptions } = useSubscriptions();
   const [isLoading, setIsLoading] = useState(true);
+  const [totals, setTotals] = useState({
+    fixed: {
+      monthly: 0,
+      yearly: 0
+    },
+    variable: {
+      monthly: 0,
+      yearly: 0
+    }
+  });
 
   useEffect(() => {
+    const activeSubscriptions = subscriptions.filter(sub => sub.isActive);
+    
+    // Calcola i totali per abbonamenti a spesa fissa
+    const fixedSubscriptions = activeSubscriptions.filter(sub => sub.tipoPagamento === 'fisso');
+    const fixedMonthlyTotal = fixedSubscriptions.reduce((total, sub) => {
+      return total + calcolaCostoMensile(sub);
+    }, 0);
+
+    // Calcola i totali per abbonamenti a spesa variabile
+    const variableSubscriptions = activeSubscriptions.filter(sub => sub.tipoPagamento === 'variabile');
+    const variableMonthlyTotal = variableSubscriptions.reduce((total, sub) => {
+      return total + calcolaCostoMensile(sub);
+    }, 0);
+    
+    setTotals({
+      fixed: {
+        monthly: parseFloat(fixedMonthlyTotal.toFixed(2)),
+        yearly: parseFloat((fixedMonthlyTotal * 12).toFixed(2))
+      },
+      variable: {
+        monthly: parseFloat(variableMonthlyTotal.toFixed(2)),
+        yearly: parseFloat((variableMonthlyTotal * 12).toFixed(2))
+      }
+    });
     setIsLoading(false);
   }, [subscriptions]);
 
-  const calcolaCostoMensile = () => {
-    return subscriptions.reduce((totale, sub) => {
-      const costo = parseFloat(sub.prezzo) || 0;
-      switch (sub.frequenza) {
-        case 'settimanale':
-          return totale + (costo * 4.33);
-        case 'mensile':
-          return totale + costo;
-        case 'trimestrale':
-          return totale + (costo / 3);
-        case 'semestrale':
-          return totale + (costo / 6);
-        case 'annuale':
-          return totale + (costo / 12);
-        default:
-          return totale + costo;
-      }
-    }, 0).toFixed(2);
+  // Funzione per calcolare il costo mensile di un singolo abbonamento
+  const calcolaCostoMensile = (subscription) => {
+    const totalPeople = (subscription.persone?.length || 0) + 1;
+    const prezzo = parseFloat(subscription.prezzo) / totalPeople;
+    if (subscription.frequenza === 'annuale') {
+      return prezzo / 12;
+    }
+    return prezzo;
+  };
+
+  // Funzione per ottenere il totale mensile
+  const getTotaleMensile = () => {
+    return (totals.fixed.monthly + totals.variable.monthly).toFixed(2);
   };
 
   return (
@@ -64,9 +93,28 @@ function Dashboard() {
               fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
               fontWeight: '400',
               lineHeight: '1.4'
-              }}>
+            }}>
               Panoramica dei tuoi abbonamenti e spese
             </p>
+          </div>
+
+          {/* Messaggio di Benvenuto */}
+          <div style={{
+            marginBottom: '2rem',
+            textAlign: 'left'
+          }}>
+            <h2 style={{
+              fontSize: '2.5rem',
+              fontWeight: '600',
+              margin: 0,
+              fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif'
+            }}>
+              Benvenuto, <span style={{
+                background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent'
+              }}>Giuseppe</span>
+            </h2>
           </div>
 
           {/* Stats Cards */}
@@ -76,6 +124,7 @@ function Dashboard() {
             gap: '1.5rem',
             marginBottom: '2rem'
           }}>
+            {/* Card Abbonamenti Attivi */}
             <div style={{
               background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(88, 86, 214, 0.1) 100%)',
               borderRadius: '16px',
@@ -89,93 +138,54 @@ function Dashboard() {
                 color: '#1d1d1f',
                 marginBottom: '0.25rem'
               }}>
-                {subscriptions.length}
+                {subscriptions.filter(sub => sub.isActive).length}
               </div>
               <div style={{ fontSize: '0.9375rem', color: '#86868b' }}>
                 Abbonamenti attivi
               </div>
             </div>
 
+            {/* Card Abbonamenti Totali */}
             <div style={{
               background: 'linear-gradient(135deg, rgba(52, 199, 89, 0.1) 0%, rgba(48, 209, 88, 0.1) 100%)',
               borderRadius: '16px',
               padding: '1.5rem',
               border: '1px solid rgba(52, 199, 89, 0.2)'
             }}>
-              <div style={{ fontSize: '1.8rem', marginBottom: '0.5rem' }}>💰</div>
+              <div style={{ fontSize: '1.8rem', marginBottom: '0.5rem' }}>📝</div>
               <div style={{
                 fontSize: '2rem',
                 fontWeight: '700',
                 color: '#34C759',
                 marginBottom: '0.25rem'
               }}>
-                €{(calcolaCostoMensile() * 12).toFixed(2)}
+                {subscriptions.length}
               </div>
               <div style={{ fontSize: '0.9375rem', color: '#86868b' }}>
-                Spesa annuale stimata
+                Abbonamenti totali
               </div>
             </div>
 
+            {/* Card Spesa Mensile */}
             <div style={{
               background: 'linear-gradient(135deg, rgba(255, 149, 0, 0.1) 0%, rgba(255, 123, 0, 0.1) 100%)',
               borderRadius: '16px',
               padding: '1.5rem',
               border: '1px solid rgba(255, 149, 0, 0.2)'
             }}>
-              <div style={{ fontSize: '1.8rem', marginBottom: '0.5rem' }}>⏰</div>
+              <div style={{ fontSize: '1.8rem', marginBottom: '0.5rem' }}>💰</div>
               <div style={{
                 fontSize: '2rem',
                 fontWeight: '700',
                 color: '#FF9500',
                 marginBottom: '0.25rem'
               }}>
-                {subscriptions.filter(sub => {
-                  const today = new Date();
-                  const scadenza = new Date(sub.dataInizio);
-                  const diffTime = scadenza - today;
-                  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                  return diffDays <= 7 && diffDays >= 0;
-                }).length}
+                €{getTotaleMensile()}
               </div>
               <div style={{ fontSize: '0.9375rem', color: '#86868b' }}>
-                In scadenza questa settimana
+                Spesa mensile totale
               </div>
             </div>
-          </div>
-
-          {/* Aggiungi Abbonamento Button */}
-          <div style={{
-            background: 'white',
-            borderRadius: '16px',
-            padding: '2rem',
-            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.05)',
-            border: '1px solid rgba(0, 0, 0, 0.05)',
-            marginBottom: '2rem',
-            display: 'flex',
-            justifyContent: 'center'
-          }}>
-            <button
-              onClick={() => navigate('/aggiungi-abbonamento')}
-              style={{
-                background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
-                color: 'white',
-                padding: '1rem 2rem',
-                borderRadius: '12px',
-                border: 'none',
-                fontSize: '1rem',
-                fontWeight: '600',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem'
-              }}
-              onMouseOver={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #0051D5 0%, #4644B8 100%)'}
-              onMouseOut={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)'}
-            >
-              <span style={{ fontSize: '1.2em' }}>+</span>
-              Aggiungi nuovo abbonamento
-            </button>
           </div>
 
           {/* Lista abbonamenti recenti */}
@@ -186,14 +196,43 @@ function Dashboard() {
             boxShadow: '0 4px 16px rgba(0, 0, 0, 0.05)',
             border: '1px solid rgba(0, 0, 0, 0.05)'
           }}>
-            <h2 style={{
-              fontSize: '1.5rem',
-              fontWeight: '600',
-              color: '#1d1d1f',
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
               marginBottom: '1.5rem'
             }}>
-              Abbonamenti recenti
-            </h2>
+              <h2 style={{
+                fontSize: '1.5rem',
+                fontWeight: '600',
+                color: '#1d1d1f',
+                margin: 0
+              }}>
+                Abbonamenti recenti
+              </h2>
+              <button
+                onClick={() => navigate('/aggiungi-abbonamento')}
+                style={{
+                  background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
+                  color: 'white',
+                  padding: '0.75rem 1.5rem',
+                  borderRadius: '12px',
+                  border: 'none',
+                  fontSize: '0.9375rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #0051D5 0%, #4644B8 100%)'}
+                onMouseOut={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)'}
+              >
+                <span style={{ fontSize: '1.2em' }}>+</span>
+                Aggiungi nuovo
+              </button>
+            </div>
             <div style={{
               display: 'grid',
               gap: '1rem'
