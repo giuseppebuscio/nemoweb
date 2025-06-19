@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { useSubscriptions } from '../context/SubscriptionContext';
-import { BsGrid, BsList } from 'react-icons/bs';
+import { BsGrid, BsList, BsSortAlphaDown, BsSortAlphaUp, BsCurrencyEuro, BsCurrencyExchange } from 'react-icons/bs';
 import './Abbonamenti.css';
 
 function Abbonamenti() {
@@ -11,6 +11,38 @@ function Abbonamenti() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [subscriptionToDelete, setSubscriptionToDelete] = useState(null);
   const [viewMode, setViewMode] = useState('grid'); // 'grid' o 'list'
+  const [sortBy, setSortBy] = useState('nome'); // 'nome' o 'prezzo'
+  const [sortDirection, setSortDirection] = useState('asc'); // 'asc' o 'desc'
+
+  // Funzione per gestire il click sui pulsanti di ordinamento
+  const handleSortClick = (criterion) => {
+    if (sortBy === criterion) {
+      // Se clicco sullo stesso criterio, cambio direzione
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      // Se clicco su un criterio diverso, imposto quello e direzione crescente
+      setSortBy(criterion);
+      setSortDirection('asc');
+    }
+  };
+
+  // Funzione per ordinare gli abbonamenti
+  const getSortedSubscriptions = () => {
+    const sorted = [...subscriptions];
+    sorted.sort((a, b) => {
+      let comparison = 0;
+      
+      if (sortBy === 'nome') {
+        comparison = a.nome.localeCompare(b.nome, 'it', { sensitivity: 'base' });
+      } else if (sortBy === 'prezzo') {
+        comparison = parseFloat(a.prezzo) - parseFloat(b.prezzo);
+      }
+      
+      // Applica la direzione dell'ordinamento
+      return sortDirection === 'asc' ? comparison : -comparison;
+    });
+    return sorted;
+  };
 
   // Funzione per verificare se l'abbonamento è in pari
   const isInPari = (subscription) => {
@@ -217,89 +249,189 @@ function Abbonamenti() {
               {/* Controlli visualizzazione */}
               <div style={{
                 display: 'flex',
-                background: 'rgba(255, 255, 255, 0.8)',
-                backdropFilter: 'blur(20px)',
-                WebkitBackdropFilter: 'blur(20px)',
-                borderRadius: '12px',
-                padding: '4px',
-                border: '1px solid rgba(255, 255, 255, 0.3)',
-                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)'
+                gap: '1rem',
+                alignItems: 'center'
               }}>
-                <button
-                  onClick={() => setViewMode('grid')}
-                  style={{
-                    padding: '8px 16px',
-                    fontSize: '0.9rem',
-                    fontWeight: '600',
-                    border: 'none',
-                    borderRadius: '8px',
-                    background: viewMode === 'grid' 
-                      ? 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)' 
-                      : 'transparent',
-                    color: viewMode === 'grid' ? 'white' : '#86868b',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    boxShadow: viewMode === 'grid' ? '0 2px 8px rgba(0, 122, 255, 0.25)' : 'none'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (viewMode !== 'grid') {
-                      e.target.style.color = '#007AFF';
-                      e.target.style.background = 'rgba(0, 122, 255, 0.1)';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (viewMode !== 'grid') {
-                      e.target.style.color = '#86868b';
-                      e.target.style.background = 'transparent';
-                    }
-                  }}
-                >
-                  <span style={{ fontSize: '1rem' }}>⊞</span>
-                  Riquadri
-                </button>
-                <button
-                  onClick={() => setViewMode('list')}
-                  style={{
-                    padding: '8px 16px',
-                    fontSize: '0.9rem',
-                    fontWeight: '600',
-                    border: 'none',
-                    borderRadius: '8px',
-                    background: viewMode === 'list' 
-                      ? 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)' 
-                      : 'transparent',
-                    color: viewMode === 'list' ? 'white' : '#86868b',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    boxShadow: viewMode === 'list' ? '0 2px 8px rgba(0, 122, 255, 0.25)' : 'none'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (viewMode !== 'list') {
-                      e.target.style.color = '#007AFF';
-                      e.target.style.background = 'rgba(0, 122, 255, 0.1)';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (viewMode !== 'list') {
-                      e.target.style.color = '#86868b';
-                      e.target.style.background = 'transparent';
-                    }
-                  }}
-                >
-                  <span style={{ 
-                    fontSize: '1rem',
-                    color: 'inherit'
-                  }}>☰</span>
-                  Elenco
-                </button>
+                {/* Selettore ordinamento */}
+                <div style={{
+                  display: 'flex',
+                  background: 'rgba(255, 255, 255, 0.8)',
+                  backdropFilter: 'blur(20px)',
+                  WebkitBackdropFilter: 'blur(20px)',
+                  borderRadius: '12px',
+                  padding: '4px',
+                  border: '1px solid rgba(255, 255, 255, 0.3)',
+                  boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)'
+                }}>
+                  <button
+                    onClick={() => handleSortClick('nome')}
+                    style={{
+                      padding: '8px 16px',
+                      fontSize: '0.9rem',
+                      fontWeight: '600',
+                      border: 'none',
+                      borderRadius: '8px',
+                      background: sortBy === 'nome' 
+                        ? 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)' 
+                        : 'transparent',
+                      color: sortBy === 'nome' ? 'white' : '#86868b',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      boxShadow: sortBy === 'nome' ? '0 2px 8px rgba(0, 122, 255, 0.25)' : 'none'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (sortBy !== 'nome') {
+                        e.target.style.color = '#007AFF';
+                        e.target.style.background = 'rgba(0, 122, 255, 0.1)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (sortBy !== 'nome') {
+                        e.target.style.color = '#86868b';
+                        e.target.style.background = 'transparent';
+                      }
+                    }}
+                  >
+                    {sortBy === 'nome' && sortDirection === 'asc' ? (
+                      <BsSortAlphaUp size={16} />
+                    ) : (
+                      <BsSortAlphaDown size={16} />
+                    )}
+                    Nome
+                  </button>
+                  <button
+                    onClick={() => handleSortClick('prezzo')}
+                    style={{
+                      padding: '8px 16px',
+                      fontSize: '0.9rem',
+                      fontWeight: '600',
+                      border: 'none',
+                      borderRadius: '8px',
+                      background: sortBy === 'prezzo' 
+                        ? 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)' 
+                        : 'transparent',
+                      color: sortBy === 'prezzo' ? 'white' : '#86868b',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      boxShadow: sortBy === 'prezzo' ? '0 2px 8px rgba(0, 122, 255, 0.25)' : 'none'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (sortBy !== 'prezzo') {
+                        e.target.style.color = '#007AFF';
+                        e.target.style.background = 'rgba(0, 122, 255, 0.1)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (sortBy !== 'prezzo') {
+                        e.target.style.color = '#86868b';
+                        e.target.style.background = 'transparent';
+                      }
+                    }}
+                  >
+                    {sortBy === 'prezzo' && sortDirection === 'asc' ? (
+                      <BsCurrencyExchange size={16} />
+                    ) : (
+                      <BsCurrencyEuro size={16} />
+                    )}
+                    Costo
+                  </button>
+                </div>
+
+                {/* Selettore visualizzazione */}
+                <div style={{
+                  display: 'flex',
+                  background: 'rgba(255, 255, 255, 0.8)',
+                  backdropFilter: 'blur(20px)',
+                  WebkitBackdropFilter: 'blur(20px)',
+                  borderRadius: '12px',
+                  padding: '4px',
+                  border: '1px solid rgba(255, 255, 255, 0.3)',
+                  boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)'
+                }}>
+                  <button
+                    onClick={() => setViewMode('grid')}
+                    style={{
+                      padding: '8px 16px',
+                      fontSize: '0.9rem',
+                      fontWeight: '600',
+                      border: 'none',
+                      borderRadius: '8px',
+                      background: viewMode === 'grid' 
+                        ? 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)' 
+                        : 'transparent',
+                      color: viewMode === 'grid' ? 'white' : '#86868b',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      boxShadow: viewMode === 'grid' ? '0 2px 8px rgba(0, 122, 255, 0.25)' : 'none'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (viewMode !== 'grid') {
+                        e.target.style.color = '#007AFF';
+                        e.target.style.background = 'rgba(0, 122, 255, 0.1)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (viewMode !== 'grid') {
+                        e.target.style.color = '#86868b';
+                        e.target.style.background = 'transparent';
+                      }
+                    }}
+                  >
+                    <span style={{ fontSize: '1rem' }}>⊞</span>
+                    Riquadri
+                  </button>
+                  <button
+                    onClick={() => setViewMode('list')}
+                    style={{
+                      padding: '8px 16px',
+                      fontSize: '0.9rem',
+                      fontWeight: '600',
+                      border: 'none',
+                      borderRadius: '8px',
+                      background: viewMode === 'list' 
+                        ? 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)' 
+                        : 'transparent',
+                      color: viewMode === 'list' ? 'white' : '#86868b',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      boxShadow: viewMode === 'list' ? '0 2px 8px rgba(0, 122, 255, 0.25)' : 'none'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (viewMode !== 'list') {
+                        e.target.style.color = '#007AFF';
+                        e.target.style.background = 'rgba(0, 122, 255, 0.1)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (viewMode !== 'list') {
+                        e.target.style.color = '#86868b';
+                        e.target.style.background = 'transparent';
+                      }
+                    }}
+                  >
+                    <span style={{ 
+                      fontSize: '1rem',
+                      color: 'inherit'
+                    }}>☰</span>
+                    Elenco
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -342,7 +474,7 @@ function Abbonamenti() {
                   </p>
                 </div>
               ) : (
-                subscriptions.map((subscription) => (
+                getSortedSubscriptions().map((subscription) => (
                   <div key={subscription.id} style={{
                     opacity: subscription.isActive ? 1 : 0.6,
                     position: 'relative',

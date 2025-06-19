@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { IoChevronBack } from 'react-icons/io5';
 
-function Sidebar({ isCollapsed, onToggle }) {
+function Sidebar({ isCollapsed, onToggle, isMobile = false }) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -18,6 +18,10 @@ function Sidebar({ isCollapsed, onToggle }) {
     if (location.pathname !== path) {
       navigate(path);
     }
+    // Chiudi il menu mobile dopo la navigazione
+    if (isMobile) {
+      onToggle();
+    }
   };
 
   return (
@@ -28,15 +32,15 @@ function Sidebar({ isCollapsed, onToggle }) {
       borderRight: '1px solid rgba(0, 0, 0, 0.1)',
       display: 'flex',
       flexDirection: 'column',
-      padding: '2rem 0',
+      padding: isMobile ? '1rem 0' : '2rem 0',
       fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif',
       transition: 'width 0.3s ease',
       overflow: 'hidden',
-      position: 'fixed',
+      position: isMobile ? 'relative' : 'fixed',
       left: 0,
       top: 0,
       zIndex: 1000,
-      boxShadow: '2px 0 10px rgba(0, 0, 0, 0.05)'
+      boxShadow: isMobile ? 'none' : '2px 0 10px rgba(0, 0, 0, 0.05)'
     }}>
       {/* Logo section */}
       <div style={{
@@ -47,35 +51,37 @@ function Sidebar({ isCollapsed, onToggle }) {
         padding: isCollapsed ? '0 1rem' : '0 2rem',
         marginBottom: '2rem'
       }}>
-        <button
-          onClick={onToggle}
-          style={{
-            background: 'none',
-            border: 'none',
-            padding: '8px',
-            cursor: 'pointer',
-            color: '#86868b',
-            fontSize: '1.25rem',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderRadius: '8px',
-            transition: 'all 0.2s ease',
-            alignSelf: isCollapsed ? 'center' : 'flex-end',
-            marginBottom: '8px',
-            transform: isCollapsed ? 'rotate(180deg)' : 'none'
-          }}
-          onMouseEnter={(e) => {
-            e.target.style.background = 'rgba(0, 0, 0, 0.05)';
-            e.target.style.color = '#1d1d1f';
-          }}
-          onMouseLeave={(e) => {
-            e.target.style.background = 'none';
-            e.target.style.color = '#86868b';
-          }}
-        >
-          <IoChevronBack size={20} />
-        </button>
+        {!isMobile && (
+          <button
+            onClick={onToggle}
+            style={{
+              background: 'none',
+              border: 'none',
+              padding: '8px',
+              cursor: 'pointer',
+              color: '#86868b',
+              fontSize: '1.25rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderRadius: '8px',
+              transition: 'all 0.2s ease',
+              alignSelf: isCollapsed ? 'center' : 'flex-end',
+              marginBottom: '8px',
+              transform: isCollapsed ? 'rotate(180deg)' : 'none'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.background = 'rgba(0, 0, 0, 0.05)';
+              e.target.style.color = '#1d1d1f';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.background = 'none';
+              e.target.style.color = '#86868b';
+            }}
+          >
+            <IoChevronBack size={20} />
+          </button>
+        )}
         <div style={{
           display: 'flex',
           alignItems: 'center',

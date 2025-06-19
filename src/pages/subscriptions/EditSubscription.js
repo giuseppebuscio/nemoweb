@@ -23,6 +23,7 @@ function EditSubscription() {
     },
     persone: [],
     prezzo: '',
+    numeroRate: '',
     logo: null,
     tipoPagamento: 'fisso' // 'fisso' o 'variabile'
   });
@@ -49,6 +50,7 @@ function EditSubscription() {
             },
             persone: data.persone || [],
             prezzo: data.prezzo || '',
+            numeroRate: data.numeroRate || '',
             logo: data.logo || null,
             tipoPagamento: data.tipoPagamento || 'fisso'
           });
@@ -894,6 +896,61 @@ function EditSubscription() {
                     </div>
                   </div>
                 )}
+              </div>
+
+              {/* Numero Totale di Rate */}
+              <div style={{ marginBottom: '2rem' }}>
+                <label style={{
+                  display: 'block',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  color: '#1d1d1f',
+                  marginBottom: '0.75rem',
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                }}>
+                  Numero totale di rate
+                </label>
+                <input
+                  type="number"
+                  name="numeroRate"
+                  value={formData.numeroRate}
+                  onChange={handleInputChange}
+                  placeholder="es. 12"
+                  min="1"
+                  style={{
+                    width: '100%',
+                    padding: '1rem',
+                    fontSize: '1rem',
+                    border: '2px solid #d2d2d7',
+                    borderRadius: '12px',
+                    background: 'rgba(255, 255, 255, 0.8)',
+                    color: '#1d1d1f',
+                    transition: 'all 0.3s ease',
+                    outline: 'none',
+                    boxSizing: 'border-box',
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.borderColor = '#007AFF';
+                    e.target.style.background = 'rgba(255, 255, 255, 0.95)';
+                    e.target.style.boxShadow = '0 0 0 4px rgba(0, 122, 255, 0.1)';
+                    e.target.style.transform = 'translateY(-1px)';
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.borderColor = '#d2d2d7';
+                    e.target.style.background = 'rgba(255, 255, 255, 0.8)';
+                    e.target.style.boxShadow = 'none';
+                    e.target.style.transform = 'translateY(0)';
+                  }}
+                />
+                <p style={{
+                  fontSize: '0.875rem',
+                  color: '#86868b',
+                  margin: '0.75rem 0 0 0',
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                }}>
+                  Inserisci il numero totale di rate previste per questo abbonamento
+                </p>
               </div>
 
               {/* Logo */}
