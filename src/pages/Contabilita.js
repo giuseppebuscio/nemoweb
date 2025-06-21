@@ -16,7 +16,11 @@ function Contabilita() {
       yearly: 0
     }
   });
+  const [currentPageFixed, setCurrentPageFixed] = useState(0);
+  const [currentPageVariable, setCurrentPageVariable] = useState(0);
   const navigate = useNavigate();
+
+  const ITEMS_PER_PAGE = 5;
 
   useEffect(() => {
     const activeSubscriptions = subscriptions.filter(sub => sub.isActive);
@@ -90,77 +94,72 @@ function Contabilita() {
     return costoMensile * 12;
   };
 
-  const renderSubscriptionSection = (title, subscriptions, totals) => (
+  const renderSubscriptionSection = (title, subscriptions, totals, currentPage, setCurrentPage) => {
+    const totalPages = Math.ceil(subscriptions.length / ITEMS_PER_PAGE);
+    const startIndex = currentPage * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    const currentSubscriptions = subscriptions.slice(startIndex, endIndex);
+
+    return (
     <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '2rem',
-      background: 'rgba(255, 255, 255, 0.8)',
+        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%)',
       backdropFilter: 'blur(20px)',
       WebkitBackdropFilter: 'blur(20px)',
-      borderRadius: '24px',
-      padding: '2rem',
-      border: '1px solid rgba(0, 122, 255, 0.1)',
-      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.05)',
-      marginBottom: '2rem'
+      borderRadius: '20px',
+        padding: '1.5rem',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.05)',
+        border: '1px solid rgba(255, 255, 255, 0.3)',
+        marginBottom: '1.5rem',
+        animation: 'fadeInUp 0.8s ease-out 0.4s both'
     }}>
       <div style={{
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-      }}>
-        <h3 style={{
-          fontSize: '1.5rem',
-          fontWeight: '600',
-          color: '#1d1d1f',
-          margin: 0,
-          background: 'linear-gradient(135deg, #1d1d1f 0%, #86868b 100%)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent'
-        }}>{title}</h3>
-
-        
-      </div>
-      <div style={{
-          background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(88, 86, 214, 0.1) 100%)',
-          borderRadius: '16px',
-          padding: '1.5rem',
-          border: '1px solid rgba(0, 122, 255, 0.2)',
-          minWidth: '200px'
+          marginBottom: '1.5rem',
+          flexWrap: 'wrap',
+          gap: '0.75rem'
         }}>
-          <h4 style={{
-            fontSize: '0.9375rem',
-            color: '#007AFF',
-            marginBottom: '0.5rem',
-            fontWeight: '600',
-            textTransform: 'uppercase',
-            letterSpacing: '0.02em'
-          }}>Spesa Mensile</h4>
-          <p style={{
-            fontSize: '2rem',
-            color: '#1d1d1f',
+          <h3 style={{
+            fontSize: 'clamp(1.25rem, 4vw, 1.75rem)',
             fontWeight: '700',
+            color: '#1d1d1f',
             margin: 0,
-            letterSpacing: '-0.02em'
-          }}>€{totals.monthly}</p>
+            letterSpacing: '-0.01em'
+          }}>{title}</h3>
+          
+          {totalPages > 1 && (
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
+              color: '#86868b',
+              fontWeight: '500'
+            }}>
+              Pagina {currentPage + 1} di {totalPages}
+            </div>
+          )}
         </div>
+
       {subscriptions.length === 0 ? (
         <div style={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '3rem',
-          background: 'rgba(0, 0, 0, 0.02)',
+          padding: '2rem',
+            background: 'rgba(255, 255, 255, 0.6)',
           borderRadius: '16px',
-          gap: '1rem'
+            gap: '0.75rem',
+            border: '1px solid rgba(0, 0, 0, 0.05)'
         }}>
           <span style={{
-            fontSize: '2.5rem',
+            fontSize: 'clamp(2rem, 6vw, 2.5rem)',
             color: '#86868b'
           }}>📱</span>
           <p style={{
-            fontSize: '1.125rem',
+            fontSize: 'clamp(0.875rem, 3vw, 1.125rem)',
             color: '#86868b',
             margin: 0,
             textAlign: 'center',
@@ -170,62 +169,117 @@ function Contabilita() {
           </p>
         </div>
       ) : (
+          <>
         <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1rem'
+              display: 'grid',
+          gap: '0.75rem'
         }}>
-          {subscriptions.map((subscription) => (
+              {currentSubscriptions.map((subscription, index) => (
             <div
               key={subscription.id}
               style={{
-                background: 'white',
+                    background: 'rgba(255, 255, 255, 0.6)',
                 borderRadius: '16px',
-                padding: '1.25rem',
-                boxShadow: '0 4px 16px rgba(0, 0, 0, 0.05)',
-                border: '1px solid rgba(0, 122, 255, 0.1)',
-                transition: 'all 0.3s ease',
+                    padding: '0.875rem',
+                    border: '1px solid rgba(0, 0, 0, 0.05)',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '1rem'
-              }}
-            >
+                    gap: '0.75rem',
+                    animation: `slideInRight 0.5s ease-out ${0.6 + index * 0.1}s both`,
+                    flexWrap: 'wrap'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
+                    e.currentTarget.style.transform = 'translateX(8px) scale(1.02)';
+                    e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.1)';
+                    e.currentTarget.style.borderColor = 'rgba(0, 122, 255, 0.2)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.6)';
+                    e.currentTarget.style.transform = 'translateX(0) scale(1)';
+                    e.currentTarget.style.boxShadow = 'none';
+                    e.currentTarget.style.borderColor = 'rgba(0, 0, 0, 0.05)';
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <div style={{
+                      width: '40px',
+                      height: '40px',
+                      background: subscription.logo ? 'none' : 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
+                      borderRadius: '10px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '1.25rem',
+                      color: 'white',
+                      boxShadow: '0 4px 12px rgba(0, 122, 255, 0.3)',
+                      overflow: 'hidden',
+                      flexShrink: 0
+                    }}>
+                      {subscription.logo ? (
+                        <img 
+                          src={subscription.logo} 
+                          alt={`Logo ${subscription.nome}`}
+                          style={{
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover'
+                          }}
+                        />
+                      ) : (
+                        <span>💳</span>
+                      )}
+                    </div>
               <div style={{
                 flex: '1',
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '0.5rem'
+                gap: '0.25rem',
+                minWidth: 0
               }}>
                 <h4 style={{
-                  fontSize: '1.25rem',
+                        fontSize: 'clamp(0.875rem, 3vw, 1.125rem)',
                   fontWeight: '600',
                   color: '#1d1d1f',
-                  margin: 0
-                }}>
-                  {subscription.nome}
+                        margin: 0,
+                        maxWidth: '200px',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        whiteSpace: 'nowrap'
+                      }}>
+                        {subscription.nome.length > 25 ? `${subscription.nome.substring(0, 25)}...` : subscription.nome}
                 </h4>
+                    </div>
               </div>
 
               <div style={{
-                display: 'flex',
-                gap: '1rem',
-                flex: '3'
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
+                    gap: '0.5rem',
+                    flex: '1',
+                    alignItems: 'stretch',
+                    justifyContent: 'flex-end',
+                    minWidth: 0
               }}>
                 <div style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  padding: '0.75rem',
-                  background: 'rgba(0, 0, 0, 0.02)',
-                  borderRadius: '12px',
-                  flex: '1'
-                }}>
+                      justifyContent: 'flex-start',
+                      gap: '0.25rem',
+                  padding: '0.625rem',
+                      background: 'rgba(255, 255, 255, 0.8)',
+                  borderRadius: '10px',
+                      border: '1px solid rgba(0, 0, 0, 0.05)',
+                      minHeight: '50px'
+                }} className="costo-abbonamento">
                   <span style={{
-                    fontSize: '0.9375rem',
-                    color: '#86868b'
+                        fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
+                        color: '#86868b',
+                        fontWeight: '500'
                   }}>Costo abbonamento</span>
                   <span style={{
-                    fontSize: '1rem',
+                    fontSize: 'clamp(0.875rem, 3vw, 1rem)',
                     fontWeight: '600',
                     color: '#1d1d1f'
                   }}>€{(parseFloat(subscription.prezzo) / ((subscription.persone?.length || 0) + 1)).toFixed(2)}</span>
@@ -234,19 +288,21 @@ function Contabilita() {
                 <div style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  padding: '0.75rem',
-                  background: 'rgba(0, 122, 255, 0.05)',
-                  borderRadius: '12px',
-                  border: '1px solid rgba(0, 122, 255, 0.1)',
-                  flex: '1'
-                }}>
+                      justifyContent: 'flex-start',
+                      gap: '0.25rem',
+                  padding: '0.625rem',
+                      background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(88, 86, 214, 0.1) 100%)',
+                  borderRadius: '10px',
+                      border: '1px solid rgba(0, 122, 255, 0.2)',
+                      minHeight: '50px'
+                }} className="costo-mensile">
                   <span style={{
-                    fontSize: '0.9375rem',
-                    color: '#007AFF'
+                        fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
+                        color: '#007AFF',
+                        fontWeight: '500'
                   }}>Costo mensile</span>
                   <span style={{
-                    fontSize: '1rem',
+                    fontSize: 'clamp(0.875rem, 3vw, 1rem)',
                     fontWeight: '600',
                     color: '#007AFF'
                   }}>€{calcolaCostoMensile(subscription).toFixed(2)}</span>
@@ -255,18 +311,21 @@ function Contabilita() {
                 <div style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  padding: '0.75rem',
-                  background: 'rgba(0, 0, 0, 0.02)',
-                  borderRadius: '12px',
-                  flex: '1'
-                }}>
+                      justifyContent: 'flex-start',
+                      gap: '0.25rem',
+                  padding: '0.625rem',
+                      background: 'rgba(255, 255, 255, 0.8)',
+                  borderRadius: '10px',
+                      border: '1px solid rgba(0, 0, 0, 0.05)',
+                      minHeight: '50px'
+                }} className="costo-annuale">
                   <span style={{
-                    fontSize: '0.9375rem',
-                    color: '#86868b'
+                        fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
+                        color: '#86868b',
+                        fontWeight: '500'
                   }}>Costo annuale</span>
                   <span style={{
-                    fontSize: '1rem',
+                    fontSize: 'clamp(0.875rem, 3vw, 1rem)',
                     fontWeight: '600',
                     color: '#1d1d1f'
                   }}>€{calcolaCostoAnnuale(subscription).toFixed(2)}</span>
@@ -275,21 +334,163 @@ function Contabilita() {
             </div>
           ))}
         </div>
+
+            {totalPages > 1 && (
+              <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: '0.75rem',
+                marginTop: '1.5rem',
+                paddingTop: '1.5rem',
+                borderTop: '1px solid rgba(0, 0, 0, 0.05)',
+                flexWrap: 'wrap'
+              }}>
+                <button
+                  onClick={() => setCurrentPage(Math.max(0, currentPage - 1))}
+                  disabled={currentPage === 0}
+                  style={{
+                    background: currentPage === 0 
+                      ? 'rgba(0, 0, 0, 0.05)' 
+                      : 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
+                    color: currentPage === 0 ? '#86868b' : 'white',
+                    border: 'none',
+                    borderRadius: '10px',
+                    padding: '0.625rem 1.25rem',
+                    fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
+                    fontWeight: '600',
+                    cursor: currentPage === 0 ? 'not-allowed' : 'pointer',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    boxShadow: currentPage === 0 
+                      ? 'none' 
+                      : '0 4px 12px rgba(0, 122, 255, 0.3)',
+                    opacity: currentPage === 0 ? 0.5 : 1
+                  }}
+                  onMouseEnter={(e) => {
+                    if (currentPage !== 0) {
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      e.currentTarget.style.boxShadow = '0 6px 16px rgba(0, 122, 255, 0.4)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (currentPage !== 0) {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 122, 255, 0.3)';
+                    }
+                  }}
+                >
+                  ← Precedente
+                </button>
+
+                <div style={{
+                  display: 'flex',
+                  gap: '0.375rem',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                  justifyContent: 'center'
+                }}>
+                  {Array.from({ length: totalPages }, (_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setCurrentPage(i)}
+                      style={{
+                        width: '28px',
+                        height: '28px',
+                        borderRadius: '6px',
+                        border: 'none',
+                        background: i === currentPage 
+                          ? 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)'
+                          : 'rgba(255, 255, 255, 0.8)',
+                        color: i === currentPage ? 'white' : '#86868b',
+                        fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        boxShadow: i === currentPage 
+                          ? '0 2px 8px rgba(0, 122, 255, 0.3)'
+                          : 'none'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (i !== currentPage) {
+                          e.currentTarget.style.background = 'rgba(0, 122, 255, 0.1)';
+                          e.currentTarget.style.color = '#007AFF';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (i !== currentPage) {
+                          e.currentTarget.style.background = 'rgba(255, 255, 255, 0.8)';
+                          e.currentTarget.style.color = '#86868b';
+                        }
+                      }}
+                    >
+                      {i + 1}
+                    </button>
+                  ))}
+                </div>
+
+                <button
+                  onClick={() => setCurrentPage(Math.min(totalPages - 1, currentPage + 1))}
+                  disabled={currentPage === totalPages - 1}
+                  style={{
+                    background: currentPage === totalPages - 1 
+                      ? 'rgba(0, 0, 0, 0.05)' 
+                      : 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
+                    color: currentPage === totalPages - 1 ? '#86868b' : 'white',
+                    border: 'none',
+                    borderRadius: '10px',
+                    padding: '0.625rem 1.25rem',
+                    fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
+                    fontWeight: '600',
+                    cursor: currentPage === totalPages - 1 ? 'not-allowed' : 'pointer',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    boxShadow: currentPage === totalPages - 1 
+                      ? 'none' 
+                      : '0 4px 12px rgba(0, 122, 255, 0.3)',
+                    opacity: currentPage === totalPages - 1 ? 0.5 : 1
+                  }}
+                  onMouseEnter={(e) => {
+                    if (currentPage !== totalPages - 1) {
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      e.currentTarget.style.boxShadow = '0 6px 16px rgba(0, 122, 255, 0.4)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (currentPage !== totalPages - 1) {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 122, 255, 0.3)';
+                    }
+                  }}
+                >
+                  Successivo →
+                </button>
+              </div>
+            )}
+          </>
       )}
     </div>
   );
+  };
 
   return (
     <Layout>
       <div style={{
-        padding: '2rem',
-        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif'
+        padding: '1rem',
+        background: 'linear-gradient(135deg, #fafafa 0%, #f5f5f7 100%)',
+        minHeight: '100vh',
+        width: '100%',
+        boxSizing: 'border-box'
       }}>
-        <div style={{ marginBottom: '2rem' }}>
+        <div style={{ width: '100%', maxWidth: '100%' }}>
+          {/* Header */}
+          <div style={{
+            marginBottom: '2rem',
+            textAlign: 'left'
+          }}>
           <h1 style={{
-            fontSize: '2.75rem',
+            fontSize: 'clamp(1.75rem, 5vw, 2.75rem)',
             fontWeight: '700',
-            margin: '0 0 1rem 0',
+              color: '#1d1d1f',
+            margin: '0 0 0.75rem 0',
             letterSpacing: '-0.025em',
             fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
             background: 'linear-gradient(135deg, #1d1d1f 0%, #86868b 100%)',
@@ -299,18 +500,195 @@ function Contabilita() {
             Contabilità
           </h1>
           <p style={{
-            fontSize: '1.125rem',
+            fontSize: 'clamp(0.875rem, 3vw, 1.125rem)',
             color: '#86868b',
             margin: 0,
             fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
             fontWeight: '400',
             lineHeight: '1.4'
           }}>
-            Monitora tutti i pagamenti
+              Gestisci e monitora le tue spese per abbonamenti
           </p>
         </div>
 
-        {isLoading ? (
+          {/* Stats Cards con design migliorato */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '1.5rem',
+            marginBottom: '2rem',
+            animation: 'fadeInUp 0.8s ease-out 0.2s both'
+          }}>
+            {/* Card Spese Fisse */}
+            <div style={{
+              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%)',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              borderRadius: '20px',
+              padding: '1.5rem',
+              border: '1px solid rgba(0, 122, 255, 0.15)',
+              boxShadow: '0 8px 32px rgba(0, 122, 255, 0.1), 0 2px 8px rgba(0, 0, 0, 0.05)',
+              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+              position: 'relative',
+              overflow: 'hidden'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
+              e.currentTarget.style.boxShadow = '0 16px 48px rgba(0, 122, 255, 0.15), 0 4px 16px rgba(0, 0, 0, 0.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0) scale(1)';
+              e.currentTarget.style.boxShadow = '0 8px 32px rgba(0, 122, 255, 0.1), 0 2px 8px rgba(0, 0, 0, 0.05)';
+            }}
+            >
+              <div style={{
+                position: 'absolute',
+                top: '-15px',
+                right: '-15px',
+                width: '60px',
+                height: '60px',
+                background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(88, 86, 214, 0.1) 100%)',
+                borderRadius: '50%',
+                opacity: 0.6
+              }} />
+              <div style={{ 
+                fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', 
+                marginBottom: '0.75rem',
+                filter: 'drop-shadow(0 2px 4px rgba(0, 122, 255, 0.2))'
+              }}>💰</div>
+              <div style={{
+                fontSize: 'clamp(1.75rem, 5vw, 2.5rem)',
+                fontWeight: '800',
+                color: '#007AFF',
+                marginBottom: '0.5rem',
+                textShadow: '0 2px 4px rgba(0, 122, 255, 0.2)'
+              }}>
+                €{totals.fixed.monthly}
+              </div>
+              <div style={{ 
+                fontSize: 'clamp(0.875rem, 2.5vw, 1rem)', 
+                color: '#86868b',
+                fontWeight: '500',
+                letterSpacing: '0.5px'
+              }}>
+                Spese fisse mensili
+              </div>
+            </div>
+
+            {/* Card Spese Variabili */}
+            <div style={{
+              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%)',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              borderRadius: '20px',
+              padding: '1.5rem',
+              border: '1px solid rgba(255, 149, 0, 0.15)',
+              boxShadow: '0 8px 32px rgba(255, 149, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.05)',
+              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+              position: 'relative',
+              overflow: 'hidden'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
+              e.currentTarget.style.boxShadow = '0 16px 48px rgba(255, 149, 0, 0.15), 0 4px 16px rgba(0, 0, 0, 0.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0) scale(1)';
+              e.currentTarget.style.boxShadow = '0 8px 32px rgba(255, 149, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.05)';
+            }}
+            >
+              <div style={{
+                position: 'absolute',
+                top: '-15px',
+                right: '-15px',
+                width: '60px',
+                height: '60px',
+                background: 'linear-gradient(135deg, rgba(255, 149, 0, 0.1) 0%, rgba(255, 123, 0, 0.1) 100%)',
+                borderRadius: '50%',
+                opacity: 0.6
+              }} />
+              <div style={{ 
+                fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', 
+                marginBottom: '0.75rem',
+                filter: 'drop-shadow(0 2px 4px rgba(255, 149, 0, 0.2))'
+              }}>📊</div>
+              <div style={{
+                fontSize: 'clamp(1.75rem, 5vw, 2.5rem)',
+                fontWeight: '800',
+                color: '#FF9500',
+                marginBottom: '0.5rem',
+                textShadow: '0 2px 4px rgba(255, 149, 0, 0.2)'
+              }}>
+                €{totals.variable.monthly}
+              </div>
+              <div style={{ 
+                fontSize: 'clamp(0.875rem, 2.5vw, 1rem)', 
+                color: '#86868b',
+                fontWeight: '500',
+                letterSpacing: '0.5px'
+              }}>
+                Spese variabili mensili
+              </div>
+            </div>
+
+            {/* Card Totale Mensile */}
+            <div style={{
+              background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%)',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              borderRadius: '20px',
+              padding: '1.5rem',
+              border: '1px solid rgba(52, 199, 89, 0.15)',
+              boxShadow: '0 8px 32px rgba(52, 199, 89, 0.1), 0 2px 8px rgba(0, 0, 0, 0.05)',
+              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+              position: 'relative',
+              overflow: 'hidden'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
+              e.currentTarget.style.boxShadow = '0 16px 48px rgba(52, 199, 89, 0.15), 0 4px 16px rgba(0, 0, 0, 0.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0) scale(1)';
+              e.currentTarget.style.boxShadow = '0 8px 32px rgba(52, 199, 89, 0.1), 0 2px 8px rgba(0, 0, 0, 0.05)';
+            }}
+            >
+              <div style={{
+                position: 'absolute',
+                top: '-15px',
+                right: '-15px',
+                width: '60px',
+                height: '60px',
+                background: 'linear-gradient(135deg, rgba(52, 199, 89, 0.1) 0%, rgba(48, 209, 88, 0.1) 100%)',
+                borderRadius: '50%',
+                opacity: 0.6
+              }} />
+              <div style={{ 
+                fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', 
+                marginBottom: '0.75rem',
+                filter: 'drop-shadow(0 2px 4px rgba(52, 199, 89, 0.2))'
+              }}>💳</div>
+              <div style={{
+                fontSize: 'clamp(1.75rem, 5vw, 2.5rem)',
+                fontWeight: '800',
+                color: '#34C759',
+                marginBottom: '0.5rem',
+                textShadow: '0 2px 4px rgba(52, 199, 89, 0.2)'
+              }}>
+                €{(totals.fixed.monthly + totals.variable.monthly).toFixed(2)}
+              </div>
+              <div style={{ 
+                fontSize: 'clamp(0.875rem, 2.5vw, 1rem)', 
+                color: '#86868b',
+                fontWeight: '500',
+                letterSpacing: '0.5px'
+              }}>
+                Totale mensile
+              </div>
+            </div>
+          </div>
+
+          {isLoading ? (
           <div style={{
             display: 'flex',
             justifyContent: 'center',
@@ -324,17 +702,120 @@ function Contabilita() {
             {renderSubscriptionSection(
               'Abbonamenti a Spesa Fissa',
               subscriptions.filter(sub => sub.isActive && sub.tipoPagamento === 'fisso'),
-              totals.fixed
+                totals.fixed,
+                currentPageFixed,
+                setCurrentPageFixed
             )}
             
             {renderSubscriptionSection(
               'Abbonamenti a Spesa Variabile',
               subscriptions.filter(sub => sub.isActive && sub.tipoPagamento === 'variabile'),
-              totals.variable
+                totals.variable,
+                currentPageVariable,
+                setCurrentPageVariable
             )}
           </>
         )}
       </div>
+      </div>
+
+      <style>
+        {`
+          @media (max-width: 768px) {
+            .contabilita-container {
+              padding: 1rem !important;
+            }
+            
+            .stats-grid {
+              grid-template-columns: 1fr !important;
+              gap: 1rem !important;
+            }
+            
+            .stats-card {
+              padding: 1.25rem !important;
+              border-radius: 16px !important;
+            }
+            
+            .subscription-card {
+              padding: 0.875rem !important;
+            }
+            
+            .subscription-logo {
+              width: 36px !important;
+              height: 36px !important;
+              font-size: 1rem !important;
+            }
+            
+            .cost-grid {
+              grid-template-columns: 1fr !important;
+              gap: 0.5rem !important;
+            }
+            
+            .pagination-container {
+              flex-direction: column !important;
+              gap: 0.75rem !important;
+            }
+            
+            .costo-abbonamento,
+            .costo-annuale {
+              display: none !important;
+            }
+            
+            .costo-mensile {
+              grid-column: 1 / -1 !important;
+              max-width: 200px !important;
+              margin-left: auto !important;
+              margin-right: 0 !important;
+            }
+          }
+          
+          @media (max-width: 480px) {
+            .contabilita-container {
+              padding: 0.75rem !important;
+            }
+            
+            .stats-grid {
+              gap: 0.75rem !important;
+            }
+            
+            .stats-card {
+              padding: 1rem !important;
+              border-radius: 12px !important;
+            }
+            
+            .subscription-card {
+              padding: 0.75rem !important;
+            }
+            
+            .main-content {
+              padding: 1rem !important;
+              border-radius: 16px !important;
+            }
+          }
+          
+          @keyframes fadeInUp {
+            from {
+              opacity: 0;
+              transform: translateY(30px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+          
+          @keyframes slideInRight {
+            from {
+              opacity: 0;
+              transform: translateX(-30px);
+            }
+            to {
+              opacity: 1;
+              transform: translateX(0);
+            }
+          }
+        `}
+      </style>
     </Layout>
   );
 }

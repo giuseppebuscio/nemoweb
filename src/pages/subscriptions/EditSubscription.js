@@ -395,7 +395,8 @@ function EditSubscription() {
                     boxSizing: 'border-box',
                     colorScheme: 'light',
                     backdropFilter: 'blur(10px)',
-                    WebkitBackdropFilter: 'blur(10px)'
+                    WebkitBackdropFilter: 'blur(10px)',
+                    cursor: 'pointer'
                   }}
                   onFocus={(e) => {
                     e.target.style.borderColor = '#007AFF';
@@ -408,6 +409,9 @@ function EditSubscription() {
                     e.target.style.background = 'rgba(255, 255, 255, 0.8)';
                     e.target.style.boxShadow = 'none';
                     e.target.style.transform = 'translateY(0)';
+                  }}
+                  onClick={(e) => {
+                    e.target.showPicker();
                   }}
                 />
                 <p style={{
@@ -949,7 +953,7 @@ function EditSubscription() {
                   margin: '0.75rem 0 0 0',
                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
                 }}>
-                  Inserisci il numero totale di rate previste per questo abbonamento
+                  Se lo conosci, inserisci il numero totale di rate previste per questo abbonamento
                 </p>
               </div>
 
@@ -1144,80 +1148,106 @@ function EditSubscription() {
           left: 0,
           width: '100vw',
           height: '100vh',
-          background: 'rgba(0, 0, 0, 0.4)',
+          background: 'rgba(0, 0, 0, 0.5)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           zIndex: 9999,
           backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)'
+          WebkitBackdropFilter: 'blur(20px)',
+          animation: 'fadeIn 0.3s ease'
         }}>
           <div style={{
-            background: 'rgba(255, 255, 255, 0.95)',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
-            borderRadius: '20px',
-            padding: '2.5rem',
-            maxWidth: '420px',
+            background: 'rgba(255, 255, 255, 0.98)',
+            backdropFilter: 'blur(30px)',
+            WebkitBackdropFilter: 'blur(30px)',
+            borderRadius: '16px',
+            padding: '2rem',
+            maxWidth: '500px',
             width: '90%',
-            boxShadow: '0 16px 48px rgba(0, 0, 0, 0.15), 0 4px 16px rgba(0, 0, 0, 0.1)',
-            border: '1px solid rgba(255, 255, 255, 0.3)',
-            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif'
+            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.2), 0 8px 32px rgba(0, 0, 0, 0.1)',
+            border: '1px solid rgba(255, 255, 255, 0.4)',
+            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
+            animation: 'slideUp 0.3s ease',
+            transform: 'translateY(0)'
           }}>
+            {/* Icona di avvertimento */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginBottom: '1.5rem'
+            }}>
+              <div style={{
+                width: '60px',
+                height: '60px',
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, rgba(255, 149, 0, 0.1) 0%, rgba(255, 123, 0, 0.1) 100%)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                border: '1px solid rgba(255, 149, 0, 0.2)'
+              }}>
+                <span style={{
+                  fontSize: '2rem',
+                  color: '#FF9500'
+                }}>
+                  ⚠️
+                </span>
+              </div>
+            </div>
+
             <h3 style={{
-              fontSize: '1.375rem',
+              fontSize: '1.5rem',
               fontWeight: '700',
               color: '#1d1d1f',
-              margin: '0 0 1.25rem 0',
+              margin: '0 0 1rem 0',
               textAlign: 'center',
-              letterSpacing: '-0.01em'
+              letterSpacing: '-0.02em',
+              lineHeight: '1.3'
             }}>
-              Annulla modifiche
+              Annulla modifiche?
             </h3>
             
             <p style={{
-              fontSize: '1.0625rem',
+              fontSize: '1rem',
               color: '#86868b',
-              margin: '0 0 2.5rem 0',
+              margin: '0 0 2rem 0',
               textAlign: 'center',
               lineHeight: '1.5',
               fontWeight: '400'
             }}>
-              Annullando le modifiche perderai tutti i cambiamenti non salvati. Sei sicuro di voler continuare?
+              Le modifiche non salvate andranno perse. Vuoi davvero annullare?
             </p>
 
             <div style={{
               display: 'flex',
-              gap: '1rem',
+              gap: '0.75rem',
               justifyContent: 'center'
             }}>
               <button
                 onClick={continueEditing}
                 style={{
-                  padding: '14px 28px',
-                  fontSize: '1rem',
+                  flex: 1,
+                  padding: '12px 20px',
+                  fontSize: '0.9375rem',
                   fontWeight: '600',
-                  border: '1px solid #007AFF',
+                  border: '1px solid rgba(0, 0, 0, 0.1)',
                   borderRadius: '12px',
                   background: 'rgba(255, 255, 255, 0.8)',
-                  color: '#007AFF',
+                  color: '#1d1d1f',
                   cursor: 'pointer',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  transition: 'all 0.2s ease',
                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
                   backdropFilter: 'blur(10px)',
                   WebkitBackdropFilter: 'blur(10px)'
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.background = 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)';
-                  e.target.style.color = 'white';
+                  e.target.style.background = 'rgba(0, 0, 0, 0.05)';
                   e.target.style.transform = 'translateY(-1px)';
-                  e.target.style.boxShadow = '0 4px 16px rgba(0, 122, 255, 0.25)';
                 }}
                 onMouseLeave={(e) => {
                   e.target.style.background = 'rgba(255, 255, 255, 0.8)';
-                  e.target.style.color = '#007AFF';
                   e.target.style.transform = 'translateY(0)';
-                  e.target.style.boxShadow = 'none';
                 }}
               >
                 Continua a modificare
@@ -1226,33 +1256,54 @@ function EditSubscription() {
               <button
                 onClick={confirmCancel}
                 style={{
-                  padding: '14px 28px',
-                  fontSize: '1rem',
+                  flex: 1,
+                  padding: '12px 20px',
+                  fontSize: '0.9375rem',
                   fontWeight: '600',
                   border: 'none',
                   borderRadius: '12px',
                   background: 'linear-gradient(135deg, #FF3B30 0%, #D70015 100%)',
                   color: 'white',
                   cursor: 'pointer',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  transition: 'all 0.2s ease',
                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                  boxShadow: '0 4px 16px rgba(255, 59, 48, 0.25)'
+                  boxShadow: '0 2px 8px rgba(255, 59, 48, 0.2)'
                 }}
                 onMouseEnter={(e) => {
                   e.target.style.background = 'linear-gradient(135deg, #D70015 0%, #B8000F 100%)';
-                  e.target.style.transform = 'translateY(-2px)';
-                  e.target.style.boxShadow = '0 8px 24px rgba(255, 59, 48, 0.35)';
+                  e.target.style.transform = 'translateY(-1px)';
+                  e.target.style.boxShadow = '0 4px 12px rgba(255, 59, 48, 0.3)';
                 }}
                 onMouseLeave={(e) => {
                   e.target.style.background = 'linear-gradient(135deg, #FF3B30 0%, #D70015 100%)';
                   e.target.style.transform = 'translateY(0)';
-                  e.target.style.boxShadow = '0 4px 16px rgba(255, 59, 48, 0.25)';
+                  e.target.style.boxShadow = '0 2px 8px rgba(255, 59, 48, 0.2)';
                 }}
               >
                 Sì, annulla
               </button>
             </div>
           </div>
+
+          <style>
+            {`
+              @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+              }
+              
+              @keyframes slideUp {
+                from { 
+                  opacity: 0;
+                  transform: translateY(20px) scale(0.95);
+                }
+                to { 
+                  opacity: 1;
+                  transform: translateY(0) scale(1);
+                }
+              }
+            `}
+          </style>
         </div>
       )}
     </Layout>

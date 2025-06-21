@@ -52,35 +52,35 @@ function Sidebar({ isCollapsed, onToggle, isMobile = false }) {
         marginBottom: '2rem'
       }}>
         {!isMobile && (
-          <button
-            onClick={onToggle}
-            style={{
-              background: 'none',
-              border: 'none',
-              padding: '8px',
-              cursor: 'pointer',
-              color: '#86868b',
-              fontSize: '1.25rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: '8px',
-              transition: 'all 0.2s ease',
-              alignSelf: isCollapsed ? 'center' : 'flex-end',
-              marginBottom: '8px',
-              transform: isCollapsed ? 'rotate(180deg)' : 'none'
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.background = 'rgba(0, 0, 0, 0.05)';
-              e.target.style.color = '#1d1d1f';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.background = 'none';
-              e.target.style.color = '#86868b';
-            }}
-          >
-            <IoChevronBack size={20} />
-          </button>
+        <button
+          onClick={onToggle}
+          style={{
+            background: 'none',
+            border: 'none',
+            padding: '8px',
+            cursor: 'pointer',
+            color: '#86868b',
+            fontSize: '1.25rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: '8px',
+            transition: 'all 0.2s ease',
+            alignSelf: isCollapsed ? 'center' : 'flex-end',
+            marginBottom: '8px',
+            transform: isCollapsed ? 'rotate(180deg)' : 'none'
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.background = 'rgba(0, 0, 0, 0.05)';
+            e.target.style.color = '#1d1d1f';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.background = 'none';
+            e.target.style.color = '#86868b';
+          }}
+        >
+          <IoChevronBack size={20} />
+        </button>
         )}
         <div style={{
           display: 'flex',
@@ -92,14 +92,14 @@ function Sidebar({ isCollapsed, onToggle, isMobile = false }) {
         }}
         onClick={() => handleNavigation('/')}
         >
-          <div style={{
-            width: '40px',
-            height: '40px',
-            background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
-            borderRadius: '10px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+        <div style={{
+          width: '40px',
+          height: '40px',
+          background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
+          borderRadius: '10px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
             boxShadow: '0 4px 12px rgba(0, 122, 255, 0.3)',
             transition: 'transform 0.2s ease'
           }}
@@ -110,25 +110,25 @@ function Sidebar({ isCollapsed, onToggle, isMobile = false }) {
             e.currentTarget.style.transform = 'scale(1)';
           }}
           >
-            <span style={{
-              fontSize: '18px',
-              fontWeight: '700',
-              color: 'white',
-              letterSpacing: '-0.5px'
-            }}>
-              MS
-            </span>
-          </div>
-          {!isCollapsed && (
-            <span style={{
-              fontSize: '1.2rem',
-              fontWeight: '600',
-              color: '#1d1d1f',
-              letterSpacing: '-0.01em'
-            }}>
-              MagicSubs
-            </span>
-          )}
+          <span style={{
+            fontSize: '18px',
+            fontWeight: '700',
+            color: 'white',
+            letterSpacing: '-0.5px'
+          }}>
+            MS
+          </span>
+        </div>
+        {!isCollapsed && (
+          <span style={{
+            fontSize: '1.2rem',
+            fontWeight: '600',
+            color: '#1d1d1f',
+            letterSpacing: '-0.01em'
+          }}>
+            MagicSubs
+          </span>
+        )}
         </div>
       </div>
 

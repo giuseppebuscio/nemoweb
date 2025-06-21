@@ -281,7 +281,8 @@ function AggiungiAbbonamento() {
                   type="date"
                   name="dataInizio"
                   value={formData.dataInizio}
-                  onChange={handleInputChange}
+                  onChange={(e) => setFormData({...formData, dataInizio: e.target.value})}
+                  required
                   style={{
                     width: '100%',
                     padding: '16px 20px',
@@ -291,11 +292,10 @@ function AggiungiAbbonamento() {
                     background: 'rgba(255, 255, 255, 0.8)',
                     fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    outline: 'none',
-                    boxSizing: 'border-box',
                     colorScheme: 'light',
                     backdropFilter: 'blur(10px)',
-                    WebkitBackdropFilter: 'blur(10px)'
+                    WebkitBackdropFilter: 'blur(10px)',
+                    cursor: 'pointer'
                   }}
                   onFocus={(e) => {
                     e.target.style.borderColor = '#007AFF';
@@ -308,6 +308,9 @@ function AggiungiAbbonamento() {
                     e.target.style.background = 'rgba(255, 255, 255, 0.8)';
                     e.target.style.boxShadow = 'none';
                     e.target.style.transform = 'translateY(0)';
+                  }}
+                  onClick={(e) => {
+                    e.target.showPicker();
                   }}
                 />
                 <p style={{
@@ -496,98 +499,131 @@ function AggiungiAbbonamento() {
                  }}>
                    Persone coinvolte
                  </label>
+                 
                  <div style={{
-                   display: 'flex',
-                   flexDirection: 'column',
-                   gap: '1rem'
-                 }}>
-                   <div style={{
-                     display: 'flex',
-                     flexWrap: 'wrap',
-                     gap: '0.5rem',
-                     padding: '0.5rem',
-                     minHeight: '48px',
                    border: '1px solid #d2d2d7',
                    borderRadius: '12px',
                    background: 'rgba(255, 255, 255, 0.8)',
+                   padding: '12px',
+                   minHeight: '52px',
+                   display: 'flex',
+                   flexWrap: 'wrap',
+                   gap: '8px',
+                   alignItems: 'center',
+                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                   cursor: 'text',
                    backdropFilter: 'blur(10px)',
                    WebkitBackdropFilter: 'blur(10px)'
-                   }}>
-                     {formData.persone.map((person, index) => (
+                 }}
+                 onClick={() => document.getElementById('personInput').focus()}
+                 onFocus={(e) => {
+                   e.currentTarget.style.borderColor = '#007AFF';
+                   e.currentTarget.style.background = 'rgba(255, 255, 255, 0.95)';
+                   e.currentTarget.style.boxShadow = '0 0 0 4px rgba(0, 122, 255, 0.1)';
+                   e.currentTarget.style.transform = 'translateY(-1px)';
+                 }}
+                 onBlur={(e) => {
+                   if (!e.currentTarget.contains(e.relatedTarget)) {
+                     e.currentTarget.style.borderColor = '#d2d2d7';
+                     e.currentTarget.style.background = 'rgba(255, 255, 255, 0.8)';
+                     e.currentTarget.style.boxShadow = 'none';
+                     e.currentTarget.style.transform = 'translateY(0)';
+                   }
+                 }}
+                 tabIndex={0}
+               >
+                 {/* Tag delle persone */}
+                 {formData.persone.map((persona, index) => (
                    <div
                      key={index}
                      style={{
                        display: 'flex',
                        alignItems: 'center',
-                           gap: '0.5rem',
+                       gap: '8px',
+                       background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
+                       color: 'white',
                        padding: '8px 12px',
-                           background: 'rgba(0, 122, 255, 0.1)',
-                           borderRadius: '8px',
+                       borderRadius: '20px',
                        fontSize: '0.9rem',
-                           color: '#007AFF',
-                           fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                       fontWeight: '500',
+                       fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                       boxShadow: '0 2px 8px rgba(0, 122, 255, 0.25)',
+                       transition: 'all 0.2s ease'
                      }}
                    >
-                         <span>{person}</span>
+                     <span>{persona}</span>
                      <button
                        type="button"
-                           onClick={() => removePerson(index)}
+                       onClick={(e) => {
+                         e.stopPropagation();
+                         removePerson(index);
+                       }}
                        style={{
-                             background: 'none',
+                         background: 'rgba(255, 255, 255, 0.2)',
                          border: 'none',
-                             padding: '0',
+                         color: 'white',
                          cursor: 'pointer',
-                             color: '#007AFF',
-                             fontSize: '1.1rem',
+                         padding: '2px',
+                         fontSize: '12px',
+                         lineHeight: '1',
+                         borderRadius: '50%',
+                         width: '18px',
+                         height: '18px',
                          display: 'flex',
                          alignItems: 'center',
                          justifyContent: 'center',
-                             width: '16px',
-                             height: '16px',
-                             borderRadius: '50%',
                          transition: 'all 0.2s ease'
                        }}
                        onMouseEnter={(e) => {
-                             e.target.style.background = 'rgba(0, 122, 255, 0.2)';
+                         e.target.style.background = 'rgba(255, 255, 255, 0.3)';
+                         e.target.style.transform = 'scale(1.1)';
                        }}
                        onMouseLeave={(e) => {
-                             e.target.style.background = 'none';
+                         e.target.style.background = 'rgba(255, 255, 255, 0.2)';
+                         e.target.style.transform = 'scale(1)';
                        }}
                      >
                        ×
                      </button>
                    </div>
                  ))}
+                 
+                 {/* Input per nuova persona */}
                  <input
+                   id="personInput"
                    type="text"
                    value={currentPersonInput}
                    onChange={(e) => setCurrentPersonInput(e.target.value)}
                    onKeyDown={handlePersonInputKeyDown}
-                       placeholder={formData.persone.length === 0 ? "Inserisci il tuo nome..." : "Aggiungi un'altra persona..."}
+                   onBlur={() => {
+                     if (currentPersonInput.trim()) {
+                       addPerson(currentPersonInput);
+                     }
+                   }}
+                   placeholder={formData.persone.length === 0 ? "Aggiungi persone (opzionale)" : "Aggiungi altra persona..."}
                    style={{
                      border: 'none',
                      outline: 'none',
-                         background: 'none',
-                         fontSize: '0.9rem',
-                         color: '#1d1d1f',
+                     background: 'transparent',
+                     fontSize: '1.0625rem',
                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
                      flex: 1,
-                         minWidth: '200px'
+                     minWidth: '200px',
+                     padding: '6px 0',
+                     color: '#1d1d1f'
                    }}
                  />
                </div>
+               
                <p style={{
                  fontSize: '0.875rem',
                  color: '#86868b',
-                     margin: 0,
+                 margin: '0.75rem 0 0 0',
                  fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                     display: 'flex',
-                     alignItems: 'center',
-                     gap: '0.5rem'
+                 fontWeight: '400'
                }}>
                  💡 Usa virgola, TAB o Invio per aggiungere una persona. Clicca × per rimuovere.
-                                </p>
-                 </div>
+               </p>
                </div>
 
                {/* Tipo di Pagamento */}
@@ -816,7 +852,7 @@ function AggiungiAbbonamento() {
                    margin: '0.75rem 0 0 0',
                    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
                  }}>
-                   Inserisci il numero totale di rate previste per questo abbonamento
+                   Se lo conosci, inserisci il numero totale di rate previste per questo abbonamento
                  </p>
                </div>
 
@@ -1011,80 +1047,106 @@ function AggiungiAbbonamento() {
           left: 0,
           width: '100vw',
           height: '100vh',
-          background: 'rgba(0, 0, 0, 0.4)',
+          background: 'rgba(0, 0, 0, 0.5)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           zIndex: 9999,
           backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)'
+          WebkitBackdropFilter: 'blur(20px)',
+          animation: 'fadeIn 0.3s ease'
         }}>
           <div style={{
-            background: 'rgba(255, 255, 255, 0.95)',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
-            borderRadius: '20px',
-            padding: '2.5rem',
-            maxWidth: '420px',
+            background: 'rgba(255, 255, 255, 0.98)',
+            backdropFilter: 'blur(30px)',
+            WebkitBackdropFilter: 'blur(30px)',
+            borderRadius: '16px',
+            padding: '2rem',
+            maxWidth: '500px',
             width: '90%',
-            boxShadow: '0 16px 48px rgba(0, 0, 0, 0.15), 0 4px 16px rgba(0, 0, 0, 0.1)',
-            border: '1px solid rgba(255, 255, 255, 0.3)',
-            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif'
+            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.2), 0 8px 32px rgba(0, 0, 0, 0.1)',
+            border: '1px solid rgba(255, 255, 255, 0.4)',
+            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
+            animation: 'slideUp 0.3s ease',
+            transform: 'translateY(0)'
           }}>
+            {/* Icona di avvertimento */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              marginBottom: '1.5rem'
+            }}>
+              <div style={{
+                width: '60px',
+                height: '60px',
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, rgba(255, 149, 0, 0.1) 0%, rgba(255, 123, 0, 0.1) 100%)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                border: '1px solid rgba(255, 149, 0, 0.2)'
+              }}>
+                <span style={{
+                  fontSize: '2rem',
+                  color: '#FF9500'
+                }}>
+                  ⚠️
+                </span>
+              </div>
+            </div>
+
             <h3 style={{
-              fontSize: '1.375rem',
+              fontSize: '1.5rem',
               fontWeight: '700',
               color: '#1d1d1f',
-              margin: '0 0 1.25rem 0',
+              margin: '0 0 1rem 0',
               textAlign: 'center',
-              letterSpacing: '-0.01em'
+              letterSpacing: '-0.02em',
+              lineHeight: '1.3'
             }}>
-              Annulla creazione
+              Annulla creazione?
             </h3>
             
             <p style={{
-              fontSize: '1.0625rem',
+              fontSize: '1rem',
               color: '#86868b',
-              margin: '0 0 2.5rem 0',
+              margin: '0 0 2rem 0',
               textAlign: 'center',
               lineHeight: '1.5',
               fontWeight: '400'
             }}>
-              Annullando la creazione perderai tutti i progressi. Sei sicuro di voler annullare?
+              I dati inseriti andranno persi. Vuoi davvero annullare la creazione?
             </p>
 
             <div style={{
               display: 'flex',
-              gap: '1rem',
+              gap: '0.75rem',
               justifyContent: 'center'
             }}>
               <button
                 onClick={continueCreating}
                 style={{
-                  padding: '14px 28px',
-                  fontSize: '1rem',
+                  flex: 1,
+                  padding: '12px 20px',
+                  fontSize: '0.9375rem',
                   fontWeight: '600',
-                  border: '1px solid #007AFF',
+                  border: '1px solid rgba(0, 0, 0, 0.1)',
                   borderRadius: '12px',
                   background: 'rgba(255, 255, 255, 0.8)',
-                  color: '#007AFF',
+                  color: '#1d1d1f',
                   cursor: 'pointer',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  transition: 'all 0.2s ease',
                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
                   backdropFilter: 'blur(10px)',
                   WebkitBackdropFilter: 'blur(10px)'
                 }}
                 onMouseEnter={(e) => {
-                  e.target.style.background = 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)';
-                  e.target.style.color = 'white';
+                  e.target.style.background = 'rgba(0, 0, 0, 0.05)';
                   e.target.style.transform = 'translateY(-1px)';
-                  e.target.style.boxShadow = '0 4px 16px rgba(0, 122, 255, 0.25)';
                 }}
                 onMouseLeave={(e) => {
                   e.target.style.background = 'rgba(255, 255, 255, 0.8)';
-                  e.target.style.color = '#007AFF';
                   e.target.style.transform = 'translateY(0)';
-                  e.target.style.boxShadow = 'none';
                 }}
               >
                 Continua a creare
@@ -1093,33 +1155,54 @@ function AggiungiAbbonamento() {
               <button
                 onClick={confirmCancel}
                 style={{
-                  padding: '14px 28px',
-                  fontSize: '1rem',
+                  flex: 1,
+                  padding: '12px 20px',
+                  fontSize: '0.9375rem',
                   fontWeight: '600',
                   border: 'none',
                   borderRadius: '12px',
                   background: 'linear-gradient(135deg, #FF3B30 0%, #D70015 100%)',
                   color: 'white',
                   cursor: 'pointer',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  transition: 'all 0.2s ease',
                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                  boxShadow: '0 4px 16px rgba(255, 59, 48, 0.25)'
+                  boxShadow: '0 2px 8px rgba(255, 59, 48, 0.2)'
                 }}
                 onMouseEnter={(e) => {
                   e.target.style.background = 'linear-gradient(135deg, #D70015 0%, #B8000F 100%)';
-                  e.target.style.transform = 'translateY(-2px)';
-                  e.target.style.boxShadow = '0 8px 24px rgba(255, 59, 48, 0.35)';
+                  e.target.style.transform = 'translateY(-1px)';
+                  e.target.style.boxShadow = '0 4px 12px rgba(255, 59, 48, 0.3)';
                 }}
                 onMouseLeave={(e) => {
                   e.target.style.background = 'linear-gradient(135deg, #FF3B30 0%, #D70015 100%)';
                   e.target.style.transform = 'translateY(0)';
-                  e.target.style.boxShadow = '0 4px 16px rgba(255, 59, 48, 0.25)';
+                  e.target.style.boxShadow = '0 2px 8px rgba(255, 59, 48, 0.2)';
                 }}
               >
-                Sì, chiudi
+                Sì, annulla
               </button>
             </div>
           </div>
+
+          <style>
+            {`
+              @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+              }
+              
+              @keyframes slideUp {
+                from { 
+                  opacity: 0;
+                  transform: translateY(20px) scale(0.95);
+                }
+                to { 
+                  opacity: 1;
+                  transform: translateY(0) scale(1);
+                }
+              }
+            `}
+          </style>
         </div>
       )}
     </Layout>

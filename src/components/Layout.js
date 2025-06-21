@@ -27,7 +27,7 @@ function Layout({ children }) {
   // Salva lo stato della sidebar nel localStorage quando cambia
   useEffect(() => {
     if (!isMobile) {
-      localStorage.setItem('sidebarCollapsed', JSON.stringify(isSidebarCollapsed));
+    localStorage.setItem('sidebarCollapsed', JSON.stringify(isSidebarCollapsed));
     }
   }, [isSidebarCollapsed, isMobile]);
 
@@ -42,7 +42,7 @@ function Layout({ children }) {
     if (isMobile) {
       setIsMobileMenuOpen(prev => !prev);
     } else {
-      setIsSidebarCollapsed(prev => !prev);
+    setIsSidebarCollapsed(prev => !prev);
     }
   };
 
@@ -55,10 +55,10 @@ function Layout({ children }) {
     }}>
       {/* Sidebar per desktop */}
       {!isMobile && (
-        <Sidebar 
-          isCollapsed={isSidebarCollapsed} 
-          onToggle={handleToggleSidebar} 
-        />
+      <Sidebar 
+        isCollapsed={isSidebarCollapsed} 
+        onToggle={handleToggleSidebar} 
+      />
       )}
       
       {/* Overlay per mobile */}
@@ -211,8 +211,8 @@ function Layout({ children }) {
         {/* Contenuto con padding per mobile */}
         <div style={{
           paddingTop: isMobile ? '60px' : 0
-        }}>
-          {children}
+      }}>
+        {children}
         </div>
       </div>
 

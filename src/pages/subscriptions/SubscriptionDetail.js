@@ -625,7 +625,7 @@ const SubscriptionDetail = () => {
               </button>
 
               <button
-                onClick={() => navigate(`/abbonamenti/${id}/modifica`)}
+                onClick={() => navigate(`/abbonamenti/${id}/edit`)}
                 style={{
                   padding: '10px 20px',
                   fontSize: '0.9375rem',

@@ -153,28 +153,34 @@ function Abbonamenti() {
   return (
     <Layout>
       <div style={{ 
-        padding: '2rem',
+        padding: '1rem',
         background: 'linear-gradient(135deg, #fafafa 0%, #f5f5f7 100%)',
         minHeight: '100vh',
         width: '100%'
       }}>
-        <div style={{ width: '100%', maxWidth: 'none' }}>
+        <div style={{ width: '100%' }}>
           
           {/* Header */}
           <div style={{
-            fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", sans-serif'
+            marginBottom: '2rem',
+            textAlign: 'left',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem'
           }}>
             <div style={{
               display: 'flex',
+              flexDirection: 'row',
               justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: '2rem'
+              alignItems: 'flex-start',
+              gap: '1rem'
             }}>
               <div>
                 <h1 style={{
-                  fontSize: '2.75rem',
+                  fontSize: 'clamp(1.75rem, 5vw, 2.75rem)',
                   fontWeight: '700',
-                  margin: '0 0 1rem 0',
+                  color: '#1d1d1f',
+                  margin: '0 0 0.75rem 0',
                   letterSpacing: '-0.025em',
                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
                   background: 'linear-gradient(135deg, #1d1d1f 0%, #86868b 100%)',
@@ -184,7 +190,7 @@ function Abbonamenti() {
                   I miei Abbonamenti
                 </h1>
                 <p style={{
-                  fontSize: '1.125rem',
+                  fontSize: 'clamp(0.875rem, 3vw, 1.125rem)',
                   color: '#86868b',
                   margin: 0,
                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
@@ -195,26 +201,35 @@ function Abbonamenti() {
                 </p>
               </div>
 
+              {/* Pulsante Aggiungi */}
               <button
                 onClick={() => navigate('/aggiungi-abbonamento')}
                 style={{
                   background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
                   color: 'white',
-                  padding: '0.75rem 1.5rem',
+                  padding: '0.75rem 1.25rem',
                   borderRadius: '12px',
                   border: 'none',
-                  fontSize: '0.9375rem',
+                  fontSize: '0.875rem',
                   fontWeight: '500',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '0.5rem'
+                  gap: '0.5rem',
+                  boxShadow: '0 4px 12px rgba(0, 122, 255, 0.3)',
+                  alignSelf: 'flex-start'
                 }}
-                onMouseOver={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #0051D5 0%, #4644B8 100%)'}
-                onMouseOut={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)'}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(0, 122, 255, 0.4)';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 122, 255, 0.3)';
+                }}
               >
-                <span style={{ fontSize: '1.2em' }}>+</span>
+                <span style={{ fontSize: '1.1em' }}>+</span>
                 Aggiungi nuovo
               </button>
             </div>
@@ -222,239 +237,288 @@ function Abbonamenti() {
 
           {/* Main Content */}
           <div style={{
-            background: 'white',
+            background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
             borderRadius: '20px',
-            padding: '2rem',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '2rem',
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
+            padding: '1.5rem',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.05)',
+            border: '1px solid rgba(255, 255, 255, 0.3)',
+            marginBottom: '1.5rem',
+            animation: 'fadeInUp 0.8s ease-out 0.4s both'
           }}>
             {/* Header del riquadro con titolo e controlli visualizzazione */}
             <div style={{
               display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
+              flexDirection: 'column',
+              gap: '1rem',
+              marginBottom: '1.5rem'
             }}>
-              <h3 style={{
-                fontSize: '1.5rem',
-                fontWeight: '600',
-                color: '#1d1d1f',
-                margin: 0,
-                background: 'linear-gradient(135deg, #1d1d1f 0%, #86868b 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
-              }}>Abbonamenti Attivi</h3>
-
-              {/* Controlli visualizzazione */}
               <div style={{
                 display: 'flex',
-                gap: '1rem',
-                alignItems: 'center'
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
+                gap: '1rem'
               }}>
-                {/* Selettore ordinamento */}
-                <div style={{
-                  display: 'flex',
-                  background: 'rgba(255, 255, 255, 0.8)',
-                  backdropFilter: 'blur(20px)',
-                  WebkitBackdropFilter: 'blur(20px)',
-                  borderRadius: '12px',
-                  padding: '4px',
-                  border: '1px solid rgba(255, 255, 255, 0.3)',
-                  boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)'
-                }}>
-                  <button
-                    onClick={() => handleSortClick('nome')}
-                    style={{
-                      padding: '8px 16px',
-                      fontSize: '0.9rem',
-                      fontWeight: '600',
-                      border: 'none',
-                      borderRadius: '8px',
-                      background: sortBy === 'nome' 
-                        ? 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)' 
-                        : 'transparent',
-                      color: sortBy === 'nome' ? 'white' : '#86868b',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.5rem',
-                      boxShadow: sortBy === 'nome' ? '0 2px 8px rgba(0, 122, 255, 0.25)' : 'none'
-                    }}
-                    onMouseEnter={(e) => {
-                      if (sortBy !== 'nome') {
-                        e.target.style.color = '#007AFF';
-                        e.target.style.background = 'rgba(0, 122, 255, 0.1)';
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (sortBy !== 'nome') {
-                        e.target.style.color = '#86868b';
-                        e.target.style.background = 'transparent';
-                      }
-                    }}
-                  >
-                    {sortBy === 'nome' && sortDirection === 'asc' ? (
-                      <BsSortAlphaUp size={16} />
-                    ) : (
-                      <BsSortAlphaDown size={16} />
-                    )}
-                    Nome
-                  </button>
-                  <button
-                    onClick={() => handleSortClick('prezzo')}
-                    style={{
-                      padding: '8px 16px',
-                      fontSize: '0.9rem',
-                      fontWeight: '600',
-                      border: 'none',
-                      borderRadius: '8px',
-                      background: sortBy === 'prezzo' 
-                        ? 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)' 
-                        : 'transparent',
-                      color: sortBy === 'prezzo' ? 'white' : '#86868b',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.5rem',
-                      boxShadow: sortBy === 'prezzo' ? '0 2px 8px rgba(0, 122, 255, 0.25)' : 'none'
-                    }}
-                    onMouseEnter={(e) => {
-                      if (sortBy !== 'prezzo') {
-                        e.target.style.color = '#007AFF';
-                        e.target.style.background = 'rgba(0, 122, 255, 0.1)';
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (sortBy !== 'prezzo') {
-                        e.target.style.color = '#86868b';
-                        e.target.style.background = 'transparent';
-                      }
-                    }}
-                  >
-                    {sortBy === 'prezzo' && sortDirection === 'asc' ? (
-                      <BsCurrencyExchange size={16} />
-                    ) : (
-                      <BsCurrencyEuro size={16} />
-                    )}
-                    Costo
-                  </button>
-                </div>
+                <h3 style={{
+                  fontSize: 'clamp(1.25rem, 4vw, 1.75rem)',
+                  fontWeight: '700',
+                  color: '#1d1d1f',
+                  margin: 0,
+                  letterSpacing: '-0.01em'
+                }}>Abbonamenti Attivi</h3>
 
-                {/* Selettore visualizzazione */}
+                {/* Controlli visualizzazione */}
                 <div style={{
                   display: 'flex',
-                  background: 'rgba(255, 255, 255, 0.8)',
-                  backdropFilter: 'blur(20px)',
-                  WebkitBackdropFilter: 'blur(20px)',
-                  borderRadius: '12px',
-                  padding: '4px',
-                  border: '1px solid rgba(255, 255, 255, 0.3)',
-                  boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)'
+                  flexDirection: 'row',
+                  gap: '1rem',
+                  alignItems: 'center'
                 }}>
-                  <button
-                    onClick={() => setViewMode('grid')}
-                    style={{
-                      padding: '8px 16px',
-                      fontSize: '0.9rem',
-                      fontWeight: '600',
-                      border: 'none',
-                      borderRadius: '8px',
-                      background: viewMode === 'grid' 
-                        ? 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)' 
-                        : 'transparent',
-                      color: viewMode === 'grid' ? 'white' : '#86868b',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                  {/* Selettore ordinamento */}
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    gap: '0.5rem',
+                    alignItems: 'center'
+                  }}>
+                    <span style={{
+                      fontSize: '0.875rem',
+                      color: '#86868b',
+                      fontWeight: '500',
+                      textAlign: 'left',
+                      whiteSpace: 'nowrap'
+                    }}>
+                      Ordina
+                    </span>
+                    <div style={{
                       display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.5rem',
-                      boxShadow: viewMode === 'grid' ? '0 2px 8px rgba(0, 122, 255, 0.25)' : 'none'
-                    }}
-                    onMouseEnter={(e) => {
-                      if (viewMode !== 'grid') {
-                        e.target.style.color = '#007AFF';
-                        e.target.style.background = 'rgba(0, 122, 255, 0.1)';
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (viewMode !== 'grid') {
-                        e.target.style.color = '#86868b';
-                        e.target.style.background = 'transparent';
-                      }
-                    }}
-                  >
-                    <span style={{ fontSize: '1rem' }}>⊞</span>
-                    Riquadri
-                  </button>
-                  <button
-                    onClick={() => setViewMode('list')}
-                    style={{
-                      padding: '8px 16px',
-                      fontSize: '0.9rem',
-                      fontWeight: '600',
-                      border: 'none',
-                      borderRadius: '8px',
-                      background: viewMode === 'list' 
-                        ? 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)' 
-                        : 'transparent',
-                      color: viewMode === 'list' ? 'white' : '#86868b',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                      fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                      background: 'rgba(255, 255, 255, 0.8)',
+                      backdropFilter: 'blur(20px)',
+                      WebkitBackdropFilter: 'blur(20px)',
+                      borderRadius: '12px',
+                      padding: '4px',
+                      border: '1px solid rgba(255, 255, 255, 0.3)',
+                      boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)'
+                    }}>
+                      <button
+                        onClick={() => handleSortClick('nome')}
+                        style={{
+                          padding: '8px 12px',
+                          fontSize: '0.875rem',
+                          fontWeight: '600',
+                          border: 'none',
+                          borderRadius: '8px',
+                          background: sortBy === 'nome' 
+                            ? 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)' 
+                            : 'transparent',
+                          color: sortBy === 'nome' ? 'white' : '#86868b',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease',
+                          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem',
+                          boxShadow: sortBy === 'nome' ? '0 2px 8px rgba(0, 122, 255, 0.25)' : 'none',
+                          flex: 1
+                        }}
+                        onMouseEnter={(e) => {
+                          if (sortBy !== 'nome') {
+                            e.target.style.color = '#007AFF';
+                            e.target.style.background = 'rgba(0, 122, 255, 0.1)';
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (sortBy !== 'nome') {
+                            e.target.style.color = '#86868b';
+                            e.target.style.background = 'transparent';
+                          }
+                        }}
+                      >
+                        {sortBy === 'nome' && sortDirection === 'asc' ? (
+                          <BsSortAlphaUp size={14} />
+                        ) : (
+                          <BsSortAlphaDown size={14} />
+                        )}
+                        Nome
+                      </button>
+                      <button
+                        onClick={() => handleSortClick('prezzo')}
+                        style={{
+                          padding: '8px 12px',
+                          fontSize: '0.875rem',
+                          fontWeight: '600',
+                          border: 'none',
+                          borderRadius: '8px',
+                          background: sortBy === 'prezzo' 
+                            ? 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)' 
+                            : 'transparent',
+                          color: sortBy === 'prezzo' ? 'white' : '#86868b',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease',
+                          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem',
+                          boxShadow: sortBy === 'prezzo' ? '0 2px 8px rgba(0, 122, 255, 0.25)' : 'none',
+                          flex: 1
+                        }}
+                        onMouseEnter={(e) => {
+                          if (sortBy !== 'prezzo') {
+                            e.target.style.color = '#007AFF';
+                            e.target.style.background = 'rgba(0, 122, 255, 0.1)';
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (sortBy !== 'prezzo') {
+                            e.target.style.color = '#86868b';
+                            e.target.style.background = 'transparent';
+                          }
+                        }}
+                      >
+                        {sortBy === 'prezzo' && sortDirection === 'asc' ? (
+                          <BsCurrencyExchange size={14} />
+                        ) : (
+                          <BsCurrencyEuro size={14} />
+                        )}
+                        Costo
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Selettore visualizzazione */}
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    gap: '0.5rem',
+                    alignItems: 'center'
+                  }}>
+                    <span style={{
+                      fontSize: '0.875rem',
+                      color: '#86868b',
+                      fontWeight: '500',
+                      textAlign: 'left',
+                      whiteSpace: 'nowrap'
+                    }}>
+                      Cambia vista
+                    </span>
+                    <div style={{
                       display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.5rem',
-                      boxShadow: viewMode === 'list' ? '0 2px 8px rgba(0, 122, 255, 0.25)' : 'none'
-                    }}
-                    onMouseEnter={(e) => {
-                      if (viewMode !== 'list') {
-                        e.target.style.color = '#007AFF';
-                        e.target.style.background = 'rgba(0, 122, 255, 0.1)';
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (viewMode !== 'list') {
-                        e.target.style.color = '#86868b';
-                        e.target.style.background = 'transparent';
-                      }
-                    }}
-                  >
-                    <span style={{ 
-                      fontSize: '1rem',
-                      color: 'inherit'
-                    }}>☰</span>
-                    Elenco
-                  </button>
+                      background: 'rgba(255, 255, 255, 0.8)',
+                      backdropFilter: 'blur(20px)',
+                      WebkitBackdropFilter: 'blur(20px)',
+                      borderRadius: '12px',
+                      padding: '4px',
+                      border: '1px solid rgba(255, 255, 255, 0.3)',
+                      boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)'
+                    }}>
+                      <button
+                        onClick={() => setViewMode('grid')}
+                        style={{
+                          padding: '8px 12px',
+                          fontSize: '0.875rem',
+                          fontWeight: '600',
+                          border: 'none',
+                          borderRadius: '8px',
+                          background: viewMode === 'grid' 
+                            ? 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)' 
+                            : 'transparent',
+                          color: viewMode === 'grid' ? 'white' : '#86868b',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease',
+                          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem',
+                          boxShadow: viewMode === 'grid' ? '0 2px 8px rgba(0, 122, 255, 0.25)' : 'none',
+                          flex: 1
+                        }}
+                        onMouseEnter={(e) => {
+                          if (viewMode !== 'grid') {
+                            e.target.style.color = '#007AFF';
+                            e.target.style.background = 'rgba(0, 122, 255, 0.1)';
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (viewMode !== 'grid') {
+                            e.target.style.color = '#86868b';
+                            e.target.style.background = 'transparent';
+                          }
+                        }}
+                      >
+                        <BsGrid size={14} />
+                        Griglia
+                      </button>
+                      <button
+                        onClick={() => setViewMode('list')}
+                        style={{
+                          padding: '8px 12px',
+                          fontSize: '0.875rem',
+                          fontWeight: '600',
+                          border: 'none',
+                          borderRadius: '8px',
+                          background: viewMode === 'list' 
+                            ? 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)' 
+                            : 'transparent',
+                          color: viewMode === 'list' ? 'white' : '#86868b',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease',
+                          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem',
+                          boxShadow: viewMode === 'list' ? '0 2px 8px rgba(0, 122, 255, 0.25)' : 'none',
+                          flex: 1
+                        }}
+                        onMouseEnter={(e) => {
+                          if (viewMode !== 'list') {
+                            e.target.style.color = '#007AFF';
+                            e.target.style.background = 'rgba(0, 122, 255, 0.1)';
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (viewMode !== 'list') {
+                            e.target.style.color = '#86868b';
+                            e.target.style.background = 'transparent';
+                          }
+                        }}
+                      >
+                        <BsList size={14} />
+                        Lista
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Grid/List View */}
-            <div className={viewMode === 'list' ? 'list-view' : 'grid-view'} style={{
-              display: 'grid',
-              gap: '1rem',
-              gridTemplateColumns: viewMode === 'grid' ? 'repeat(auto-fill, minmax(300px, 1fr))' : '1fr'
+            {/* Lista abbonamenti */}
+            <div style={{
+              display: viewMode === 'grid' ? 'grid' : 'flex',
+              gridTemplateColumns: viewMode === 'grid' ? 'repeat(auto-fit, minmax(280px, 1fr))' : 'none',
+              flexDirection: viewMode === 'list' ? 'column' : 'row',
+              gap: '1rem'
             }}>
-              {subscriptions.length === 0 ? (
+              {getSortedSubscriptions().length === 0 ? (
                 <div style={{
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  padding: '3rem',
-                  background: 'rgba(0, 0, 0, 0.02)',
+                  padding: '2rem',
+                  background: 'rgba(255, 255, 255, 0.6)',
                   borderRadius: '16px',
-                  gap: '1rem'
+                  gap: '1rem',
+                  border: '1px solid rgba(0, 0, 0, 0.05)',
+                  gridColumn: '1 / -1'
                 }}>
-                  <span style={{ fontSize: '2.5rem' }}>📱</span>
+                  <span style={{
+                    fontSize: 'clamp(2rem, 5vw, 2.5rem)',
+                    color: '#86868b'
+                  }}>📱</span>
                   <p style={{
-                    fontSize: '1.125rem',
+                    fontSize: 'clamp(0.875rem, 3vw, 1.125rem)',
                     color: '#86868b',
                     margin: 0,
                     textAlign: 'center',
@@ -463,7 +527,7 @@ function Abbonamenti() {
                     Nessun abbonamento presente
                   </p>
                   <p style={{
-                    fontSize: '0.9375rem',
+                    fontSize: 'clamp(0.75rem, 2.5vw, 0.9375rem)',
                     color: '#86868b',
                     margin: 0,
                     textAlign: 'center',
@@ -474,213 +538,347 @@ function Abbonamenti() {
                   </p>
                 </div>
               ) : (
-                getSortedSubscriptions().map((subscription) => (
-                  <div key={subscription.id} style={{
-                    opacity: subscription.isActive ? 1 : 0.6,
-                    position: 'relative',
-                    background: 'white',
-                    borderRadius: viewMode === 'list' ? '12px' : '20px',
-                    padding: viewMode === 'list' ? '1rem 1.5rem' : '1.5rem',
-                    border: '1px solid rgba(0, 0, 0, 0.1)',
-                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
-                    transition: 'all 0.2s ease',
-                    display: viewMode === 'list' ? 'flex' : 'block',
-                    alignItems: viewMode === 'list' ? 'center' : undefined,
-                    gap: viewMode === 'list' ? '2rem' : undefined
-                  }}>
+                getSortedSubscriptions().map((subscription, index) => (
+                  <div
+                    key={subscription.id}
+                    style={{
+                      background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%)',
+                      backdropFilter: 'blur(20px)',
+                      WebkitBackdropFilter: 'blur(20px)',
+                      borderRadius: '20px',
+                      padding: '1.25rem',
+                      border: '1px solid rgba(255, 255, 255, 0.3)',
+                      boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                      position: 'relative',
+                      overflow: 'hidden',
+                      opacity: subscription.isActive ? 1 : 0.6
+                    }}
+                    onClick={() => navigate(`/abbonamenti/${subscription.id}`)}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-4px) scale(1.02)';
+                      e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.12)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                      e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.08)';
+                    }}
+                  >
                     {viewMode === 'list' ? (
                       <>
-                        {/* Vista Elenco */}
-                        {/* Nome e Frequenza (Sinistra) */}
+                        {/* Vista Lista */}
                         <div style={{
-                          flex: '2'
+                          display: 'flex',
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                          gap: '1rem',
+                          width: '100%',
+                          padding: '0.5rem 0'
                         }}>
-                          <h4 style={{
-                            fontSize: '1.25rem',
-                            fontWeight: '600',
-                            color: '#1d1d1f',
-                            margin: '0 0 0.5rem 0'
-                          }}>
-                            {subscription.nome}
-                          </h4>
-                          <p style={{
-                            fontSize: '1rem',
-                            color: '#86868b',
-                            margin: 0,
+                          {/* Logo */}
+                          <div style={{
+                            width: '50px',
+                            height: '50px',
+                            background: subscription.logo ? 'none' : 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
+                            borderRadius: '12px',
                             display: 'flex',
                             alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: '1.5rem',
+                            color: 'white',
+                            boxShadow: '0 4px 12px rgba(0, 122, 255, 0.3)',
+                            overflow: 'hidden',
+                            flexShrink: 0
+                          }}>
+                            {subscription.logo ? (
+                              <img 
+                                src={subscription.logo} 
+                                alt={`Logo ${subscription.nome}`}
+                                style={{
+                                  width: '100%',
+                                  height: '100%',
+                                  objectFit: 'cover'
+                                }}
+                              />
+                            ) : (
+                              <span>💳</span>
+                            )}
+                          </div>
+
+                          {/* Nome */}
+                          <div style={{ 
+                            flex: '1', 
+                            minWidth: 0,
+                            display: 'flex',
+                            flexDirection: 'column',
                             gap: '0.5rem'
                           }}>
-                            <span style={{ fontSize: '1.1rem' }}>🔄</span>
-                            {formatFrequency(subscription)}
-                          </p>
-                        </div>
+                            <h4 style={{
+                              fontSize: 'clamp(1rem, 3vw, 1.25rem)',
+                              fontWeight: '600',
+                              color: '#1d1d1f',
+                              margin: 0,
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              whiteSpace: 'nowrap'
+                            }}>
+                              {subscription.nome}
+                            </h4>
+                            <p style={{
+                              fontSize: 'clamp(0.875rem, 2.5vw, 1rem)',
+                              color: '#86868b',
+                              margin: 0,
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '0.5rem'
+                            }}>
+                              <span style={{ fontSize: '1.1rem' }}>🔄</span>
+                              {formatFrequency(subscription)}
+                            </p>
+                          </div>
 
-                        {/* Costo Totale */}
-                        <div style={{
-                          flex: '1',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          padding: '0.75rem',
-                          background: 'rgba(0, 0, 0, 0.02)',
-                          borderRadius: '12px',
-                          alignItems: 'flex-start'
-                        }}>
-                          <span style={{
-                            fontSize: '0.9375rem',
-                            color: '#86868b'
-                          }}>Costo</span>
-                          <span style={{
-                            fontSize: '1rem',
-                            fontWeight: '600',
-                            color: '#1d1d1f'
-                          }}>€{parseFloat(subscription.prezzo).toFixed(2)}</span>
-                        </div>
-
-                        {/* Totale pagato */}
-                        <div style={{
-                          flex: '1',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          padding: '0.75rem',
-                          background: 'rgba(0, 122, 255, 0.05)',
-                          borderRadius: '12px',
-                          border: '1px solid rgba(0, 122, 255, 0.1)',
-                          alignItems: 'flex-start'
-                        }}>
-                          <span style={{
-                            fontSize: '0.9375rem',
-                            color: '#007AFF'
-                          }}>Totale pagato</span>
-                          <span style={{
-                            fontSize: '1rem',
-                            fontWeight: '600',
-                            color: '#007AFF'
-                          }}>€{subscription.tipoPagamento === 'variabile' 
-                            ? (subscription.pagamenti ? subscription.pagamenti.reduce((totale, pagamento) => totale + parseFloat(pagamento.importo), 0).toFixed(2) : '0.00')
-                            : (subscription.payments ? subscription.payments.reduce((acc, pagamento) => acc + parseFloat(pagamento.importo), 0).toFixed(2) : '0.00')}</span>
-                        </div>
-
-                        {/* Switch e Stato Pagamenti */}
-                        <div style={{
-                          flex: '0.5',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'flex-end'
-                        }}>
-                          <div className="switch" onClick={(e) => {
-                            e.stopPropagation();
-                            handleToggle(subscription);
+                          {/* Costo */}
+                          <div style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'flex-start',
+                            gap: '0.25rem',
+                            padding: '0.625rem',
+                            background: 'rgba(255, 255, 255, 0.8)',
+                            borderRadius: '10px',
+                            border: '1px solid rgba(0, 0, 0, 0.05)',
+                            minHeight: '50px',
+                            minWidth: '200px'
                           }}>
-                            <input
-                              type="checkbox"
-                              checked={subscription.isActive}
-                              onChange={(e) => {
-                                e.stopPropagation();
-                                handleToggle(subscription);
-                              }}
-                            />
-                            <span className="slider"></span>
+                            <span style={{
+                              fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
+                              color: '#86868b',
+                              fontWeight: '500'
+                            }}>Costo</span>
+                            <span style={{
+                              fontSize: 'clamp(0.875rem, 3vw, 1rem)',
+                              fontWeight: '600',
+                              color: '#1d1d1f'
+                            }}>€{parseFloat(subscription.prezzo).toFixed(2)}</span>
+                          </div>
+
+                          {/* Totale pagato */}
+                          <div style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'flex-start',
+                            gap: '0.25rem',
+                            padding: '0.625rem',
+                            background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(88, 86, 214, 0.1) 100%)',
+                            borderRadius: '10px',
+                            border: '1px solid rgba(0, 122, 255, 0.2)',
+                            minHeight: '50px',
+                            minWidth: '220px'
+                          }}>
+                            <span style={{
+                              fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
+                              color: '#007AFF',
+                              fontWeight: '500'
+                            }}>Totale pagato</span>
+                            <span style={{
+                              fontSize: 'clamp(0.875rem, 3vw, 1rem)',
+                              fontWeight: '600',
+                              color: '#007AFF'
+                            }}>€{subscription.tipoPagamento === 'variabile' 
+                              ? (subscription.pagamenti ? subscription.pagamenti.reduce((totale, pagamento) => totale + parseFloat(pagamento.importo), 0).toFixed(2) : '0.00')
+                              : (subscription.payments ? subscription.payments.reduce((acc, pagamento) => acc + parseFloat(pagamento.importo), 0).toFixed(2) : '0.00')}</span>
+                          </div>
+
+                          {/* Pulsante Visualizza */}
+                          <button
+                            onClick={() => navigate(`/abbonamenti/${subscription.id}`)}
+                            style={{
+                              background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
+                              color: 'white',
+                              padding: '0.5rem 1.25rem',
+                              borderRadius: '8px',
+                              border: 'none',
+                              fontSize: '0.875rem',
+                              fontWeight: '500',
+                              cursor: 'pointer',
+                              transition: 'all 0.2s ease',
+                              whiteSpace: 'nowrap',
+                              boxShadow: '0 4px 12px rgba(0, 122, 255, 0.3)',
+                              minWidth: '100px'
+                            }}
+                            onMouseOver={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #0051D5 0%, #4644B8 100%)'}
+                            onMouseOut={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)'}
+                          >
+                            Visualizza
+                          </button>
+
+                          {/* Switch */}
+                          <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            padding: '0 0.25rem'
+                          }}>
+                            <div className="switch" onClick={(e) => {
+                              e.stopPropagation();
+                              handleToggle(subscription);
+                            }}>
+                              <input
+                                type="checkbox"
+                                checked={subscription.isActive}
+                                onChange={(e) => {
+                                  e.stopPropagation();
+                                  handleToggle(subscription);
+                                }}
+                              />
+                              <span className="slider"></span>
+                            </div>
                           </div>
                         </div>
-
-                        {/* Pulsante Visualizza */}
-                        <button
-                          onClick={() => navigate(`/abbonamenti/${subscription.id}`)}
-                          style={{
-                            background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
-                            color: 'white',
-                            padding: '0.75rem 1.5rem',
-                            borderRadius: '12px',
-                            border: 'none',
-                            fontSize: '0.9375rem',
-                            fontWeight: '500',
-                            cursor: 'pointer',
-                            transition: 'all 0.2s ease',
-                            flex: '0.5',
-                            whiteSpace: 'nowrap'
-                          }}
-                          onMouseOver={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #0051D5 0%, #4644B8 100%)'}
-                          onMouseOut={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)'}
-                        >
-                          Visualizza
-                        </button>
                       </>
                     ) : (
                       <>
                         {/* Vista Riquadri */}
                         <div style={{
                           position: 'relative',
-                          zIndex: 1,
-                          marginTop: '2rem'
+                          zIndex: 1
                         }}>
-                          <h4 style={{
-                            fontSize: '1.25rem',
-                            fontWeight: '600',
-                            color: '#1d1d1f',
-                            margin: '0 0 0.75rem 0'
-                          }}>
-                            {subscription.nome}
-                          </h4>
-                          <p style={{
-                            fontSize: '1rem',
-                            color: '#86868b',
-                            margin: '0 0 0.5rem 0',
+                          {/* Switch in alto */}
+                          <div style={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                            alignItems: 'center',
+                            gap: '0.5rem',
+                            marginBottom: '1rem'
+                          }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleToggle(subscription);
+                            }}
+                          >
+                            <span style={{
+                              fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
+                              color: subscription.isActive ? '#34C759' : '#86868b',
+                              fontWeight: '500',
+                              cursor: 'pointer'
+                            }}>
+                              {subscription.isActive ? 'Attivo' : 'Non attivo'}
+                            </span>
+                            <div className="switch">
+                              <input
+                                type="checkbox"
+                                checked={subscription.isActive}
+                                onChange={(e) => {
+                                  e.stopPropagation();
+                                  handleToggle(subscription);
+                                }}
+                              />
+                              <span className="slider"></span>
+                            </div>
+                          </div>
+
+                          {/* Nome e Logo */}
+                          <div style={{
                             display: 'flex',
                             alignItems: 'center',
-                            gap: '0.5rem'
+                            gap: '0.75rem',
+                            marginBottom: '1rem'
                           }}>
-                            <span style={{ fontSize: '1.1rem' }}>🔄</span>
-                            {formatFrequency(subscription)}
-                          </p>
+                            <div style={{
+                              width: '40px',
+                              height: '40px',
+                              background: subscription.logo ? 'none' : 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
+                              borderRadius: '10px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              fontSize: '1.25rem',
+                              color: 'white',
+                              boxShadow: '0 4px 12px rgba(0, 122, 255, 0.3)',
+                              overflow: 'hidden',
+                              flexShrink: 0
+                            }}>
+                              {subscription.logo ? (
+                                <img 
+                                  src={subscription.logo} 
+                                  alt={`Logo ${subscription.nome}`}
+                                  style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover'
+                                  }}
+                                />
+                              ) : (
+                                <span>💳</span>
+                              )}
+                            </div>
+                            <div style={{ flex: '1', minWidth: 0 }}>
+                              <h4 style={{
+                                fontSize: 'clamp(0.875rem, 3vw, 1.25rem)',
+                                fontWeight: '600',
+                                color: '#1d1d1f',
+                                margin: '0 0 0.5rem 0',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                whiteSpace: 'nowrap'
+                              }}>
+                                {subscription.nome}
+                              </h4>
+                              <p style={{
+                                fontSize: 'clamp(0.75rem, 2.5vw, 1rem)',
+                                color: '#86868b',
+                                margin: 0,
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.5rem'
+                              }}>
+                                <span style={{ fontSize: '1rem' }}>🔄</span>
+                                {formatFrequency(subscription)}
+                              </p>
+                            </div>
+                          </div>
 
                           <div style={{
                             display: 'flex',
-                            flexDirection: 'column',
-                            gap: '0.75rem',
-                            marginTop: '1.25rem'
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            padding: '0.75rem',
+                            background: 'rgba(0, 0, 0, 0.02)',
+                            borderRadius: '12px',
+                            marginBottom: '0.75rem'
                           }}>
-                            <div style={{
-                              display: 'flex',
-                              justifyContent: 'space-between',
-                              alignItems: 'center',
-                              padding: '0.75rem',
-                              background: 'rgba(0, 0, 0, 0.02)',
-                              borderRadius: '12px'
-                            }}>
-                              <span style={{
-                                fontSize: '0.9375rem',
-                                color: '#86868b'
-                              }}>Costo</span>
-                              <span style={{
-                                fontSize: '1rem',
-                                fontWeight: '600',
-                                color: '#1d1d1f'
-                              }}>€{parseFloat(subscription.prezzo).toFixed(2)}</span>
-                            </div>
+                            <span style={{
+                              fontSize: 'clamp(0.75rem, 2.5vw, 0.9375rem)',
+                              color: '#86868b'
+                            }}>Costo</span>
+                            <span style={{
+                              fontSize: 'clamp(0.875rem, 3vw, 1rem)',
+                              fontWeight: '600',
+                              color: '#1d1d1f'
+                            }}>€{parseFloat(subscription.prezzo).toFixed(2)}</span>
+                          </div>
 
-                            <div style={{
-                              display: 'flex',
-                              justifyContent: 'space-between',
-                              alignItems: 'center',
-                              padding: '0.75rem',
-                              background: 'rgba(0, 122, 255, 0.05)',
-                              borderRadius: '12px',
-                              border: '1px solid rgba(0, 122, 255, 0.1)',
-                              alignItems: 'flex-start'
-                            }}>
-                              <span style={{
-                                fontSize: '0.9375rem',
-                                color: '#007AFF'
-                              }}>Totale pagato</span>
-                              <span style={{
-                                fontSize: '1rem',
-                                fontWeight: '600',
-                                color: '#007AFF'
-                              }}>€{subscription.tipoPagamento === 'variabile' 
-                                ? (subscription.pagamenti ? subscription.pagamenti.reduce((totale, pagamento) => totale + parseFloat(pagamento.importo), 0).toFixed(2) : '0.00')
-                                : (subscription.payments ? subscription.payments.reduce((acc, pagamento) => acc + parseFloat(pagamento.importo), 0).toFixed(2) : '0.00')}</span>
-                            </div>
+                          <div style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            padding: '0.75rem',
+                            background: 'rgba(0, 122, 255, 0.05)',
+                            borderRadius: '12px',
+                            border: '1px solid rgba(0, 122, 255, 0.1)',
+                            marginBottom: '1rem'
+                          }}>
+                            <span style={{
+                              fontSize: 'clamp(0.75rem, 2.5vw, 0.9375rem)',
+                              color: '#007AFF'
+                            }}>Totale pagato</span>
+                            <span style={{
+                              fontSize: 'clamp(0.875rem, 3vw, 1rem)',
+                              fontWeight: '600',
+                              color: '#007AFF'
+                            }}>€{subscription.tipoPagamento === 'variabile' 
+                              ? (subscription.pagamenti ? subscription.pagamenti.reduce((totale, pagamento) => totale + parseFloat(pagamento.importo), 0).toFixed(2) : '0.00')
+                              : (subscription.payments ? subscription.payments.reduce((acc, pagamento) => acc + parseFloat(pagamento.importo), 0).toFixed(2) : '0.00')}</span>
                           </div>
 
                           <button
@@ -688,15 +886,15 @@ function Abbonamenti() {
                             style={{
                               background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
                               color: 'white',
-                              padding: '0.75rem 1.5rem',
+                              padding: '0.75rem 1.25rem',
                               borderRadius: '12px',
                               border: 'none',
-                              fontSize: '0.9375rem',
+                              fontSize: '0.875rem',
                               fontWeight: '500',
                               cursor: 'pointer',
                               transition: 'all 0.2s ease',
                               width: '100%',
-                              marginTop: '1.25rem'
+                              boxShadow: '0 4px 12px rgba(0, 122, 255, 0.3)'
                             }}
                             onMouseOver={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #0051D5 0%, #4644B8 100%)'}
                             onMouseOut={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)'}
@@ -705,51 +903,13 @@ function Abbonamenti() {
                           </button>
                         </div>
 
-                        {/* Switch per la vista riquadri */}
-                        <div style={{
-                          position: 'absolute',
-                          top: '1rem',
-                          right: '1rem',
-                          zIndex: 2
-                        }}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleToggle(subscription);
-                          }}
-                        >
-                          <div style={{
-                            flex: '0.5',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: '0.75rem'
-                        }}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleToggle(subscription);
-                          }}
-                        >
-                          <div className="switch">
-                            <input
-                              type="checkbox"
-                              checked={subscription.isActive}
-                              onChange={(e) => {
-                                e.stopPropagation();
-                                handleToggle(subscription);
-                              }}
-                            />
-                            <span className="slider"></span>
-                            </div>
-                          </div>
-                        </div>
-
                         {/* Sfondo decorativo */}
                         <div style={{
                           position: 'absolute',
                           top: 0,
                           right: 0,
-                          width: '150px',
-                          height: '150px',
+                          width: '120px',
+                          height: '120px',
                           background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.05) 0%, rgba(88, 86, 214, 0.05) 100%)',
                           borderRadius: '0 20px 0 100%',
                           zIndex: 0
@@ -761,74 +921,201 @@ function Abbonamenti() {
               )}
             </div>
           </div>
-
-          {/* Modal di conferma eliminazione */}
-          {showDeleteModal && (
-            <div style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              background: 'rgba(0, 0, 0, 0.5)',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              zIndex: 1000
-            }}>
-              <div style={{
-                background: 'white',
-                padding: '2rem',
-                borderRadius: '16px',
-                maxWidth: '400px',
-                width: '90%'
-              }}>
-                <h3 style={{
-                  margin: '0 0 1rem 0',
-                  fontSize: '1.25rem',
-                  fontWeight: '600'
-                }}>Conferma eliminazione</h3>
-                <p style={{
-                  margin: '0 0 1.5rem 0',
-                  color: '#666'
-                }}>Sei sicuro di voler eliminare questo abbonamento?</p>
-                <div style={{
-                  display: 'flex',
-                  gap: '1rem',
-                  justifyContent: 'flex-end'
-                }}>
-                  <button
-                    onClick={() => setShowDeleteModal(false)}
-                    style={{
-                      padding: '0.5rem 1rem',
-                      border: 'none',
-                      borderRadius: '8px',
-                      background: '#f5f5f7',
-                      color: '#666',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    Annulla
-                  </button>
-                  <button
-                    onClick={confirmDelete}
-                    style={{
-                      padding: '0.5rem 1rem',
-                      border: 'none',
-                      borderRadius: '8px',
-                      background: '#ff3b30',
-                      color: 'white',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    Elimina
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </div>
+
+      {/* Modal di conferma eliminazione */}
+      {showDeleteModal && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'rgba(0, 0, 0, 0.5)',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 1000,
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)',
+          padding: '1rem'
+        }}>
+          <div style={{
+            background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+            borderRadius: '20px',
+            padding: '1.5rem',
+            maxWidth: '500px',
+            width: '100%',
+            textAlign: 'center',
+            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.2)',
+            border: '1px solid rgba(255, 255, 255, 0.3)',
+            animation: 'fadeInUp 0.3s ease-out'
+          }}>
+            <div style={{
+              fontSize: 'clamp(2rem, 6vw, 3rem)',
+              marginBottom: '1rem',
+              filter: 'drop-shadow(0 4px 8px rgba(255, 59, 48, 0.3))'
+            }}>⚠️</div>
+            <h3 style={{
+              fontSize: 'clamp(1.25rem, 4vw, 1.5rem)',
+              fontWeight: '700',
+              color: '#1d1d1f',
+              margin: '0 0 1rem 0',
+              letterSpacing: '-0.01em'
+            }}>
+              Conferma eliminazione
+            </h3>
+            <p style={{
+              fontSize: 'clamp(0.875rem, 3vw, 1.125rem)',
+              color: '#86868b',
+              margin: '0 0 1.5rem 0',
+              lineHeight: '1.5'
+            }}>
+              Sei sicuro di voler eliminare l'abbonamento <strong>"{subscriptionToDelete?.nome}"</strong>? Questa azione non può essere annullata.
+            </p>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.75rem'
+            }}>
+              <button
+                onClick={() => setShowDeleteModal(false)}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.8)',
+                  color: '#86868b',
+                  padding: '0.75rem 1.5rem',
+                  borderRadius: '12px',
+                  border: '1px solid rgba(0, 0, 0, 0.1)',
+                  fontSize: '0.875rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.9)';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.8)';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                }}
+              >
+                Annulla
+              </button>
+              <button
+                onClick={confirmDelete}
+                style={{
+                  background: 'linear-gradient(135deg, #FF3B30 0%, #FF6B6B 100%)',
+                  color: 'white',
+                  padding: '0.75rem 1.5rem',
+                  borderRadius: '12px',
+                  border: 'none',
+                  fontSize: '0.875rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  boxShadow: '0 4px 12px rgba(255, 59, 48, 0.3)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 6px 16px rgba(255, 59, 48, 0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 59, 48, 0.3)';
+                }}
+              >
+                Elimina
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <style>
+        {`
+          @media (max-width: 768px) {
+            .abbonamenti-container {
+              padding: 1rem !important;
+            }
+            
+            .header-container {
+              flex-direction: column !important;
+              gap: 1rem !important;
+              align-items: flex-start !important;
+            }
+            
+            .controls-container {
+              flex-direction: column !important;
+              gap: 1rem !important;
+              align-items: stretch !important;
+            }
+            
+            .subscription-card {
+              padding: 1rem !important;
+            }
+            
+            .subscription-logo {
+              width: 36px !important;
+              height: 36px !important;
+              font-size: 1rem !important;
+            }
+            
+            .cost-grid {
+              grid-template-columns: 1fr !important;
+              gap: 0.5rem !important;
+            }
+          }
+          
+          @media (max-width: 480px) {
+            .abbonamenti-container {
+              padding: 0.75rem !important;
+            }
+            
+            .main-content {
+              padding: 1rem !important;
+              border-radius: 16px !important;
+            }
+            
+            .subscription-card {
+              padding: 0.875rem !important;
+            }
+            
+            .modal-container {
+              padding: 1rem !important;
+            }
+            
+            .modal-content {
+              padding: 1.25rem !important;
+            }
+          }
+          
+          @keyframes fadeInUp {
+            from {
+              opacity: 0;
+              transform: translateY(30px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+          
+          @keyframes slideInRight {
+            from {
+              opacity: 0;
+              transform: translateX(-30px);
+            }
+            to {
+              opacity: 1;
+              transform: translateX(0);
+            }
+          }
+        `}
+      </style>
     </Layout>
   );
 }
