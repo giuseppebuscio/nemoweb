@@ -1187,7 +1187,7 @@ const SubscriptionDetail = () => {
 
                 {/* Lista Pagamenti */}
                 <div style={{
-                  background: 'white',
+                  background: 'whie',
                   borderRadius: '16px',
                   padding: '1.5rem',
                   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
