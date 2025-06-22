@@ -254,14 +254,14 @@ function Contabilita() {
               </div>
 
               <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(3, 300px)',
+                display: 'flex',
+                flexDirection: 'column',
                 gap: '0.75rem',
                 flex: '1',
                 alignItems: 'stretch',
                 justifyContent: 'flex-end',
                 minWidth: 0
-              }}>
+              }} className="cost-grid">
                 <div style={{
                   display: 'flex',
                   flexDirection: 'column',
@@ -272,8 +272,9 @@ function Contabilita() {
                   borderRadius: '10px',
                       border: '1px solid rgba(0, 0, 0, 0.05)',
                       minHeight: '50px',
-                      width: '300px'
-                }} className="costo-abbonamento">
+                      width: '100%',
+                      maxWidth: '200px'
+                }} className="costo-abbonamento desktop-only">
                   <span style={{
                         fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
                         color: '#86868b',
@@ -296,7 +297,8 @@ function Contabilita() {
                   borderRadius: '10px',
                       border: '1px solid rgba(0, 122, 255, 0.2)',
                       minHeight: '50px',
-                      width: '300px'
+                      width: '100%',
+                      maxWidth: '200px'
                 }} className="costo-mensile">
                   <span style={{
                         fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
@@ -320,8 +322,9 @@ function Contabilita() {
                   borderRadius: '10px',
                       border: '1px solid rgba(0, 0, 0, 0.05)',
                       minHeight: '50px',
-                      width: '300px'
-                }} className="costo-annuale">
+                      width: '100%',
+                      maxWidth: '200px'
+                }} className="costo-annuale desktop-only">
                   <span style={{
                         fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
                         color: '#86868b',
@@ -369,6 +372,7 @@ function Contabilita() {
                       : '0 4px 12px rgba(0, 122, 255, 0.3)',
                     opacity: currentPage === 0 ? 0.5 : 1
                   }}
+                  className="nav-button prev-button"
                   onMouseEnter={(e) => {
                     if (currentPage !== 0) {
                       e.currentTarget.style.transform = 'translateY(-2px)';
@@ -382,7 +386,8 @@ function Contabilita() {
                     }
                   }}
                 >
-                  ← Precedente
+                  <span className="button-text">← Precedente</span>
+                  <span className="button-arrow">←</span>
                 </button>
 
                 <div style={{
@@ -451,6 +456,7 @@ function Contabilita() {
                       : '0 4px 12px rgba(0, 122, 255, 0.3)',
                     opacity: currentPage === totalPages - 1 ? 0.5 : 1
                   }}
+                  className="nav-button next-button"
                   onMouseEnter={(e) => {
                     if (currentPage !== totalPages - 1) {
                       e.currentTarget.style.transform = 'translateY(-2px)';
@@ -464,7 +470,8 @@ function Contabilita() {
                     }
                   }}
                 >
-                  Successivo →
+                  <span className="button-text">Successivo →</span>
+                  <span className="button-arrow">→</span>
                 </button>
               </div>
             )}
@@ -727,8 +734,10 @@ function Contabilita() {
             }
             
             .subscription-card {
-              padding: 0
-              .875rem !important;
+              padding: 0.875rem !important;
+              flex-direction: row !important;
+              align-items: center !important;
+              gap: 1rem !important;
             }
             
             .subscription-logo {
@@ -738,8 +747,20 @@ function Contabilita() {
             }
             
             .cost-grid {
-              grid-template-columns: 1fr !important;
+              flex-direction: row !important;
+              align-items: center !important;
               gap: 0.5rem !important;
+              width: auto !important;
+            }
+            
+            .desktop-only {
+              display: none !important;
+            }
+            
+            .costo-mensile {
+              width: auto !important;
+              max-width: none !important;
+              min-width: 120px !important;
             }
             
             .pagination-container {
@@ -747,16 +768,55 @@ function Contabilita() {
               gap: 0.75rem !important;
             }
             
-            .costo-abbonamento,
-            .costo-annuale {
+            .nav-button {
+              padding: 0.625rem !important;
+              min-width: 44px !important;
+              height: 44px !important;
+              display: flex !important;
+              align-items: center !important;
+              justify-content: center !important;
+            }
+            
+            .button-text {
               display: none !important;
             }
             
-            .costo-mensile {
-              grid-column: 1 / -1 !important;
-              max-width: 200px !important;
-              margin-left: auto !important;
-              margin-right: 0 !important;
+            .button-arrow {
+              display: block !important;
+              font-size: 1.25rem !important;
+            }
+            
+            .pagination-container button {
+              width: 44px !important;
+              height: 44px !important;
+              min-width: 44px !important;
+              padding: 0 !important;
+              display: flex !important;
+              align-items: center !important;
+              justify-content: center !important;
+            }
+          }
+          
+          @media (min-width: 769px) {
+            .cost-grid {
+              flex-direction: row !important;
+              flex-wrap: nowrap !important;
+              gap: 0.75rem !important;
+            }
+            
+            .costo-abbonamento,
+            .costo-mensile,
+            .costo-annuale {
+              flex: 1 !important;
+              max-width: none !important;
+            }
+            
+            .button-text {
+              display: block !important;
+            }
+            
+            .button-arrow {
+              display: none !important;
             }
           }
           
@@ -767,6 +827,17 @@ function Contabilita() {
             
             .subscription-card {
               padding: 0.75rem !important;
+            }
+            
+            .cost-grid {
+              flex-direction: row !important;
+              width: auto !important;
+            }
+            
+            .costo-mensile {
+              width: auto !important;
+              max-width: none !important;
+              min-width: 100px !important;
             }
             
             .main-content {
