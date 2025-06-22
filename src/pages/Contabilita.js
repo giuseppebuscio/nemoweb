@@ -255,12 +255,12 @@ function Contabilita() {
 
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
-                    gap: '0.5rem',
-                    flex: '1',
-                    alignItems: 'stretch',
-                    justifyContent: 'flex-end',
-                    minWidth: 0
+                gridTemplateColumns: 'repeat(3, 300px)',
+                gap: '0.75rem',
+                flex: '1',
+                alignItems: 'stretch',
+                justifyContent: 'flex-end',
+                minWidth: 0
               }}>
                 <div style={{
                   display: 'flex',
@@ -271,7 +271,8 @@ function Contabilita() {
                       background: 'rgba(255, 255, 255, 0.8)',
                   borderRadius: '10px',
                       border: '1px solid rgba(0, 0, 0, 0.05)',
-                      minHeight: '50px'
+                      minHeight: '50px',
+                      width: '300px'
                 }} className="costo-abbonamento">
                   <span style={{
                         fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
@@ -294,7 +295,8 @@ function Contabilita() {
                       background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(88, 86, 214, 0.1) 100%)',
                   borderRadius: '10px',
                       border: '1px solid rgba(0, 122, 255, 0.2)',
-                      minHeight: '50px'
+                      minHeight: '50px',
+                      width: '300px'
                 }} className="costo-mensile">
                   <span style={{
                         fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
@@ -317,7 +319,8 @@ function Contabilita() {
                       background: 'rgba(255, 255, 255, 0.8)',
                   borderRadius: '10px',
                       border: '1px solid rgba(0, 0, 0, 0.05)',
-                      minHeight: '50px'
+                      minHeight: '50px',
+                      width: '300px'
                 }} className="costo-annuale">
                   <span style={{
                         fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
