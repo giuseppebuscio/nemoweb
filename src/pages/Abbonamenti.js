@@ -13,6 +13,17 @@ function Abbonamenti() {
   const [viewMode, setViewMode] = useState('grid'); // 'grid' o 'list'
   const [sortBy, setSortBy] = useState('nome'); // 'nome' o 'prezzo'
   const [sortDirection, setSortDirection] = useState('asc'); // 'asc' o 'desc'
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  // Effetto per gestire il responsive del testo del pulsante
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Funzione per gestire il click sui pulsanti di ordinamento
   const handleSortClick = (criterion) => {
@@ -150,6 +161,11 @@ function Abbonamenti() {
     navigate(`/abbonamento/${subscriptionId}`);
   };
 
+  // Funzione per ottenere il testo del pulsante in base alla dimensione dello schermo
+  const getAddButtonText = () => {
+    return isMobile ? "Nuovo" : "Aggiungi nuovo";
+  };
+
   return (
     <Layout>
       <div style={{ 
@@ -157,7 +173,7 @@ function Abbonamenti() {
         background: 'linear-gradient(135deg, #fafafa 0%, #f5f5f7 100%)',
         minHeight: '100vh',
         width: '100%'
-      }}>
+      }} className="main-container">
         <div style={{ width: '100%' }}>
           
           {/* Header */}
@@ -167,7 +183,7 @@ function Abbonamenti() {
             display: 'flex',
             flexDirection: 'column',
             gap: '1rem'
-          }}>
+          }} className="header-container">
             <div style={{
               display: 'flex',
               flexDirection: 'row',
@@ -186,7 +202,7 @@ function Abbonamenti() {
                   background: 'linear-gradient(135deg, #1d1d1f 0%, #86868b 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent'
-                }}>
+                }} className="header-title">
                   I miei Abbonamenti
                 </h1>
                 <p style={{
@@ -196,7 +212,7 @@ function Abbonamenti() {
                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
                   fontWeight: '400',
                   lineHeight: '1.4'
-                }}>
+                }} className="header-subtitle">
                   Visualizza e gestisci tutti i tuoi abbonamenti
                 </p>
               </div>
@@ -220,6 +236,7 @@ function Abbonamenti() {
                   boxShadow: '0 4px 12px rgba(0, 122, 255, 0.3)',
                   alignSelf: 'flex-start'
                 }}
+                className="add-button-mobile"
                 onMouseOver={(e) => {
                   e.currentTarget.style.transform = 'translateY(-2px)';
                   e.currentTarget.style.boxShadow = '0 6px 16px rgba(0, 122, 255, 0.4)';
@@ -230,7 +247,7 @@ function Abbonamenti() {
                 }}
               >
                 <span style={{ fontSize: '1.1em' }}>+</span>
-                Aggiungi nuovo
+                <span className="add-button-text">{getAddButtonText()}</span>
               </button>
             </div>
           </div>
@@ -246,7 +263,7 @@ function Abbonamenti() {
             border: '1px solid rgba(255, 255, 255, 0.3)',
             marginBottom: '1.5rem',
             animation: 'fadeInUp 0.8s ease-out 0.4s both'
-          }}>
+          }} className="main-content">
             {/* Header del riquadro con titolo e controlli visualizzazione */}
             <div style={{
               display: 'flex',
@@ -260,14 +277,14 @@ function Abbonamenti() {
                 justifyContent: 'space-between',
                 alignItems: 'flex-start',
                 gap: '1rem'
-              }}>
+              }} className="controls-header">
                 <h3 style={{
                   fontSize: 'clamp(1.25rem, 4vw, 1.75rem)',
                   fontWeight: '700',
                   color: '#1d1d1f',
                   margin: 0,
                   letterSpacing: '-0.01em'
-                }}>Abbonamenti Attivi</h3>
+                }} className="controls-title">Abbonamenti Attivi</h3>
 
                 {/* Controlli visualizzazione */}
                 <div style={{
@@ -275,14 +292,14 @@ function Abbonamenti() {
                   flexDirection: 'row',
                   gap: '1rem',
                   alignItems: 'center'
-                }}>
+                }} className="controls-container">
                   {/* Selettore ordinamento */}
                   <div style={{
                     display: 'flex',
                     flexDirection: 'row',
                     gap: '0.5rem',
                     alignItems: 'center'
-                  }}>
+                  }} className="sort-selector">
                     <span style={{
                       fontSize: '0.875rem',
                       color: '#86868b',
@@ -393,7 +410,7 @@ function Abbonamenti() {
                     flexDirection: 'row',
                     gap: '0.5rem',
                     alignItems: 'center'
-                  }}>
+                  }} className="view-selector">
                     <span style={{
                       fontSize: '0.875rem',
                       color: '#86868b',
@@ -499,7 +516,7 @@ function Abbonamenti() {
               gridTemplateColumns: viewMode === 'grid' ? 'repeat(auto-fit, minmax(280px, 1fr))' : 'none',
               flexDirection: viewMode === 'list' ? 'column' : 'row',
               gap: '1rem'
-            }}>
+            }} className="subscriptions-grid">
               {getSortedSubscriptions().length === 0 ? (
                 <div style={{
                   display: 'flex',
@@ -555,6 +572,7 @@ function Abbonamenti() {
                       overflow: 'hidden',
                       opacity: subscription.isActive ? 1 : 0.6
                     }}
+                    className="subscription-card"
                     onClick={() => navigate(`/abbonamenti/${subscription.id}`)}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = 'translateY(-4px) scale(1.02)';
@@ -567,53 +585,54 @@ function Abbonamenti() {
                   >
                     {viewMode === 'list' ? (
                       <>
-                        {/* Vista Lista */}
+                        {/* Vista Lista Semplificata */}
                         <div style={{
                           display: 'flex',
                           flexDirection: 'row',
                           alignItems: 'center',
-                          gap: '1rem',
+                          justifyContent: 'space-between',
                           width: '100%',
-                          padding: '0.5rem 0'
-                        }}>
-                          {/* Logo */}
-                          <div style={{
-                            width: '50px',
-                            height: '50px',
-                            background: subscription.logo ? 'none' : 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
-                            borderRadius: '12px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: '1.5rem',
-                            color: 'white',
-                            boxShadow: '0 4px 12px rgba(0, 122, 255, 0.3)',
-                            overflow: 'hidden',
-                            flexShrink: 0
-                          }}>
-                            {subscription.logo ? (
-                              <img 
-                                src={subscription.logo} 
-                                alt={`Logo ${subscription.nome}`}
-                                style={{
-                                  width: '100%',
-                                  height: '100%',
-                                  objectFit: 'cover'
-                                }}
-                              />
-                            ) : (
-                              <span>💳</span>
-                            )}
-                          </div>
-
+                          padding: '1rem 0',
+                          cursor: 'pointer'
+                        }} className="list-view-mobile">
                           {/* Nome */}
                           <div style={{ 
                             flex: '1', 
                             minWidth: 0,
                             display: 'flex',
-                            flexDirection: 'column',
-                            gap: '0.5rem'
-                          }}>
+                            alignItems: 'center',
+                            gap: '0.75rem'
+                          }} className="info-container">
+                            {/* Logo */}
+                            <div style={{
+                              width: '40px',
+                              height: '40px',
+                              background: subscription.logo ? 'none' : 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
+                              borderRadius: '10px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              fontSize: '1.25rem',
+                              color: 'white',
+                              boxShadow: '0 4px 12px rgba(0, 122, 255, 0.3)',
+                              overflow: 'hidden',
+                              flexShrink: 0
+                            }} className="logo-container">
+                              {subscription.logo ? (
+                                <img 
+                                  src={subscription.logo} 
+                                  alt={`Logo ${subscription.nome}`}
+                                  style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover'
+                                  }}
+                                />
+                              ) : (
+                                <span>💳</span>
+                              )}
+                            </div>
+                            
                             <h4 style={{
                               fontSize: 'clamp(1rem, 3vw, 1.25rem)',
                               fontWeight: '600',
@@ -625,100 +644,14 @@ function Abbonamenti() {
                             }}>
                               {subscription.nome}
                             </h4>
-                            <p style={{
-                              fontSize: 'clamp(0.875rem, 2.5vw, 1rem)',
-                              color: '#86868b',
-                              margin: 0,
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '0.5rem'
-                            }}>
-                              <span style={{ fontSize: '1.1rem' }}>🔄</span>
-                              {formatFrequency(subscription)}
-                            </p>
                           </div>
-
-                          {/* Costo */}
-                          <div style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'flex-start',
-                            gap: '0.25rem',
-                            padding: '0.625rem',
-                            background: 'rgba(255, 255, 255, 0.8)',
-                            borderRadius: '10px',
-                            border: '1px solid rgba(0, 0, 0, 0.05)',
-                            minHeight: '50px',
-                            minWidth: '200px'
-                          }}>
-                            <span style={{
-                              fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
-                              color: '#86868b',
-                              fontWeight: '500'
-                            }}>Costo</span>
-                            <span style={{
-                              fontSize: 'clamp(0.875rem, 3vw, 1rem)',
-                              fontWeight: '600',
-                              color: '#1d1d1f'
-                            }}>€{parseFloat(subscription.prezzo).toFixed(2)}</span>
-                          </div>
-
-                          {/* Totale pagato */}
-                          <div style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'flex-start',
-                            gap: '0.25rem',
-                            padding: '0.625rem',
-                            background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(88, 86, 214, 0.1) 100%)',
-                            borderRadius: '10px',
-                            border: '1px solid rgba(0, 122, 255, 0.2)',
-                            minHeight: '50px',
-                            minWidth: '220px'
-                          }}>
-                            <span style={{
-                              fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
-                              color: '#007AFF',
-                              fontWeight: '500'
-                            }}>Totale pagato</span>
-                            <span style={{
-                              fontSize: 'clamp(0.875rem, 3vw, 1rem)',
-                              fontWeight: '600',
-                              color: '#007AFF'
-                            }}>€{subscription.tipoPagamento === 'variabile' 
-                              ? (subscription.pagamenti ? subscription.pagamenti.reduce((totale, pagamento) => totale + parseFloat(pagamento.importo), 0).toFixed(2) : '0.00')
-                              : (subscription.payments ? subscription.payments.reduce((acc, pagamento) => acc + parseFloat(pagamento.importo), 0).toFixed(2) : '0.00')}</span>
-                          </div>
-
-                          {/* Pulsante Visualizza */}
-                          <button
-                            onClick={() => navigate(`/abbonamenti/${subscription.id}`)}
-                            style={{
-                              background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
-                              color: 'white',
-                              padding: '0.5rem 1.25rem',
-                              borderRadius: '8px',
-                              border: 'none',
-                              fontSize: '0.875rem',
-                              fontWeight: '500',
-                              cursor: 'pointer',
-                              transition: 'all 0.2s ease',
-                              whiteSpace: 'nowrap',
-                              boxShadow: '0 4px 12px rgba(0, 122, 255, 0.3)',
-                              minWidth: '100px'
-                            }}
-                            onMouseOver={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #0051D5 0%, #4644B8 100%)'}
-                            onMouseOut={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)'}
-                          >
-                            Visualizza
-                          </button>
 
                           {/* Switch */}
                           <div style={{
                             display: 'flex',
                             alignItems: 'center',
                             padding: '0 0.25rem'
-                          }}>
+                          }} className="actions-container">
                             <div className="switch" onClick={(e) => {
                               e.stopPropagation();
                               handleToggle(subscription);
@@ -742,7 +675,7 @@ function Abbonamenti() {
                         <div style={{
                           position: 'relative',
                           zIndex: 1
-                        }}>
+                        }} className="grid-view-mobile">
                           {/* Switch in alto */}
                           <div style={{
                             display: 'flex',
@@ -797,7 +730,7 @@ function Abbonamenti() {
                               boxShadow: '0 4px 12px rgba(0, 122, 255, 0.3)',
                               overflow: 'hidden',
                               flexShrink: 0
-                            }}>
+                            }} className="logo-container">
                               {subscription.logo ? (
                                 <img 
                                   src={subscription.logo} 
@@ -846,7 +779,7 @@ function Abbonamenti() {
                             background: 'rgba(0, 0, 0, 0.02)',
                             borderRadius: '12px',
                             marginBottom: '0.75rem'
-                          }}>
+                          }} className="cost-row cost-item">
                             <span style={{
                               fontSize: 'clamp(0.75rem, 2.5vw, 0.9375rem)',
                               color: '#86868b'
@@ -867,7 +800,7 @@ function Abbonamenti() {
                             borderRadius: '12px',
                             border: '1px solid rgba(0, 122, 255, 0.1)',
                             marginBottom: '1rem'
-                          }}>
+                          }} className="cost-row cost-item">
                             <span style={{
                               fontSize: 'clamp(0.75rem, 2.5vw, 0.9375rem)',
                               color: '#007AFF'
@@ -896,6 +829,7 @@ function Abbonamenti() {
                               width: '100%',
                               boxShadow: '0 4px 12px rgba(0, 122, 255, 0.3)'
                             }}
+                            className="view-button"
                             onMouseOver={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #0051D5 0%, #4644B8 100%)'}
                             onMouseOut={(e) => e.currentTarget.style.background = 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)'}
                           >
@@ -953,19 +887,19 @@ function Abbonamenti() {
             boxShadow: '0 20px 60px rgba(0, 0, 0, 0.2)',
             border: '1px solid rgba(255, 255, 255, 0.3)',
             animation: 'fadeInUp 0.3s ease-out'
-          }}>
+          }} className="modal-content-mobile">
             <div style={{
               fontSize: 'clamp(2rem, 6vw, 3rem)',
               marginBottom: '1rem',
               filter: 'drop-shadow(0 4px 8px rgba(255, 59, 48, 0.3))'
-            }}>⚠️</div>
+            }} className="modal-icon">⚠️</div>
             <h3 style={{
               fontSize: 'clamp(1.25rem, 4vw, 1.5rem)',
               fontWeight: '700',
               color: '#1d1d1f',
               margin: '0 0 1rem 0',
               letterSpacing: '-0.01em'
-            }}>
+            }} className="modal-title">
               Conferma eliminazione
             </h3>
             <p style={{
@@ -973,14 +907,14 @@ function Abbonamenti() {
               color: '#86868b',
               margin: '0 0 1.5rem 0',
               lineHeight: '1.5'
-            }}>
+            }} className="modal-text">
               Sei sicuro di voler eliminare l'abbonamento <strong>"{subscriptionToDelete?.nome}"</strong>? Questa azione non può essere annullata.
             </p>
             <div style={{
               display: 'flex',
               flexDirection: 'column',
               gap: '0.75rem'
-            }}>
+            }} className="modal-buttons-mobile">
               <button
                 onClick={() => setShowDeleteModal(false)}
                 style={{
@@ -1038,61 +972,361 @@ function Abbonamenti() {
       <style>
         {`
           @media (max-width: 768px) {
-            .abbonamenti-container {
-              padding: 1rem !important;
-            }
-            
+            /* Header responsive */
             .header-container {
               flex-direction: column !important;
               gap: 1rem !important;
-              align-items: flex-start !important;
+              align-items: stretch !important;
             }
             
+            /* Controlli responsive */
             .controls-container {
               flex-direction: column !important;
               gap: 1rem !important;
               align-items: stretch !important;
             }
             
-            .subscription-card {
-              padding: 1rem !important;
+            /* Selettori responsive */
+            .sort-selector, .view-selector {
+              flex-direction: column !important;
+              gap: 0.5rem !important;
             }
             
-            .subscription-logo {
+            .sort-selector > div, .view-selector > div {
+              width: 100% !important;
+            }
+            
+            /* Griglia responsive */
+            .subscriptions-grid {
+              grid-template-columns: 1fr !important;
+              gap: 1rem !important;
+            }
+            
+            /* Card responsive */
+            .subscription-card {
+              padding: 1rem !important;
+              border-radius: 16px !important;
+            }
+            
+            /* Vista lista mobile */
+            .list-view-mobile {
+              flex-direction: row !important;
+              gap: 0.75rem !important;
+              align-items: center !important;
+              justify-content: space-between !important;
+              padding: 1rem 0 !important;
+              cursor: pointer !important;
+            }
+            
+            .list-view-mobile .logo-container {
+              width: 40px !important;
+              height: 40px !important;
+              font-size: 1.25rem !important;
+              flex-shrink: 0 !important;
+            }
+            
+            .list-view-mobile .info-container {
+              flex: 1 !important;
+              min-width: 0 !important;
+              display: flex !important;
+              align-items: center !important;
+              gap: 0.75rem !important;
+            }
+            
+            .list-view-mobile .info-container h4 {
+              font-size: clamp(1rem, 3vw, 1.25rem) !important;
+              margin: 0 !important;
+              overflow: hidden !important;
+              text-overflow: ellipsis !important;
+              white-space: nowrap !important;
+            }
+            
+            .list-view-mobile .actions-container {
+              flex-shrink: 0 !important;
+              display: flex !important;
+              align-items: center !important;
+              padding: 0 0.25rem !important;
+            }
+            
+            /* Vista griglia mobile */
+            .grid-view-mobile .logo-container {
               width: 36px !important;
               height: 36px !important;
               font-size: 1rem !important;
             }
             
-            .cost-grid {
-              grid-template-columns: 1fr !important;
+            .grid-view-mobile .cost-row {
+              flex-direction: column !important;
               gap: 0.5rem !important;
+              align-items: stretch !important;
+            }
+            
+            .grid-view-mobile .cost-item {
+              width: 100% !important;
+              min-width: auto !important;
+            }
+            
+            /* Pulsante aggiungi mobile */
+            .add-button-mobile {
+              justify-content: center !important;
+              padding: 0.75rem 1rem !important;
+              font-size: 0.875rem !important;
+              border-radius: 10px !important;
+              min-width: fit-content !important;
+            }
+            
+            .add-button-text {
+              display: inline !important;
+            }
+            
+            .add-button-text::after {
+              content: "Nuovo" !important;
+              display: none !important;
+            }
+            
+            /* Modal mobile */
+            .modal-content-mobile {
+              margin: 1rem !important;
+              padding: 1.25rem !important;
+              border-radius: 16px !important;
+            }
+            
+            .modal-buttons-mobile {
+              flex-direction: column !important;
+              gap: 0.75rem !important;
+            }
+            
+            .modal-buttons-mobile button {
+              width: 100% !important;
+              padding: 1rem !important;
+              font-size: 1rem !important;
             }
           }
           
           @media (max-width: 480px) {
-            .abbonamenti-container {
+            /* Container principale */
+            .main-container {
               padding: 0.75rem !important;
             }
             
+            /* Header mobile */
+            .header-title {
+              font-size: 1.5rem !important;
+              margin-bottom: 0.5rem !important;
+            }
+            
+            .header-subtitle {
+              font-size: 0.875rem !important;
+            }
+            
+            /* Contenuto principale */
             .main-content {
               padding: 1rem !important;
               border-radius: 16px !important;
+              margin-bottom: 1rem !important;
             }
             
+            /* Card mobile */
             .subscription-card {
               padding: 0.875rem !important;
+              border-radius: 12px !important;
             }
             
-            .modal-container {
+            /* Controlli mobile */
+            .controls-header {
+              flex-direction: column !important;
+              gap: 0.75rem !important;
+              align-items: stretch !important;
+            }
+            
+            .controls-title {
+              font-size: 1.25rem !important;
+            }
+            
+            /* Selettori mobile */
+            .sort-selector span, .view-selector span {
+              font-size: 0.875rem !important;
+            }
+            
+            .sort-selector button, .view-selector button {
+              padding: 0.5rem 0.75rem !important;
+              font-size: 0.75rem !important;
+            }
+            
+            /* Vista lista mobile piccola */
+            .list-view-mobile .logo-container {
+              width: 36px !important;
+              height: 36px !important;
+              font-size: 1.1rem !important;
+            }
+            
+            .list-view-mobile .info-container h4 {
+              font-size: 1rem !important;
+            }
+            
+            .list-view-mobile .info-container {
+              gap: 0.5rem !important;
+            }
+            
+            .list-view-mobile .cost-container,
+            .list-view-mobile .total-container {
+              padding: 0.5rem !important;
+              min-height: 40px !important;
+            }
+            
+            .list-view-mobile .cost-container span:first-child,
+            .list-view-mobile .total-container span:first-child {
+              font-size: 0.75rem !important;
+            }
+            
+            .list-view-mobile .cost-container span:last-child,
+            .list-view-mobile .total-container span:last-child {
+              font-size: 0.875rem !important;
+            }
+            
+            /* Vista griglia mobile piccola */
+            .grid-view-mobile .logo-container {
+              width: 32px !important;
+              height: 32px !important;
+              font-size: 0.9rem !important;
+            }
+            
+            .grid-view-mobile h4 {
+              font-size: 1rem !important;
+            }
+            
+            .grid-view-mobile p {
+              font-size: 0.875rem !important;
+            }
+            
+            .grid-view-mobile .cost-row {
+              padding: 0.5rem !important;
+            }
+            
+            .grid-view-mobile .cost-row span:first-child {
+              font-size: 0.75rem !important;
+            }
+            
+            .grid-view-mobile .cost-row span:last-child {
+              font-size: 0.875rem !important;
+            }
+            
+            .grid-view-mobile .view-button {
+              padding: 0.75rem 1rem !important;
+              font-size: 0.875rem !important;
+            }
+            
+            /* Switch mobile */
+            .switch {
+              width: 44px !important;
+              height: 26px !important;
+            }
+            
+            .slider:before {
+              height: 22px !important;
+              width: 22px !important;
+            }
+            
+            input:checked + .slider:before {
+              transform: translateX(18px) !important;
+            }
+            
+            /* Modal mobile piccola */
+            .modal-content-mobile {
+              margin: 0.5rem !important;
               padding: 1rem !important;
             }
             
-            .modal-content {
-              padding: 1.25rem !important;
+            .modal-icon {
+              font-size: 2.5rem !important;
+            }
+            
+            .modal-title {
+              font-size: 1.25rem !important;
+            }
+            
+            .modal-text {
+              font-size: 0.875rem !important;
+            }
+            
+            /* Pulsante aggiungi mobile piccola */
+            .add-button-mobile {
+              justify-content: center !important;
+              padding: 0.625rem 0.875rem !important;
+              font-size: 0.8125rem !important;
+              border-radius: 8px !important;
+              min-width: fit-content !important;
             }
           }
           
+          @media (max-width: 360px) {
+            /* Extra small devices */
+            .main-container {
+              padding: 0.5rem !important;
+            }
+            
+            .main-content {
+              padding: 0.75rem !important;
+            }
+            
+            .subscription-card {
+              padding: 0.75rem !important;
+            }
+            
+            .header-title {
+              font-size: 1.25rem !important;
+            }
+            
+            .controls-title {
+              font-size: 1.125rem !important;
+            }
+            
+            .list-view-mobile .logo-container {
+              width: 32px !important;
+              height: 32px !important;
+            }
+            
+            .grid-view-mobile .logo-container {
+              width: 28px !important;
+              height: 28px !important;
+            }
+            
+            .modal-content-mobile {
+              margin: 0.25rem !important;
+              padding: 0.875rem !important;
+            }
+            
+            .add-button-mobile {
+              padding: 0.5rem 0.75rem !important;
+              font-size: 0.75rem !important;
+              border-radius: 6px !important;
+              min-width: fit-content !important;
+            }
+          }
+          
+          /* Stili per orientamento landscape su mobile */
+          @media (max-width: 768px) and (orientation: landscape) {
+            .header-container {
+              flex-direction: row !important;
+              align-items: center !important;
+            }
+            
+            .add-button-mobile {
+              width: auto !important;
+              min-width: fit-content !important;
+            }
+            
+            .controls-header {
+              flex-direction: row !important;
+              align-items: center !important;
+            }
+            
+            .sort-selector, .view-selector {
+              flex-direction: row !important;
+            }
+          }
+          
+          /* Animazioni responsive */
           @keyframes fadeInUp {
             from {
               opacity: 0;
@@ -1112,6 +1346,38 @@ function Abbonamenti() {
             to {
               opacity: 1;
               transform: translateX(0);
+            }
+          }
+          
+          /* Stili per touch devices */
+          @media (hover: none) and (pointer: coarse) {
+            .subscription-card:hover {
+              transform: none !important;
+              box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+            }
+            
+            .subscription-card:active {
+              transform: scale(0.98) !important;
+              transition: transform 0.1s ease !important;
+            }
+            
+            button:active {
+              transform: scale(0.95) !important;
+            }
+            
+            .list-view-mobile:active {
+              background: rgba(0, 122, 255, 0.05) !important;
+              border-radius: 12px !important;
+              transition: background 0.1s ease !important;
+            }
+          }
+          
+          /* Effetti hover per desktop */
+          @media (hover: hover) {
+            .list-view-mobile:hover {
+              background: rgba(0, 122, 255, 0.05) !important;
+              border-radius: 12px !important;
+              transition: background 0.2s ease !important;
             }
           }
         `}
