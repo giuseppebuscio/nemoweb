@@ -271,36 +271,36 @@ function EditSubscription() {
   return (
     <Layout>
       <div style={{ 
-        padding: '2rem',
+        padding: '1rem',
         background: 'linear-gradient(135deg, #fafafa 0%, #f5f5f7 100%)',
         minHeight: '100vh',
         width: '100%'
-      }}>
-        <div style={{ width: '100%', maxWidth: 'none' }}>
+      }} className="edit-subscription-container">
+        <div style={{ width: '100%' }} className="edit-subscription-content">
           
           {/* Header */}
-          <div style={{ marginBottom: '1.5rem', textAlign: 'left' }}>
+          <div style={{ marginBottom: '1.5rem', textAlign: 'left' }} className="edit-subscription-header">
             <h1 style={{
-              fontSize: '2.75rem',
+              fontSize: 'clamp(1.75rem, 5vw, 2.75rem)',
               fontWeight: '700',
               color: '#1d1d1f',
-              margin: '0 0 1rem 0',
+              margin: '0 0 0.75rem 0',
               letterSpacing: '-0.025em',
               fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
               background: 'linear-gradient(135deg, #1d1d1f 0%, #86868b 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
-            }}>
+            }} className="edit-subscription-title">
               Modifica Abbonamento
             </h1>
             <p style={{
-              fontSize: '1.125rem',
+              fontSize: 'clamp(0.875rem, 3vw, 1.125rem)',
               color: '#86868b',
               margin: 0,
               fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
               fontWeight: '400',
               lineHeight: '1.4'
-            }}>
+            }} className="edit-subscription-subtitle">
               Modifica i dettagli di "{subscription.nome}"
             </p>
           </div>
@@ -311,15 +311,15 @@ function EditSubscription() {
             backdropFilter: 'blur(20px)',
             WebkitBackdropFilter: 'blur(20px)',
             borderRadius: '20px',
-            padding: '2.5rem',
+            padding: '1.25rem',
             boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05)',
             border: '1px solid rgba(255, 255, 255, 0.2)',
             width: '100%'
-          }}>
+          }} className="edit-subscription-form-card">
             <form onSubmit={handleSubmit}>
               
               {/* Nome Abbonamento */}
-              <div style={{ marginBottom: '2rem' }}>
+              <div style={{ marginBottom: '2rem' }} className="form-field">
                 <label style={{
                   display: 'block',
                   fontSize: '1rem',
@@ -327,7 +327,7 @@ function EditSubscription() {
                   color: '#1d1d1f',
                   marginBottom: '0.75rem',
                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                }}>
+                }} className="form-label">
                   Nome dell'abbonamento <span style={{ color: '#FF3B30' }}>*</span>
                 </label>
                 <input
@@ -336,6 +336,7 @@ function EditSubscription() {
                   value={formData.nome}
                   onChange={handleInputChange}
                   placeholder="es. Netflix, Spotify, Adobe Creative Suite..."
+                  className="form-input"
                   style={{
                     width: '100%',
                     padding: '16px 20px',
@@ -366,7 +367,7 @@ function EditSubscription() {
               </div>
 
               {/* Data Inizio Pagamento */}
-              <div style={{ marginBottom: '2rem' }}>
+              <div style={{ marginBottom: '2rem' }} className="form-field">
                 <label style={{
                   display: 'block',
                   fontSize: '1rem',
@@ -374,7 +375,7 @@ function EditSubscription() {
                   color: '#1d1d1f',
                   marginBottom: '0.75rem',
                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                }}>
+                }} className="form-label">
                   Data di inizio pagamento <span style={{ color: '#FF3B30' }}>*</span>
                 </label>
                 <input
@@ -382,6 +383,7 @@ function EditSubscription() {
                   name="dataInizio"
                   value={formData.dataInizio}
                   onChange={handleInputChange}
+                  className="form-input"
                   style={{
                     width: '100%',
                     padding: '16px 20px',
@@ -426,7 +428,7 @@ function EditSubscription() {
               </div>
 
               {/* Frequenza */}
-              <div style={{ marginBottom: '2rem' }}>
+              <div style={{ marginBottom: '2rem' }} className="form-field">
                 <label style={{
                   display: 'block',
                   fontSize: '1rem',
@@ -434,13 +436,14 @@ function EditSubscription() {
                   color: '#1d1d1f',
                   marginBottom: '0.75rem',
                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                }}>
+                }} className="form-label">
                   Frequenza di pagamento <span style={{ color: '#FF3B30' }}>*</span>
                 </label>
                 <select
                   name="frequenza"
                   value={formData.frequenza}
                   onChange={handleInputChange}
+                  className="form-select"
                   style={{
                     width: '100%',
                     padding: '16px 20px',
@@ -589,7 +592,7 @@ function EditSubscription() {
               </div>
 
               {/* Persone Coinvolte */}
-              <div style={{ marginBottom: '2rem' }}>
+              <div style={{ marginBottom: '2rem' }} className="form-field">
                 <label style={{
                   display: 'block',
                   fontSize: '1rem',
@@ -597,7 +600,7 @@ function EditSubscription() {
                   color: '#1d1d1f',
                   marginBottom: '0.75rem',
                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                }}>
+                }} className="form-label">
                   Persone coinvolte
                 </label>
                 
@@ -728,7 +731,7 @@ function EditSubscription() {
               </div>
 
               {/* Tipo di Pagamento */}
-              <div style={{ marginBottom: '2rem' }}>
+              <div style={{ marginBottom: '2rem' }} className="form-field">
                 <label style={{
                   display: 'block',
                   fontSize: '1rem',
@@ -736,13 +739,14 @@ function EditSubscription() {
                   color: '#1d1d1f',
                   marginBottom: '0.75rem',
                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                }}>
+                }} className="form-label">
                   Tipo di Pagamento
                 </label>
                 <div style={{
                   display: 'flex',
+                  flexDirection: 'column',
                   gap: '1rem'
-                }}>
+                }} className="payment-type-container">
                   <label style={{
                     flex: 1,
                     padding: '1rem',
@@ -828,7 +832,7 @@ function EditSubscription() {
               </div>
 
               {/* Prezzo */}
-              <div style={{ marginBottom: '2rem' }}>
+              <div style={{ marginBottom: '2rem' }} className="form-field">
                 <label style={{
                   display: 'block',
                   fontSize: '1rem',
@@ -836,7 +840,7 @@ function EditSubscription() {
                   color: '#1d1d1f',
                   marginBottom: '0.75rem',
                       fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                    }}>
+                    }} className="form-label">
                   {formData.tipoPagamento === 'variabile' ? 'Prezzo prima rata' : 'Prezzo dell\'abbonamento'}
                 </label>
                     <input
@@ -847,19 +851,33 @@ function EditSubscription() {
                       placeholder="0.00"
                       step="0.01"
                       min="0"
+                      className="form-input"
                       style={{
                         width: '100%',
-                    padding: '1rem',
-                    fontSize: '1rem',
-                    border: '2px solid #d2d2d7',
+                        padding: '16px 20px',
+                        fontSize: '1.0625rem',
+                        border: '1px solid #d2d2d7',
                         borderRadius: '12px',
                         background: 'rgba(255, 255, 255, 0.8)',
-                    color: '#1d1d1f',
-                    transition: 'all 0.3s ease',
+                        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                         outline: 'none',
                         boxSizing: 'border-box',
-                    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                  }}
+                        backdropFilter: 'blur(10px)',
+                        WebkitBackdropFilter: 'blur(10px)'
+                      }}
+                      onFocus={(e) => {
+                        e.target.style.borderColor = '#007AFF';
+                        e.target.style.background = 'rgba(255, 255, 255, 0.95)';
+                        e.target.style.boxShadow = '0 0 0 4px rgba(0, 122, 255, 0.1)';
+                        e.target.style.transform = 'translateY(-1px)';
+                      }}
+                      onBlur={(e) => {
+                        e.target.style.borderColor = '#d2d2d7';
+                        e.target.style.background = 'rgba(255, 255, 255, 0.8)';
+                        e.target.style.boxShadow = 'none';
+                        e.target.style.transform = 'translateY(0)';
+                      }}
                 />
                 {formData.tipoPagamento === 'variabile' && (
                   <p style={{
@@ -903,7 +921,7 @@ function EditSubscription() {
               </div>
 
               {/* Numero Totale di Rate */}
-              <div style={{ marginBottom: '2rem' }}>
+              <div style={{ marginBottom: '2rem' }} className="form-field">
                 <label style={{
                   display: 'block',
                   fontSize: '1rem',
@@ -911,7 +929,7 @@ function EditSubscription() {
                   color: '#1d1d1f',
                   marginBottom: '0.75rem',
                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                }}>
+                }} className="form-label">
                   Numero totale di rate
                 </label>
                 <input
@@ -921,18 +939,20 @@ function EditSubscription() {
                   onChange={handleInputChange}
                   placeholder="es. 12"
                   min="1"
+                  className="form-input"
                   style={{
                     width: '100%',
-                    padding: '1rem',
-                    fontSize: '1rem',
-                    border: '2px solid #d2d2d7',
+                    padding: '16px 20px',
+                    fontSize: '1.0625rem',
+                    border: '1px solid #d2d2d7',
                     borderRadius: '12px',
                     background: 'rgba(255, 255, 255, 0.8)',
-                    color: '#1d1d1f',
-                    transition: 'all 0.3s ease',
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     outline: 'none',
                     boxSizing: 'border-box',
-                    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                    backdropFilter: 'blur(10px)',
+                    WebkitBackdropFilter: 'blur(10px)'
                   }}
                   onFocus={(e) => {
                     e.target.style.borderColor = '#007AFF';
@@ -958,7 +978,7 @@ function EditSubscription() {
               </div>
 
               {/* Logo */}
-              <div style={{ marginBottom: '2rem' }}>
+              <div style={{ marginBottom: '2rem' }} className="form-field">
                 <label style={{
                   display: 'block',
                   fontSize: '1rem',
@@ -966,7 +986,7 @@ function EditSubscription() {
                   color: '#1d1d1f',
                   marginBottom: '0.75rem',
                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                }}>
+                }} className="form-label">
                   Logo dell'abbonamento
                 </label>
                 <div style={{ 
@@ -1062,7 +1082,7 @@ function EditSubscription() {
                 justifyContent: 'flex-end',
                 paddingTop: '2rem',
                 borderTop: '1px solid rgba(0, 0, 0, 0.08)'
-              }}>
+              }} className="edit-subscription-buttons">
                 <button
                   type="button"
                   onClick={handleCancelClick}
@@ -1300,6 +1320,121 @@ function EditSubscription() {
                 to { 
                   opacity: 1;
                   transform: translateY(0) scale(1);
+                }
+              }
+              
+              /* Stili responsive per mobile */
+              @media (max-width: 768px) {
+                /* Container principale */
+                .edit-subscription-container {
+                  padding: 1rem !important;
+                }
+                
+                /* Header mobile */
+                .edit-subscription-title {
+                  font-size: clamp(1.75rem, 5vw, 2.75rem) !important;
+                  margin-bottom: 0.75rem !important;
+                }
+                
+                .edit-subscription-subtitle {
+                  font-size: clamp(0.875rem, 3vw, 1.125rem) !important;
+                }
+                
+                /* Form card mobile */
+                .edit-subscription-form-card {
+                  padding: 1.25rem !important;
+                  border-radius: 16px !important;
+                }
+                
+                /* Campi del form mobile */
+                .form-field {
+                  margin-bottom: 1.5rem !important;
+                }
+                
+                .form-label {
+                  font-size: 0.9375rem !important;
+                  margin-bottom: 0.5rem !important;
+                }
+                
+                .form-input,
+                .form-select {
+                  padding: 14px 16px !important;
+                  font-size: 1rem !important;
+                  border-radius: 10px !important;
+                }
+                
+                /* Container tipo pagamento mobile */
+                .payment-type-container {
+                  flex-direction: column !important;
+                  gap: 0.75rem !important;
+                }
+                
+                /* Pulsanti mobile */
+                .edit-subscription-buttons {
+                  flex-direction: column !important;
+                  gap: 0.75rem !important;
+                }
+                
+                .edit-subscription-buttons button {
+                  width: 100% !important;
+                  padding: 14px 20px !important;
+                  font-size: 0.9375rem !important;
+                  min-width: auto !important;
+                }
+              }
+              
+              /* Stili per schermi molto piccoli */
+              @media (max-width: 480px) {
+                .edit-subscription-container {
+                  padding: 0.75rem !important;
+                }
+                
+                .edit-subscription-form-card {
+                  padding: 1rem !important;
+                  border-radius: 12px !important;
+                }
+                
+                .form-input,
+                .form-select {
+                  padding: 12px 14px !important;
+                  font-size: 0.9375rem !important;
+                }
+                
+                .edit-subscription-buttons button {
+                  padding: 12px 16px !important;
+                  font-size: 0.875rem !important;
+                }
+              }
+              
+              /* Stili per schermi extra piccoli */
+              @media (max-width: 360px) {
+                .edit-subscription-container {
+                  padding: 0.5rem !important;
+                }
+                
+                .edit-subscription-form-card {
+                  padding: 0.875rem !important;
+                }
+                
+                .form-input,
+                .form-select {
+                  padding: 10px 12px !important;
+                  font-size: 0.875rem !important;
+                }
+              }
+              
+              /* Stili per orientamento landscape su mobile */
+              @media (max-width: 768px) and (orientation: landscape) {
+                .edit-subscription-container {
+                  padding: 0.75rem !important;
+                }
+                
+                .edit-subscription-form-card {
+                  padding: 1rem !important;
+                }
+                
+                .form-field {
+                  margin-bottom: 1rem !important;
                 }
               }
             `}
