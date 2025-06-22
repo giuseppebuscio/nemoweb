@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { useSubscriptions } from '../context/SubscriptionContext';
@@ -25,6 +25,19 @@ function AggiungiAbbonamento() {
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [logoPreview, setLogoPreview] = useState(null);
   const [logoError, setLogoError] = useState('');
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Rileva se siamo su mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -171,27 +184,27 @@ function AggiungiAbbonamento() {
   return (
     <Layout>
       <div style={{ 
-        padding: '2rem',
+        padding: '1rem',
         background: 'linear-gradient(135deg, #fafafa 0%, #f5f5f7 100%)',
         minHeight: '100vh',
         width: '100%'
-      }}>
-        <div style={{ width: '100%', maxWidth: 'none' }}>
+      }} className="add-subscription-container">
+        <div style={{ width: '100%' }} className="add-subscription-content">
           
           {/* Header */}
-          <div style={{ marginBottom: '1.5rem', textAlign: 'left' }}>
+          <div style={{ marginBottom: '1.5rem', textAlign: 'left' }} className="add-subscription-header">
             <h1 style={{
-              fontSize: '2.75rem',
+              fontSize: 'clamp(1.75rem, 5vw, 2.75rem)',
               fontWeight: '700',
               color: '#1d1d1f',
-              margin: '0 0 1rem 0',
+              margin: '0 0 0.75rem 0',
               letterSpacing: '-0.025em',
               fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
               background: 'linear-gradient(135deg, #1d1d1f 0%, #86868b 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent'
-            }}>
-              Aggiungi Nuovo Abbonamento
+            }} className="add-subscription-title">
+              Aggiungi Nuovo
             </h1>
             <p style={{
               fontSize: '1.125rem',
@@ -200,8 +213,8 @@ function AggiungiAbbonamento() {
               fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
               fontWeight: '400',
               lineHeight: '1.4'
-            }}>
-              Inserisci i dettagli del tuo nuovo abbonamento
+            }} className="add-subscription-subtitle">
+              Inserisci un nuovo abbonamento
             </p>
           </div>
 
@@ -211,15 +224,15 @@ function AggiungiAbbonamento() {
             backdropFilter: 'blur(20px)',
             WebkitBackdropFilter: 'blur(20px)',
             borderRadius: '20px',
-            padding: '2.5rem',
+            padding: '1.25rem',
             boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05)',
             border: '1px solid rgba(255, 255, 255, 0.2)',
             width: '100%'
-          }}>
+          }} className="add-subscription-form-card">
             <form onSubmit={handleSubmit}>
               
               {/* Nome Abbonamento */}
-              <div style={{ marginBottom: '2rem' }}>
+              <div style={{ marginBottom: '2rem' }} className="form-field">
                 <label style={{
                   display: 'block',
                   fontSize: '1rem',
@@ -227,7 +240,7 @@ function AggiungiAbbonamento() {
                   color: '#1d1d1f',
                   marginBottom: '0.75rem',
                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                }}>
+                }} className="form-label">
                   Nome dell'abbonamento <span style={{ color: '#FF3B30' }}>*</span>
                 </label>
                 <input
@@ -236,6 +249,7 @@ function AggiungiAbbonamento() {
                   value={formData.nome}
                   onChange={handleInputChange}
                   placeholder="es. Netflix, Spotify, Adobe Creative Suite..."
+                  className="form-input"
                   style={{
                     width: '100%',
                     padding: '16px 20px',
@@ -254,7 +268,6 @@ function AggiungiAbbonamento() {
                     e.target.style.borderColor = '#007AFF';
                     e.target.style.background = 'rgba(255, 255, 255, 0.95)';
                     e.target.style.boxShadow = '0 0 0 4px rgba(0, 122, 255, 0.1)';
-                    e.target.style.transform = 'translateY(-1px)';
                   }}
                   onBlur={(e) => {
                     e.target.style.borderColor = '#d2d2d7';
@@ -266,7 +279,7 @@ function AggiungiAbbonamento() {
               </div>
 
               {/* Data Inizio Pagamento */}
-              <div style={{ marginBottom: '2rem' }}>
+              <div style={{ marginBottom: '2rem' }} className="form-field">
                 <label style={{
                   display: 'block',
                   fontSize: '1rem',
@@ -274,7 +287,7 @@ function AggiungiAbbonamento() {
                   color: '#1d1d1f',
                   marginBottom: '0.75rem',
                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                }}>
+                }} className="form-label">
                   Data di inizio pagamento <span style={{ color: '#FF3B30' }}>*</span>
                 </label>
                 <input
@@ -283,6 +296,7 @@ function AggiungiAbbonamento() {
                   value={formData.dataInizio}
                   onChange={(e) => setFormData({...formData, dataInizio: e.target.value})}
                   required
+                  className="form-input"
                   style={{
                     width: '100%',
                     padding: '16px 20px',
@@ -325,7 +339,7 @@ function AggiungiAbbonamento() {
               </div>
 
               {/* Frequenza */}
-              <div style={{ marginBottom: '2rem' }}>
+              <div style={{ marginBottom: '2rem' }} className="form-field">
                 <label style={{
                   display: 'block',
                   fontSize: '1rem',
@@ -333,13 +347,14 @@ function AggiungiAbbonamento() {
                   color: '#1d1d1f',
                   marginBottom: '0.75rem',
                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                }}>
+                }} className="form-label">
                   Frequenza di pagamento <span style={{ color: '#FF3B30' }}>*</span>
                 </label>
                 <select
                   name="frequenza"
                   value={formData.frequenza}
                   onChange={handleInputChange}
+                  className="form-select"
                   style={{
                     width: '100%',
                     padding: '16px 20px',
@@ -385,21 +400,21 @@ function AggiungiAbbonamento() {
                     border: '1px solid rgba(0, 122, 255, 0.15)',
                     backdropFilter: 'blur(10px)',
                     WebkitBackdropFilter: 'blur(10px)'
-                  }}>
+                  }} className="custom-frequency-section">
                     <p style={{
                       fontSize: '1rem',
                       fontWeight: '600',
                       color: '#1d1d1f',
                       margin: '0 0 1.25rem 0',
                       fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                    }}>
+                    }} className="custom-frequency-title">
                       Imposta frequenza personalizzata
                     </p>
                     <div style={{
                       display: 'flex',
                       gap: '1.25rem',
                       alignItems: 'center'
-                    }}>
+                    }} className="custom-frequency-inputs">
                       <div style={{ flex: '0 0 auto' }}>
                         <span style={{
                           fontSize: '1rem',
@@ -488,7 +503,7 @@ function AggiungiAbbonamento() {
                </div>
 
                {/* Persone Coinvolte */}
-               <div style={{ marginBottom: '2rem' }}>
+               <div style={{ marginBottom: '2rem' }} className="form-field">
                  <label style={{
                    display: 'block',
                    fontSize: '1rem',
@@ -496,7 +511,7 @@ function AggiungiAbbonamento() {
                    color: '#1d1d1f',
                    marginBottom: '0.75rem',
                    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                 }}>
+                 }} className="form-label">
                    Persone coinvolte
                  </label>
                  
@@ -514,7 +529,7 @@ function AggiungiAbbonamento() {
                    cursor: 'text',
                    backdropFilter: 'blur(10px)',
                    WebkitBackdropFilter: 'blur(10px)'
-                 }}
+                 }} className="people-input-container"
                  onClick={() => document.getElementById('personInput').focus()}
                  onFocus={(e) => {
                    e.currentTarget.style.borderColor = '#007AFF';
@@ -627,7 +642,7 @@ function AggiungiAbbonamento() {
                </div>
 
                {/* Tipo di Pagamento */}
-               <div style={{ marginBottom: '2rem' }}>
+               <div style={{ marginBottom: '2rem' }} className="form-field">
                  <label style={{
                    display: 'block',
                    fontSize: '1rem',
@@ -635,13 +650,14 @@ function AggiungiAbbonamento() {
                    color: '#1d1d1f',
                    marginBottom: '0.75rem',
                    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                 }}>
+                 }} className="form-label">
                    Tipo di Pagamento
                  </label>
                  <div style={{
                    display: 'flex',
+                   flexDirection: 'column',
                    gap: '1rem'
-                 }}>
+                 }} className="payment-type-container">
                    <label style={{
                      flex: 1,
                      padding: '1rem',
@@ -653,7 +669,7 @@ function AggiungiAbbonamento() {
                      display: 'flex',
                      alignItems: 'center',
                      gap: '0.75rem'
-                   }}>
+                   }} className="payment-type-option">
                      <input
                        type="radio"
                        name="tipoPagamento"
@@ -666,7 +682,7 @@ function AggiungiAbbonamento() {
                        fontSize: '1.25rem',
                        color: formData.tipoPagamento === 'fisso' ? '#007AFF' : '#86868b'
                      }}>💰</span>
-                     <div>
+                     <div className="payment-type-content">
                        <div style={{
                          fontSize: '1rem',
                          fontWeight: '600',
@@ -694,7 +710,7 @@ function AggiungiAbbonamento() {
                      display: 'flex',
                      alignItems: 'center',
                      gap: '0.75rem'
-                   }}>
+                   }} className="payment-type-option">
                      <input
                        type="radio"
                        name="tipoPagamento"
@@ -707,7 +723,7 @@ function AggiungiAbbonamento() {
                        fontSize: '1.25rem',
                        color: formData.tipoPagamento === 'variabile' ? '#007AFF' : '#86868b'
                      }}>📊</span>
-                     <div>
+                     <div className="payment-type-content">
                        <div style={{
                          fontSize: '1rem',
                          fontWeight: '600',
@@ -727,7 +743,7 @@ function AggiungiAbbonamento() {
                </div>
 
                {/* Prezzo */}
-               <div style={{ marginBottom: '2rem' }}>
+               <div style={{ marginBottom: '2rem' }} className="form-field">
                  <label style={{
                    display: 'block',
                    fontSize: '1rem',
@@ -735,7 +751,7 @@ function AggiungiAbbonamento() {
                    color: '#1d1d1f',
                    marginBottom: '0.75rem',
                        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                     }}>
+                     }} className="form-label">
                    {formData.tipoPagamento === 'variabile' ? 'Prezzo prima rata' : 'Prezzo dell\'abbonamento'}
                  </label>
                      <input
@@ -746,19 +762,33 @@ function AggiungiAbbonamento() {
                        placeholder="0.00"
                        step="0.01"
                        min="0"
+                       className="form-input"
                        style={{
                          width: '100%',
-                     padding: '1rem',
-                     fontSize: '1rem',
-                     border: '2px solid #d2d2d7',
+                         padding: '16px 20px',
+                         fontSize: '1.0625rem',
+                         border: '1px solid #d2d2d7',
                          borderRadius: '12px',
                          background: 'rgba(255, 255, 255, 0.8)',
-                     color: '#1d1d1f',
-                     transition: 'all 0.3s ease',
+                         fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                          outline: 'none',
                          boxSizing: 'border-box',
-                     fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                   }}
+                         backdropFilter: 'blur(10px)',
+                         WebkitBackdropFilter: 'blur(10px)'
+                       }}
+                       onFocus={(e) => {
+                         e.target.style.borderColor = '#007AFF';
+                         e.target.style.background = 'rgba(255, 255, 255, 0.95)';
+                         e.target.style.boxShadow = '0 0 0 4px rgba(0, 122, 255, 0.1)';
+                         e.target.style.transform = 'translateY(-1px)';
+                       }}
+                       onBlur={(e) => {
+                         e.target.style.borderColor = '#d2d2d7';
+                         e.target.style.background = 'rgba(255, 255, 255, 0.8)';
+                         e.target.style.boxShadow = 'none';
+                         e.target.style.transform = 'translateY(0)';
+                       }}
                  />
                  {formData.tipoPagamento === 'variabile' && (
                    <p style={{
@@ -802,7 +832,7 @@ function AggiungiAbbonamento() {
                </div>
 
                {/* Numero Totale di Rate */}
-               <div style={{ marginBottom: '2rem' }}>
+               <div style={{ marginBottom: '2rem' }} className="form-field">
                  <label style={{
                    display: 'block',
                    fontSize: '1rem',
@@ -810,7 +840,7 @@ function AggiungiAbbonamento() {
                    color: '#1d1d1f',
                    marginBottom: '0.75rem',
                    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                 }}>
+                 }} className="form-label">
                    Numero totale di rate
                  </label>
                  <input
@@ -820,18 +850,20 @@ function AggiungiAbbonamento() {
                    onChange={handleInputChange}
                    placeholder="es. 12"
                    min="1"
+                   className="form-input"
                    style={{
                      width: '100%',
-                     padding: '1rem',
-                     fontSize: '1rem',
-                     border: '2px solid #d2d2d7',
+                     padding: '16px 20px',
+                     fontSize: '1.0625rem',
+                     border: '1px solid #d2d2d7',
                      borderRadius: '12px',
                      background: 'rgba(255, 255, 255, 0.8)',
-                     color: '#1d1d1f',
-                     transition: 'all 0.3s ease',
+                     fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                      outline: 'none',
                      boxSizing: 'border-box',
-                     fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                     backdropFilter: 'blur(10px)',
+                     WebkitBackdropFilter: 'blur(10px)'
                    }}
                    onFocus={(e) => {
                      e.target.style.borderColor = '#007AFF';
@@ -857,7 +889,7 @@ function AggiungiAbbonamento() {
                </div>
 
                {/* Logo */}
-               <div style={{ marginBottom: '2rem' }}>
+               <div style={{ marginBottom: '2rem' }} className="form-field">
                  <label style={{
                    display: 'block',
                    fontSize: '1rem',
@@ -865,7 +897,7 @@ function AggiungiAbbonamento() {
                    color: '#1d1d1f',
                    marginBottom: '0.75rem',
                    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
-                 }}>
+                 }} className="form-label">
                    Logo dell'abbonamento
                  </label>
                  <div style={{ 
@@ -882,7 +914,7 @@ function AggiungiAbbonamento() {
                    background: logoPreview ? 'none' : 'rgba(255, 255, 255, 0.8)',
                    transition: 'all 0.3s ease',
                    borderColor: logoError ? '#FF3B30' : '#d2d2d7'
-                 }}>
+                 }} className="logo-upload-container">
                    {logoPreview ? (
                      <>
                        <img 
@@ -961,10 +993,11 @@ function AggiungiAbbonamento() {
                 justifyContent: 'flex-end',
                 paddingTop: '2rem',
                 borderTop: '1px solid rgba(0, 0, 0, 0.08)'
-              }}>
+              }} className="form-buttons">
                 <button
                   type="button"
                   onClick={handleCancelClick}
+                  className="cancel-button"
                   style={{
                     padding: '14px 28px',
                     fontSize: '1rem',
@@ -1000,6 +1033,7 @@ function AggiungiAbbonamento() {
                 <button
                   type="submit"
                   disabled={!isFormValid}
+                  className="submit-button"
                   style={{
                     padding: '14px 32px',
                     fontSize: '1rem',
@@ -1031,7 +1065,7 @@ function AggiungiAbbonamento() {
                     }
                   }}
                 >
-                  Aggiungi Abbonamento
+                  {isMobile ? 'Aggiungi' : 'Aggiungi Abbonamento'}
                 </button>
               </div>
             </form>
@@ -1055,7 +1089,7 @@ function AggiungiAbbonamento() {
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
           animation: 'fadeIn 0.3s ease'
-        }}>
+        }} className="modal-overlay">
           <div style={{
             background: 'rgba(255, 255, 255, 0.98)',
             backdropFilter: 'blur(30px)',
@@ -1069,7 +1103,7 @@ function AggiungiAbbonamento() {
             fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
             animation: 'slideUp 0.3s ease',
             transform: 'translateY(0)'
-          }}>
+          }} className="modal-content">
             {/* Icona di avvertimento */}
             <div style={{
               display: 'flex',
@@ -1122,9 +1156,10 @@ function AggiungiAbbonamento() {
               display: 'flex',
               gap: '0.75rem',
               justifyContent: 'center'
-            }}>
+            }} className="modal-buttons">
               <button
                 onClick={continueCreating}
+                className="modal-continue-button"
                 style={{
                   flex: 1,
                   padding: '12px 20px',
@@ -1154,6 +1189,7 @@ function AggiungiAbbonamento() {
 
               <button
                 onClick={confirmCancel}
+                className="modal-cancel-button"
                 style={{
                   flex: 1,
                   padding: '12px 20px',
@@ -1199,6 +1235,326 @@ function AggiungiAbbonamento() {
                 to { 
                   opacity: 1;
                   transform: translateY(0) scale(1);
+                }
+              }
+              
+              /* Stili responsive per mobile */
+              @media (max-width: 768px) {
+                /* Container principale */
+                .add-subscription-container {
+                  padding: 1rem !important;
+                }
+                
+                /* Header mobile */
+                .add-subscription-title {
+                  font-size: clamp(1.75rem, 5vw, 2.75rem) !important;
+                  margin-bottom: 0.75rem !important;
+                }
+                
+                .add-subscription-subtitle {
+                  font-size: clamp(0.875rem, 3vw, 1.125rem) !important;
+                }
+                
+                /* Form card mobile */
+                .add-subscription-form-card {
+                  padding: 1.5rem !important;
+                  border-radius: 16px !important;
+                  margin-bottom: 1.5rem !important;
+                }
+                
+                /* Campi form mobile */
+                .form-field {
+                  margin-bottom: 1.5rem !important;
+                }
+                
+                .form-label {
+                  font-size: 0.9375rem !important;
+                  margin-bottom: 0.5rem !important;
+                }
+                
+                .form-input, .form-select {
+                  padding: 14px 16px !important;
+                  font-size: 1rem !important;
+                  border-radius: 10px !important;
+                }
+                
+                /* Frequenza personalizzata mobile */
+                .custom-frequency-section {
+                  padding: 1rem !important;
+                  margin-top: 1rem !important;
+                }
+                
+                .custom-frequency-title {
+                  font-size: 0.9375rem !important;
+                  margin-bottom: 1rem !important;
+                }
+                
+                .custom-frequency-inputs {
+                  flex-direction: column !important;
+                  gap: 0.75rem !important;
+                  align-items: stretch !important;
+                }
+                
+                .custom-frequency-inputs > div:first-child {
+                  flex: none !important;
+                }
+                
+                .custom-frequency-inputs > div:nth-child(2) {
+                  flex: none !important;
+                  width: 100% !important;
+                }
+                
+                .custom-frequency-inputs > div:last-child {
+                  flex: none !important;
+                  width: 100% !important;
+                }
+                
+                /* Persone coinvolte mobile */
+                .people-input-container {
+                  padding: 10px !important;
+                  min-height: 48px !important;
+                }
+                
+                .people-input-container input {
+                  font-size: 1rem !important;
+                  min-width: 150px !important;
+                }
+                
+                /* Tipo di pagamento mobile */
+                .payment-type-container {
+                  flex-direction: column !important;
+                  gap: 0.75rem !important;
+                }
+                
+                .payment-type-option {
+                  padding: 0.875rem !important;
+                }
+                
+                .payment-type-content > div:first-child {
+                  font-size: 0.9375rem !important;
+                }
+                
+                .payment-type-content > div:last-child {
+                  font-size: 0.8125rem !important;
+                }
+                
+                /* Logo mobile */
+                .logo-upload-container {
+                  width: 50px !important;
+                  height: 50px !important;
+                }
+                
+                /* Pulsanti mobile */
+                .form-buttons {
+                  flex-direction: column !important;
+                  gap: 0.75rem !important;
+                  padding-top: 1.5rem !important;
+                }
+                
+                .cancel-button, .submit-button {
+                  width: 100% !important;
+                  padding: 1rem !important;
+                  font-size: 1rem !important;
+                  justify-content: center !important;
+                }
+                
+                /* Modal mobile */
+                .modal-content {
+                  margin: 1rem !important;
+                  padding: 1.5rem !important;
+                  border-radius: 12px !important;
+                }
+                
+                .modal-buttons {
+                  flex-direction: column !important;
+                  gap: 0.75rem !important;
+                }
+                
+                .modal-continue-button, .modal-cancel-button {
+                  width: 100% !important;
+                  padding: 1rem !important;
+                  font-size: 1rem !important;
+                }
+              }
+              
+              @media (max-width: 480px) {
+                /* Container principale */
+                .add-subscription-container {
+                  padding: 0.75rem !important;
+                }
+                
+                /* Header mobile piccola */
+                .add-subscription-title {
+                  font-size: clamp(1.75rem, 5vw, 2.75rem) !important;
+                  margin-bottom: 0.5rem !important;
+                }
+                
+                .add-subscription-subtitle {
+                  font-size: clamp(0.875rem, 3vw, 1.125rem) !important;
+                }
+                
+                /* Form card mobile piccola */
+                .add-subscription-form-card {
+                  padding: 1.25rem !important;
+                  border-radius: 12px !important;
+                  margin-bottom: 1rem !important;
+                }
+                
+                /* Campi form mobile piccola */
+                .form-field {
+                  margin-bottom: 1.25rem !important;
+                }
+                
+                .form-label {
+                  font-size: 0.875rem !important;
+                  margin-bottom: 0.5rem !important;
+                }
+                
+                .form-input, .form-select {
+                  padding: 12px 14px !important;
+                  font-size: 0.9375rem !important;
+                  border-radius: 8px !important;
+                }
+                
+                /* Frequenza personalizzata mobile piccola */
+                .custom-frequency-section {
+                  padding: 0.875rem !important;
+                }
+                
+                .custom-frequency-title {
+                  font-size: 0.875rem !important;
+                  margin-bottom: 0.875rem !important;
+                }
+                
+                .custom-frequency-inputs input,
+                .custom-frequency-inputs select {
+                  padding: 10px 12px !important;
+                  font-size: 0.875rem !important;
+                }
+                
+                /* Persone coinvolte mobile piccola */
+                .people-input-container {
+                  padding: 8px !important;
+                  min-height: 44px !important;
+                }
+                
+                .people-input-container input {
+                  font-size: 0.9375rem !important;
+                  min-width: 120px !important;
+                }
+                
+                /* Tipo di pagamento mobile piccola */
+                .payment-type-option {
+                  padding: 0.75rem !important;
+                }
+                
+                .payment-type-content > div:first-child {
+                  font-size: 0.875rem !important;
+                }
+                
+                .payment-type-content > div:last-child {
+                  font-size: 0.75rem !important;
+                }
+                
+                /* Logo mobile piccola */
+                .logo-upload-container {
+                  width: 45px !important;
+                  height: 45px !important;
+                }
+                
+                /* Pulsanti mobile piccola */
+                .form-buttons {
+                  padding-top: 1.25rem !important;
+                }
+                
+                .cancel-button, .submit-button {
+                  padding: 0.875rem !important;
+                  font-size: 0.9375rem !important;
+                }
+                
+                /* Modal mobile piccola */
+                .modal-content {
+                  margin: 0.75rem !important;
+                  padding: 1.25rem !important;
+                }
+                
+                .modal-continue-button, .modal-cancel-button {
+                  padding: 0.875rem !important;
+                  font-size: 0.9375rem !important;
+                }
+              }
+              
+              @media (max-width: 360px) {
+                /* Extra small devices */
+                .add-subscription-container {
+                  padding: 0.5rem !important;
+                }
+                
+                .add-subscription-title {
+                  font-size: clamp(1.75rem, 5vw, 2.75rem) !important;
+                  margin-bottom: 0.5rem !important;
+                }
+                
+                .add-subscription-form-card {
+                  padding: 1rem !important;
+                  margin-bottom: 1rem !important;
+                }
+                
+                .form-field {
+                  margin-bottom: 1rem !important;
+                }
+                
+                .form-input, .form-select {
+                  padding: 10px 12px !important;
+                  font-size: 0.875rem !important;
+                }
+                
+                .cancel-button, .submit-button {
+                  padding: 0.75rem !important;
+                  font-size: 0.875rem !important;
+                }
+                
+                .modal-content {
+                  margin: 0.5rem !important;
+                  padding: 1rem !important;
+                }
+              }
+              
+              /* Stili per orientamento landscape su mobile */
+              @media (max-width: 768px) and (orientation: landscape) {
+                .add-subscription-container {
+                  padding: 1.5rem !important;
+                }
+                
+                .add-subscription-form-card {
+                  padding: 2rem !important;
+                }
+                
+                .form-buttons {
+                  flex-direction: row !important;
+                  gap: 1rem !important;
+                }
+                
+                .cancel-button, .submit-button {
+                  width: auto !important;
+                  flex: 1 !important;
+                }
+              }
+              
+              /* Stili per touch devices */
+              @media (hover: none) and (pointer: coarse) {
+                .form-input:focus,
+                .form-select:focus {
+                  transform: none !important;
+                }
+                
+                .payment-type-option:active {
+                  transform: scale(0.98) !important;
+                }
+                
+                .cancel-button:active,
+                .submit-button:active {
+                  transform: scale(0.95) !important;
                 }
               }
             `}
