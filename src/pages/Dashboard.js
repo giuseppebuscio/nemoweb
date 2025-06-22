@@ -151,17 +151,16 @@ function Dashboard() {
               }}>📊</div>
               <div style={{
                 fontSize: 'clamp(1.75rem, 5vw, 2.5rem)',
-                fontWeight: '800',
+                fontWeight: '600',
                 color: '#007AFF',
                 marginBottom: '0.5rem',
-                textShadow: '0 2px 4px rgba(0, 122, 255, 0.2)'
               }}>
                 {subscriptions.filter(sub => sub.isActive).length}
               </div>
               <div style={{ 
                 fontSize: 'clamp(0.875rem, 2.5vw, 1rem)', 
                 color: '#86868b',
-                fontWeight: '500',
+                fontWeight: '400',
                 letterSpacing: '0.5px'
               }}>
                 Abbonamenti attivi
@@ -207,17 +206,16 @@ function Dashboard() {
               }}>📝</div>
               <div style={{
                 fontSize: 'clamp(1.75rem, 5vw, 2.5rem)',
-                fontWeight: '800',
+                fontWeight: '600',
                 color: '#34C759',
                 marginBottom: '0.5rem',
-                textShadow: '0 2px 4px rgba(52, 199, 89, 0.2)'
               }}>
                 {subscriptions.length}
               </div>
               <div style={{ 
                 fontSize: 'clamp(0.875rem, 2.5vw, 1rem)', 
                 color: '#86868b',
-                fontWeight: '500',
+                fontWeight: '400',
                 letterSpacing: '0.5px'
               }}>
                 Abbonamenti totali
@@ -263,17 +261,16 @@ function Dashboard() {
               }}>💰</div>
               <div style={{
                 fontSize: 'clamp(1.75rem, 5vw, 2.5rem)',
-                fontWeight: '800',
+                fontWeight: '600',
                 color: '#FF9500',
                 marginBottom: '0.5rem',
-                textShadow: '0 2px 4px rgba(255, 149, 0, 0.2)'
               }}>
                 €{getTotaleMensile()}
               </div>
               <div style={{ 
                 fontSize: 'clamp(0.875rem, 2.5vw, 1rem)', 
                 color: '#86868b',
-                fontWeight: '500',
+                fontWeight: '400',
                 letterSpacing: '0.5px'
               }}>
                 Spesa mensile totale

@@ -546,10 +546,10 @@ function Contabilita() {
             >
               <div style={{
                 position: 'absolute',
-                top: '-15px',
-                right: '-15px',
-                width: '60px',
-                height: '60px',
+                top: '-20px',
+                right: '-20px',
+                width: '80px',
+                height: '80px',
                 background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(88, 86, 214, 0.1) 100%)',
                 borderRadius: '50%',
                 opacity: 0.6
@@ -561,17 +561,16 @@ function Contabilita() {
               }}>💰</div>
               <div style={{
                 fontSize: 'clamp(1.75rem, 5vw, 2.5rem)',
-                fontWeight: '800',
+                fontWeight: '600',
                 color: '#007AFF',
                 marginBottom: '0.5rem',
-                textShadow: '0 2px 4px rgba(0, 122, 255, 0.2)'
               }}>
                 €{totals.fixed.monthly}
               </div>
               <div style={{ 
                 fontSize: 'clamp(0.875rem, 2.5vw, 1rem)', 
                 color: '#86868b',
-                fontWeight: '500',
+                fontWeight: '400',
                 letterSpacing: '0.5px'
               }}>
                 Spese fisse mensili
@@ -602,10 +601,10 @@ function Contabilita() {
             >
               <div style={{
                 position: 'absolute',
-                top: '-15px',
-                right: '-15px',
-                width: '60px',
-                height: '60px',
+                top: '-20px',
+                right: '-20px',
+                width: '80px',
+                height: '80px',
                 background: 'linear-gradient(135deg, rgba(255, 149, 0, 0.1) 0%, rgba(255, 123, 0, 0.1) 100%)',
                 borderRadius: '50%',
                 opacity: 0.6
@@ -617,17 +616,16 @@ function Contabilita() {
               }}>📊</div>
               <div style={{
                 fontSize: 'clamp(1.75rem, 5vw, 2.5rem)',
-                fontWeight: '800',
+                fontWeight: '600',
                 color: '#FF9500',
                 marginBottom: '0.5rem',
-                textShadow: '0 2px 4px rgba(255, 149, 0, 0.2)'
               }}>
                 €{totals.variable.monthly}
               </div>
               <div style={{ 
                 fontSize: 'clamp(0.875rem, 2.5vw, 1rem)', 
                 color: '#86868b',
-                fontWeight: '500',
+                fontWeight: '400',
                 letterSpacing: '0.5px'
               }}>
                 Spese variabili mensili
@@ -658,10 +656,10 @@ function Contabilita() {
             >
               <div style={{
                 position: 'absolute',
-                top: '-15px',
-                right: '-15px',
-                width: '60px',
-                height: '60px',
+                top: '-20px',
+                right: '-20px',
+                width: '80px',
+                height: '80px',
                 background: 'linear-gradient(135deg, rgba(52, 199, 89, 0.1) 0%, rgba(48, 209, 88, 0.1) 100%)',
                 borderRadius: '50%',
                 opacity: 0.6
@@ -673,17 +671,16 @@ function Contabilita() {
               }}>💳</div>
               <div style={{
                 fontSize: 'clamp(1.75rem, 5vw, 2.5rem)',
-                fontWeight: '800',
+                fontWeight: '600',
                 color: '#34C759',
                 marginBottom: '0.5rem',
-                textShadow: '0 2px 4px rgba(52, 199, 89, 0.2)'
               }}>
                 €{(totals.fixed.monthly + totals.variable.monthly).toFixed(2)}
               </div>
               <div style={{ 
                 fontSize: 'clamp(0.875rem, 2.5vw, 1rem)', 
                 color: '#86868b',
-                fontWeight: '500',
+                fontWeight: '400',
                 letterSpacing: '0.5px'
               }}>
                 Totale mensile
@@ -729,18 +726,9 @@ function Contabilita() {
               padding: 1rem !important;
             }
             
-            .stats-grid {
-              grid-template-columns: 1fr !important;
-              gap: 1rem !important;
-            }
-            
-            .stats-card {
-              padding: 1.25rem !important;
-              border-radius: 16px !important;
-            }
-            
             .subscription-card {
-              padding: 0.875rem !important;
+              padding: 0
+              .875rem !important;
             }
             
             .subscription-logo {
@@ -775,15 +763,6 @@ function Contabilita() {
           @media (max-width: 480px) {
             .contabilita-container {
               padding: 0.75rem !important;
-            }
-            
-            .stats-grid {
-              gap: 0.75rem !important;
-            }
-            
-            .stats-card {
-              padding: 1rem !important;
-              border-radius: 12px !important;
             }
             
             .subscription-card {
