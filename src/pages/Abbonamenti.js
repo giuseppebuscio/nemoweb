@@ -199,9 +199,7 @@ function Abbonamenti() {
                   margin: '0 0 0.75rem 0',
                   letterSpacing: '-0.025em',
                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
-                  background: 'linear-gradient(135deg, #1d1d1f 0%, #86868b 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent'
+                  
                 }} className="header-title">
                   I miei Abbonamenti
                 </h1>
@@ -217,7 +215,7 @@ function Abbonamenti() {
                 </p>
               </div>
 
-              {/* Pulsante Aggiungi */}
+              {/* Pulsante Aggiungi - Solo desktop */}
               <button
                 onClick={() => navigate('/aggiungi-abbonamento')}
                 style={{
@@ -236,7 +234,7 @@ function Abbonamenti() {
                   boxShadow: '0 4px 12px rgba(0, 122, 255, 0.3)',
                   alignSelf: 'flex-start'
                 }}
-                className="add-button-mobile"
+                className="add-button-desktop"
                 onMouseOver={(e) => {
                   e.currentTarget.style.transform = 'translateY(-2px)';
                   e.currentTarget.style.boxShadow = '0 6px 16px rgba(0, 122, 255, 0.4)';
@@ -247,7 +245,7 @@ function Abbonamenti() {
                 }}
               >
                 <span style={{ fontSize: '1.1em' }}>+</span>
-                <span className="add-button-text">{getAddButtonText()}</span>
+                <span className="add-button-text">Aggiungi nuovo</span>
               </button>
             </div>
           </div>
@@ -267,244 +265,238 @@ function Abbonamenti() {
             {/* Header del riquadro con titolo e controlli visualizzazione */}
             <div style={{
               display: 'flex',
-              flexDirection: 'column',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
               gap: '1rem',
               marginBottom: '1.5rem'
             }}>
+              <h3 style={{
+                fontSize: 'clamp(1.25rem, 4vw, 1.75rem)',
+                fontWeight: '700',
+                color: '#1d1d1f',
+                margin: 0,
+                letterSpacing: '-0.01em'
+              }} className="controls-title">Abbonamenti Attivi</h3>
+
+              {/* Controlli visualizzazione */}
               <div style={{
                 display: 'flex',
                 flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'flex-start',
-                gap: '1rem'
-              }} className="controls-header">
-                <h3 style={{
-                  fontSize: 'clamp(1.25rem, 4vw, 1.75rem)',
-                  fontWeight: '700',
-                  color: '#1d1d1f',
-                  margin: 0,
-                  letterSpacing: '-0.01em'
-                }} className="controls-title">Abbonamenti Attivi</h3>
-
-                {/* Controlli visualizzazione */}
+                gap: '1rem',
+                alignItems: 'center'
+              }} className="controls-container">
+                {/* Selettore ordinamento */}
                 <div style={{
                   display: 'flex',
                   flexDirection: 'row',
-                  gap: '1rem',
+                  gap: '0.5rem',
                   alignItems: 'center'
-                }} className="controls-container">
-                  {/* Selettore ordinamento */}
+                }} className="sort-selector">
+                  <span style={{
+                    fontSize: '0.875rem',
+                    color: '#86868b',
+                    fontWeight: '500',
+                    textAlign: 'left',
+                    whiteSpace: 'nowrap'
+                  }}>
+                    Ordina
+                  </span>
                   <div style={{
                     display: 'flex',
-                    flexDirection: 'row',
-                    gap: '0.5rem',
-                    alignItems: 'center'
-                  }} className="sort-selector">
-                    <span style={{
-                      fontSize: '0.875rem',
-                      color: '#86868b',
-                      fontWeight: '500',
-                      textAlign: 'left',
-                      whiteSpace: 'nowrap'
-                    }}>
-                      Ordina
-                    </span>
-                    <div style={{
-                      display: 'flex',
-                      background: 'rgba(255, 255, 255, 0.8)',
-                      backdropFilter: 'blur(20px)',
-                      WebkitBackdropFilter: 'blur(20px)',
-                      borderRadius: '12px',
-                      padding: '4px',
-                      border: '1px solid rgba(255, 255, 255, 0.3)',
-                      boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)'
-                    }}>
-                      <button
-                        onClick={() => handleSortClick('nome')}
-                        style={{
-                          padding: '8px 12px',
-                          fontSize: '0.875rem',
-                          fontWeight: '600',
-                          border: 'none',
-                          borderRadius: '8px',
-                          background: sortBy === 'nome' 
-                            ? 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)' 
-                            : 'transparent',
-                          color: sortBy === 'nome' ? 'white' : '#86868b',
-                          cursor: 'pointer',
-                          transition: 'all 0.2s ease',
-                          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.5rem',
-                          boxShadow: sortBy === 'nome' ? '0 2px 8px rgba(0, 122, 255, 0.25)' : 'none',
-                          flex: 1
-                        }}
-                        onMouseEnter={(e) => {
-                          if (sortBy !== 'nome') {
-                            e.target.style.color = '#007AFF';
-                            e.target.style.background = 'rgba(0, 122, 255, 0.1)';
-                          }
-                        }}
-                        onMouseLeave={(e) => {
-                          if (sortBy !== 'nome') {
-                            e.target.style.color = '#86868b';
-                            e.target.style.background = 'transparent';
-                          }
-                        }}
-                      >
-                        {sortBy === 'nome' && sortDirection === 'asc' ? (
-                          <BsSortAlphaUp size={14} />
-                        ) : (
-                          <BsSortAlphaDown size={14} />
-                        )}
-                        Nome
-                      </button>
-                      <button
-                        onClick={() => handleSortClick('prezzo')}
-                        style={{
-                          padding: '8px 12px',
-                          fontSize: '0.875rem',
-                          fontWeight: '600',
-                          border: 'none',
-                          borderRadius: '8px',
-                          background: sortBy === 'prezzo' 
-                            ? 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)' 
-                            : 'transparent',
-                          color: sortBy === 'prezzo' ? 'white' : '#86868b',
-                          cursor: 'pointer',
-                          transition: 'all 0.2s ease',
-                          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.5rem',
-                          boxShadow: sortBy === 'prezzo' ? '0 2px 8px rgba(0, 122, 255, 0.25)' : 'none',
-                          flex: 1
-                        }}
-                        onMouseEnter={(e) => {
-                          if (sortBy !== 'prezzo') {
-                            e.target.style.color = '#007AFF';
-                            e.target.style.background = 'rgba(0, 122, 255, 0.1)';
-                          }
-                        }}
-                        onMouseLeave={(e) => {
-                          if (sortBy !== 'prezzo') {
-                            e.target.style.color = '#86868b';
-                            e.target.style.background = 'transparent';
-                          }
-                        }}
-                      >
-                        {sortBy === 'prezzo' && sortDirection === 'asc' ? (
-                          <BsCurrencyExchange size={14} />
-                        ) : (
-                          <BsCurrencyEuro size={14} />
-                        )}
-                        Costo
-                      </button>
-                    </div>
+                    background: 'rgba(255, 255, 255, 0.8)',
+                    backdropFilter: 'blur(20px)',
+                    WebkitBackdropFilter: 'blur(20px)',
+                    borderRadius: '12px',
+                    padding: '4px',
+                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)'
+                  }}>
+                    <button
+                      onClick={() => handleSortClick('nome')}
+                      style={{
+                        padding: '8px 12px',
+                        fontSize: '0.875rem',
+                        fontWeight: '600',
+                        border: 'none',
+                        borderRadius: '8px',
+                        background: sortBy === 'nome' 
+                          ? 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)' 
+                          : 'transparent',
+                        color: sortBy === 'nome' ? 'white' : '#86868b',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        boxShadow: sortBy === 'nome' ? '0 2px 8px rgba(0, 122, 255, 0.25)' : 'none',
+                        flex: 1
+                      }}
+                      onMouseEnter={(e) => {
+                        if (sortBy !== 'nome') {
+                          e.target.style.color = '#007AFF';
+                          e.target.style.background = 'rgba(0, 122, 255, 0.1)';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (sortBy !== 'nome') {
+                          e.target.style.color = '#86868b';
+                          e.target.style.background = 'transparent';
+                        }
+                      }}
+                    >
+                      {sortBy === 'nome' && sortDirection === 'asc' ? (
+                        <BsSortAlphaUp size={14} />
+                      ) : (
+                        <BsSortAlphaDown size={14} />
+                      )}
+                      Nome
+                    </button>
+                    <button
+                      onClick={() => handleSortClick('prezzo')}
+                      style={{
+                        padding: '8px 12px',
+                        fontSize: '0.875rem',
+                        fontWeight: '600',
+                        border: 'none',
+                        borderRadius: '8px',
+                        background: sortBy === 'prezzo' 
+                          ? 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)' 
+                          : 'transparent',
+                        color: sortBy === 'prezzo' ? 'white' : '#86868b',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        boxShadow: sortBy === 'prezzo' ? '0 2px 8px rgba(0, 122, 255, 0.25)' : 'none',
+                        flex: 1
+                      }}
+                      onMouseEnter={(e) => {
+                        if (sortBy !== 'prezzo') {
+                          e.target.style.color = '#007AFF';
+                          e.target.style.background = 'rgba(0, 122, 255, 0.1)';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (sortBy !== 'prezzo') {
+                          e.target.style.color = '#86868b';
+                          e.target.style.background = 'transparent';
+                        }
+                      }}
+                    >
+                      {sortBy === 'prezzo' && sortDirection === 'asc' ? (
+                        <BsCurrencyExchange size={14} />
+                      ) : (
+                        <BsCurrencyEuro size={14} />
+                      )}
+                      Costo
+                    </button>
                   </div>
+                </div>
 
-                  {/* Selettore visualizzazione */}
+                {/* Selettore visualizzazione */}
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  gap: '0.5rem',
+                  alignItems: 'center'
+                }} className="view-selector">
+                  <span style={{
+                    fontSize: '0.875rem',
+                    color: '#86868b',
+                    fontWeight: '500',
+                    textAlign: 'left',
+                    whiteSpace: 'nowrap'
+                  }}>
+                    Cambia vista
+                  </span>
                   <div style={{
                     display: 'flex',
-                    flexDirection: 'row',
-                    gap: '0.5rem',
-                    alignItems: 'center'
-                  }} className="view-selector">
-                    <span style={{
-                      fontSize: '0.875rem',
-                      color: '#86868b',
-                      fontWeight: '500',
-                      textAlign: 'left',
-                      whiteSpace: 'nowrap'
-                    }}>
-                      Cambia vista
-                    </span>
-                    <div style={{
-                      display: 'flex',
-                      background: 'rgba(255, 255, 255, 0.8)',
-                      backdropFilter: 'blur(20px)',
-                      WebkitBackdropFilter: 'blur(20px)',
-                      borderRadius: '12px',
-                      padding: '4px',
-                      border: '1px solid rgba(255, 255, 255, 0.3)',
-                      boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)'
-                    }}>
-                      <button
-                        onClick={() => setViewMode('grid')}
-                        style={{
-                          padding: '8px 12px',
-                          fontSize: '0.875rem',
-                          fontWeight: '600',
-                          border: 'none',
-                          borderRadius: '8px',
-                          background: viewMode === 'grid' 
-                            ? 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)' 
-                            : 'transparent',
-                          color: viewMode === 'grid' ? 'white' : '#86868b',
-                          cursor: 'pointer',
-                          transition: 'all 0.2s ease',
-                          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.5rem',
-                          boxShadow: viewMode === 'grid' ? '0 2px 8px rgba(0, 122, 255, 0.25)' : 'none',
-                          flex: 1
-                        }}
-                        onMouseEnter={(e) => {
-                          if (viewMode !== 'grid') {
-                            e.target.style.color = '#007AFF';
-                            e.target.style.background = 'rgba(0, 122, 255, 0.1)';
-                          }
-                        }}
-                        onMouseLeave={(e) => {
-                          if (viewMode !== 'grid') {
-                            e.target.style.color = '#86868b';
-                            e.target.style.background = 'transparent';
-                          }
-                        }}
-                      >
-                        <BsGrid size={14} />
-                        Griglia
-                      </button>
-                      <button
-                        onClick={() => setViewMode('list')}
-                        style={{
-                          padding: '8px 12px',
-                          fontSize: '0.875rem',
-                          fontWeight: '600',
-                          border: 'none',
-                          borderRadius: '8px',
-                          background: viewMode === 'list' 
-                            ? 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)' 
-                            : 'transparent',
-                          color: viewMode === 'list' ? 'white' : '#86868b',
-                          cursor: 'pointer',
-                          transition: 'all 0.2s ease',
-                          fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.5rem',
-                          boxShadow: viewMode === 'list' ? '0 2px 8px rgba(0, 122, 255, 0.25)' : 'none',
-                          flex: 1
-                        }}
-                        onMouseEnter={(e) => {
-                          if (viewMode !== 'list') {
-                            e.target.style.color = '#007AFF';
-                            e.target.style.background = 'rgba(0, 122, 255, 0.1)';
-                          }
-                        }}
-                        onMouseLeave={(e) => {
-                          if (viewMode !== 'list') {
-                            e.target.style.color = '#86868b';
-                            e.target.style.background = 'transparent';
-                          }
-                        }}
-                      >
-                        <BsList size={14} />
-                        Lista
-                      </button>
-                    </div>
+                    background: 'rgba(255, 255, 255, 0.8)',
+                    backdropFilter: 'blur(20px)',
+                    WebkitBackdropFilter: 'blur(20px)',
+                    borderRadius: '12px',
+                    padding: '4px',
+                    border: '1px solid rgba(255, 255, 255, 0.3)',
+                    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08)'
+                  }}>
+                    <button
+                      onClick={() => setViewMode('grid')}
+                      style={{
+                        padding: '8px 12px',
+                        fontSize: '0.875rem',
+                        fontWeight: '600',
+                        border: 'none',
+                        borderRadius: '8px',
+                        background: viewMode === 'grid' 
+                          ? 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)' 
+                          : 'transparent',
+                        color: viewMode === 'grid' ? 'white' : '#86868b',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        boxShadow: viewMode === 'grid' ? '0 2px 8px rgba(0, 122, 255, 0.25)' : 'none',
+                        flex: 1
+                      }}
+                      onMouseEnter={(e) => {
+                        if (viewMode !== 'grid') {
+                          e.target.style.color = '#007AFF';
+                          e.target.style.background = 'rgba(0, 122, 255, 0.1)';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (viewMode !== 'grid') {
+                          e.target.style.color = '#86868b';
+                          e.target.style.background = 'transparent';
+                        }
+                      }}
+                    >
+                      <BsGrid size={14} />
+                      Griglia
+                    </button>
+                    <button
+                      onClick={() => setViewMode('list')}
+                      style={{
+                        padding: '8px 12px',
+                        fontSize: '0.875rem',
+                        fontWeight: '600',
+                        border: 'none',
+                        borderRadius: '8px',
+                        background: viewMode === 'list' 
+                          ? 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)' 
+                          : 'transparent',
+                        color: viewMode === 'list' ? 'white' : '#86868b',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        boxShadow: viewMode === 'list' ? '0 2px 8px rgba(0, 122, 255, 0.25)' : 'none',
+                        flex: 1
+                      }}
+                      onMouseEnter={(e) => {
+                        if (viewMode !== 'list') {
+                          e.target.style.color = '#007AFF';
+                          e.target.style.background = 'rgba(0, 122, 255, 0.1)';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (viewMode !== 'list') {
+                          e.target.style.color = '#86868b';
+                          e.target.style.background = 'transparent';
+                        }
+                      }}
+                    >
+                      <BsList size={14} />
+                      Lista
+                    </button>
                   </div>
                 </div>
               </div>
@@ -854,6 +846,42 @@ function Abbonamenti() {
                 ))
               )}
             </div>
+            
+            {/* Pulsante Aggiungi - Solo mobile */}
+            <button
+              onClick={() => navigate('/aggiungi-abbonamento')}
+              style={{
+                background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
+                color: 'white',
+                padding: '1rem 1.5rem',
+                borderRadius: '16px',
+                border: 'none',
+                fontSize: '1rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.75rem',
+                boxShadow: '0 8px 24px rgba(0, 122, 255, 0.3)',
+                width: '100%',
+                marginTop: '1.5rem',
+                fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+              }}
+              className="add-button-mobile-bottom"
+              onMouseOver={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = '0 12px 32px rgba(0, 122, 255, 0.4)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 122, 255, 0.3)';
+              }}
+            >
+              <span style={{ fontSize: '1.25em' }}>+</span>
+              <span>Nuovo</span>
+            </button>
           </div>
         </div>
       </div>
@@ -979,6 +1007,16 @@ function Abbonamenti() {
               align-items: stretch !important;
             }
             
+            /* Nascondi pulsante desktop su mobile */
+            .add-button-desktop {
+              display: none !important;
+            }
+            
+            /* Mostra pulsante mobile in fondo */
+            .add-button-mobile-bottom {
+              display: flex !important;
+            }
+            
             /* Controlli responsive */
             .controls-container {
               flex-direction: column !important;
@@ -1101,137 +1139,64 @@ function Abbonamenti() {
               padding: 1rem !important;
               font-size: 1rem !important;
             }
+            
+            /* Nascondi le scritte Cambia vista e Ordina */
+            .sort-selector > span,
+            .view-selector > span {
+              display: none !important;
+            }
+            /* Nascondi le scritte Griglia e Lista solo su mobile */
+            .view-selector button {
+              font-size: 0 !important;
+            }
+            .view-selector button svg {
+              font-size: 0.875rem !important;
+            }
+            /* Layout mobile: titolo nascosto e controlli su una riga */
+            .controls-title {
+              display: none !important;
+            }
+            /* Tutti i controlli su una riga */
+            .controls-container {
+              flex-direction: row !important;
+              gap: 0.5rem !important;
+              align-items: center !important;
+              justify-content: flex-end !important;
+            }
           }
           
           @media (max-width: 480px) {
-            /* Container principale */
+            /* Small devices */
             .main-container {
               padding: 0.75rem !important;
             }
             
-            /* Header mobile */
-            .header-title {
-              font-size: 1.5rem !important;
-              margin-bottom: 0.5rem !important;
-            }
-            
-            .header-subtitle {
-              font-size: 0.875rem !important;
-            }
-            
-            /* Contenuto principale */
             .main-content {
               padding: 1rem !important;
-              border-radius: 16px !important;
-              margin-bottom: 1rem !important;
             }
             
-            /* Card mobile */
             .subscription-card {
-              padding: 0.875rem !important;
-              border-radius: 12px !important;
+              padding: 1rem !important;
             }
             
-            /* Controlli mobile */
-            .controls-header {
-              flex-direction: column !important;
-              gap: 0.75rem !important;
-              align-items: stretch !important;
+            .header-title {
+              font-size: clamp(1.75rem, 5vw, 2.75rem) !important;
             }
             
             .controls-title {
               font-size: 1.25rem !important;
             }
             
-            /* Selettori mobile */
-            .sort-selector span, .view-selector span {
-              font-size: 0.875rem !important;
-            }
-            
-            .sort-selector button, .view-selector button {
-              padding: 0.5rem 0.75rem !important;
-              font-size: 0.75rem !important;
-            }
-            
-            /* Vista lista mobile piccola */
             .list-view-mobile .logo-container {
               width: 36px !important;
               height: 36px !important;
-              font-size: 1.1rem !important;
             }
             
-            .list-view-mobile .info-container h4 {
-              font-size: 1rem !important;
-            }
-            
-            .list-view-mobile .info-container {
-              gap: 0.5rem !important;
-            }
-            
-            .list-view-mobile .cost-container,
-            .list-view-mobile .total-container {
-              padding: 0.5rem !important;
-              min-height: 40px !important;
-            }
-            
-            .list-view-mobile .cost-container span:first-child,
-            .list-view-mobile .total-container span:first-child {
-              font-size: 0.75rem !important;
-            }
-            
-            .list-view-mobile .cost-container span:last-child,
-            .list-view-mobile .total-container span:last-child {
-              font-size: 0.875rem !important;
-            }
-            
-            /* Vista griglia mobile piccola */
             .grid-view-mobile .logo-container {
               width: 32px !important;
               height: 32px !important;
-              font-size: 0.9rem !important;
             }
             
-            .grid-view-mobile h4 {
-              font-size: 1rem !important;
-            }
-            
-            .grid-view-mobile p {
-              font-size: 0.875rem !important;
-            }
-            
-            .grid-view-mobile .cost-row {
-              padding: 0.5rem !important;
-            }
-            
-            .grid-view-mobile .cost-row span:first-child {
-              font-size: 0.75rem !important;
-            }
-            
-            .grid-view-mobile .cost-row span:last-child {
-              font-size: 0.875rem !important;
-            }
-            
-            .grid-view-mobile .view-button {
-              padding: 0.75rem 1rem !important;
-              font-size: 0.875rem !important;
-            }
-            
-            /* Switch mobile */
-            .switch {
-              width: 44px !important;
-              height: 26px !important;
-            }
-            
-            .slider:before {
-              height: 22px !important;
-              width: 22px !important;
-            }
-            
-            input:checked + .slider:before {
-              transform: translateX(18px) !important;
-            }
-            
-            /* Modal mobile piccola */
             .modal-content-mobile {
               margin: 0.5rem !important;
               padding: 1rem !important;
@@ -1256,6 +1221,14 @@ function Abbonamenti() {
               font-size: 0.8125rem !important;
               border-radius: 8px !important;
               min-width: fit-content !important;
+            }
+            
+            /* Pulsante mobile in fondo */
+            .add-button-mobile-bottom {
+              padding: 1rem 1.5rem !important;
+              font-size: 1rem !important;
+              border-radius: 16px !important;
+              margin-top: 1.5rem !important;
             }
           }
           
@@ -1301,6 +1274,14 @@ function Abbonamenti() {
               font-size: 0.75rem !important;
               border-radius: 6px !important;
               min-width: fit-content !important;
+            }
+            
+            /* Pulsante mobile in fondo su schermi extra piccoli */
+            .add-button-mobile-bottom {
+              padding: 0.875rem 1.25rem !important;
+              font-size: 0.9375rem !important;
+              border-radius: 12px !important;
+              margin-top: 1.25rem !important;
             }
           }
           
@@ -1378,6 +1359,17 @@ function Abbonamenti() {
               background: rgba(0, 122, 255, 0.05) !important;
               border-radius: 12px !important;
               transition: background 0.2s ease !important;
+            }
+          }
+          
+          /* Stili per desktop - nascondi pulsante mobile */
+          @media (min-width: 769px) {
+            .add-button-mobile-bottom {
+              display: none !important;
+            }
+            
+            .add-button-desktop {
+              display: flex !important;
             }
           }
         `}
