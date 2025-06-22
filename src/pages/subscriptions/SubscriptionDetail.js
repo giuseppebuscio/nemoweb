@@ -518,7 +518,7 @@ const SubscriptionDetail = () => {
         background: 'linear-gradient(135deg, #f5f5f7 0%, #ffffff 100%)',
         minHeight: '100vh',
         width: '100%'
-      }}>
+      }} className="subscription-detail-container">
         <div style={{ 
           width: '100%'
         }}>
@@ -529,12 +529,12 @@ const SubscriptionDetail = () => {
             alignItems: 'flex-start',
             marginBottom: '2rem',
             width: '100%'
-          }}>
+          }} className="subscription-header">
             <div style={{
               display: 'flex',
               gap: '1.5rem',
               alignItems: 'center'
-            }}>
+            }} className="subscription-info">
               {subscription.logo && (
                 <div style={{
                   width: '80px',
@@ -547,7 +547,7 @@ const SubscriptionDetail = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center'
-                }}>
+                }} className="subscription-logo">
                   <img 
                     src={subscription.logo} 
                     alt={`Logo ${subscription.nome}`}
@@ -568,7 +568,7 @@ const SubscriptionDetail = () => {
                   letterSpacing: '-0.025em',
                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif',
                   textAlign: 'left'
-                }}>
+                }} className="subscription-title">
                   {subscription.nome}
                 </h1>
                 <p style={{
@@ -578,7 +578,7 @@ const SubscriptionDetail = () => {
                   fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
                   fontWeight: '400',
                   textAlign: 'left'
-                }}>
+                }} className="subscription-subtitle">
                   {formatFrequency(subscription)}
                 </p>
               </div>
@@ -589,7 +589,7 @@ const SubscriptionDetail = () => {
               display: 'flex',
               gap: '1rem',
               alignItems: 'center'
-            }}>
+            }} className="action-buttons">
               <button
                 onClick={() => navigate('/abbonamenti')}
                 style={{
@@ -609,6 +609,7 @@ const SubscriptionDetail = () => {
                   alignItems: 'center',
                   gap: '0.5rem'
                 }}
+                className="action-button touch-target"
                 onMouseEnter={(e) => {
                   e.target.style.background = 'rgba(134, 134, 139, 0.1)';
                   e.target.style.borderColor = '#1d1d1f';
@@ -643,6 +644,7 @@ const SubscriptionDetail = () => {
                   alignItems: 'center',
                   gap: '0.5rem'
                 }}
+                className="action-button touch-target"
                 onMouseEnter={(e) => {
                   e.target.style.background = 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)';
                   e.target.style.color = 'white';
@@ -670,32 +672,35 @@ const SubscriptionDetail = () => {
             borderRadius: '12px',
             width: 'fit-content',
             alignSelf: 'flex-start'
-          }}>
-            {[
-              'informazioni',
-              ...(subscription.tipoPagamento === 'fisso' ? ['pagamenti'] : ['rate']),
-              ...(subscription.persone && subscription.persone.length > 0 ? ['quote'] : [])
-            ].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                style={{
-                  padding: '8px 16px',
-                  fontSize: '0.9375rem',
-                  fontWeight: '600',
-                  border: 'none',
-                  borderRadius: '8px',
-                  background: activeTab === tab ? 'white' : 'transparent',
-                  color: activeTab === tab ? '#1d1d1f' : '#86868b',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s ease',
-                  fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
-                  boxShadow: activeTab === tab ? '0 2px 8px rgba(0, 0, 0, 0.08)' : 'none'
-                }}
-              >
-                {capitalizeFirstLetter(tab)}
-              </button>
-            ))}
+          }} className="tabs-container">
+            <div className="tabs-scroll">
+              {[
+                'informazioni',
+                ...(subscription.tipoPagamento === 'fisso' ? ['pagamenti'] : ['rate']),
+                ...(subscription.persone && subscription.persone.length > 0 ? ['quote'] : [])
+              ].map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  style={{
+                    padding: '8px 16px',
+                    fontSize: '0.9375rem',
+                    fontWeight: '600',
+                    border: 'none',
+                    borderRadius: '8px',
+                    background: activeTab === tab ? 'white' : 'transparent',
+                    color: activeTab === tab ? '#1d1d1f' : '#86868b',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif',
+                    boxShadow: activeTab === tab ? '0 2px 8px rgba(0, 0, 0, 0.08)' : 'none'
+                  }}
+                  className="tab-button touch-target"
+                >
+                  {capitalizeFirstLetter(tab)}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Card principale */}
@@ -708,17 +713,17 @@ const SubscriptionDetail = () => {
             boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05)',
             border: '1px solid rgba(255, 255, 255, 0.4)',
             width: '100%'
-          }}>
+          }} className="main-card">
             {/* Contenuto del tab */}
             {activeTab === 'informazioni' && (
-              <div style={{ padding: '2rem' }}>
+              <div style={{ padding: '2rem' }} className="card-content">
                 <div style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
                   gap: '2rem',
                   marginBottom: '2rem',
                   width: '100%'
-                }}>
+                }} className="stats-grid">
                   {/* Prezzo Totale */}
                   <div style={{
                     background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(88, 86, 214, 0.1) 100%)',
@@ -726,7 +731,7 @@ const SubscriptionDetail = () => {
                     padding: '1.5rem',
                     border: '1px solid rgba(0, 122, 255, 0.2)',
                     width: '100%'
-                  }}>
+                  }} className="stat-card mobile-animate">
                     <h4 style={{
                       fontSize: '0.9375rem',
                       color: '#007AFF',
@@ -735,7 +740,7 @@ const SubscriptionDetail = () => {
                       textTransform: 'uppercase',
                       letterSpacing: '0.02em',
                       textAlign: 'left'
-                    }}>
+                    }} className="stat-title">
                       {subscription.tipoPagamento === 'variabile' ? 'Prezzo Prima Rata' : 'Prezzo Abbonamento'}
                     </h4>
                     <p style={{
@@ -745,7 +750,7 @@ const SubscriptionDetail = () => {
                       margin: 0,
                       letterSpacing: '-0.02em',
                       textAlign: 'left'
-                    }}>€{formatTotale(subscription.prezzo)}</p>
+                    }} className="stat-value">€{formatTotale(subscription.prezzo)}</p>
                   </div>
 
                   {/* Tipo di Pagamento */}
@@ -755,7 +760,7 @@ const SubscriptionDetail = () => {
                     padding: '1.5rem',
                     border: '1px solid rgba(0, 122, 255, 0.2)',
                     width: '100%'
-                  }}>
+                  }} className="stat-card mobile-animate mobile-animate-delay-1">
                     <h4 style={{
                       fontSize: '0.9375rem',
                       color: '#007AFF',
@@ -764,7 +769,7 @@ const SubscriptionDetail = () => {
                       textTransform: 'uppercase',
                       letterSpacing: '0.02em',
                       textAlign: 'left'
-                    }}>
+                    }} className="stat-title">
                       Tipo di Pagamento
                     </h4>
                     <div style={{
@@ -805,7 +810,7 @@ const SubscriptionDetail = () => {
                     padding: '1.5rem',
                     border: '1px solid rgba(88, 86, 214, 0.2)',
                     width: '100%'
-                  }}>
+                  }} className="stat-card mobile-animate mobile-animate-delay-2">
                     <h4 style={{
                       fontSize: '0.9375rem',
                       color: '#5856D6',
@@ -814,7 +819,7 @@ const SubscriptionDetail = () => {
                       textTransform: 'uppercase',
                       letterSpacing: '0.02em',
                       textAlign: 'left'
-                    }}>
+                    }} className="stat-title">
                       Totale Pagato
                     </h4>
                     <p style={{
@@ -824,7 +829,7 @@ const SubscriptionDetail = () => {
                       margin: 0,
                       letterSpacing: '-0.02em',
                       textAlign: 'left'
-                    }}>
+                    }} className="stat-value">
                       €{subscription.tipoPagamento === 'variabile' ? (subscription.pagamenti ? subscription.pagamenti.reduce((totale, pagamento) => totale + parseFloat(pagamento.importo), 0).toFixed(2) : '0.00') : formatTotale(calcolaTotale())}
                     </p>
                   </div>
@@ -839,131 +844,169 @@ const SubscriptionDetail = () => {
                   gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
                   gap: '2rem',
                   width: '100%'
-                }}>
+                }} className="details-container">
                   {/* Frequenza */}
-                  <div>
+                  <div className="detail-item">
                     <h4 style={{
                       fontSize: '0.875rem',
                       color: '#86868b',
                       marginBottom: '0.5rem',
                       fontWeight: '600'
-                    }}>Frequenza</h4>
+                    }} className="detail-title">
+                      Frequenza
+                    </h4>
                     <p style={{
                       fontSize: '1rem',
                       color: '#1d1d1f',
-                      fontWeight: '500',
-                      margin: 0
-                    }}>{formatFrequency(subscription)}</p>
+                      margin: 0,
+                      fontWeight: '500'
+                    }} className="detail-value">
+                      {formatFrequency(subscription)}
+                    </p>
                   </div>
 
-                  {/* Data Creazione */}
-                  <div>
+                  {/* Data di Inizio */}
+                  <div className="detail-item">
                     <h4 style={{
                       fontSize: '0.875rem',
                       color: '#86868b',
                       marginBottom: '0.5rem',
                       fontWeight: '600'
-                    }}>Data Inizio Abbonamento</h4>
+                    }} className="detail-title">
+                      Data di Inizio
+                    </h4>
                     <p style={{
                       fontSize: '1rem',
                       color: '#1d1d1f',
-                      fontWeight: '500',
-                      margin: 0
-                    }}>{formatData(subscription.dataInizio)}</p>
+                      margin: 0,
+                      fontWeight: '500'
+                    }} className="detail-value">
+                      {formatData(subscription.dataInizio)}
+                    </p>
                   </div>
+
+                  {/* Data di Fine */}
+                  {subscription.dataFine && (
+                    <div className="detail-item">
+                      <h4 style={{
+                        fontSize: '0.875rem',
+                        color: '#86868b',
+                        marginBottom: '0.5rem',
+                        fontWeight: '600'
+                      }} className="detail-title">
+                        Data di Fine
+                      </h4>
+                      <p style={{
+                        fontSize: '1rem',
+                        color: '#1d1d1f',
+                        margin: 0,
+                        fontWeight: '500'
+                      }} className="detail-value">
+                        {formatData(subscription.dataFine)}
+                      </p>
+                    </div>
+                  )}
 
                   {/* Ultimo Pagamento */}
-                  <div>
-                    <h4 style={{
-                      fontSize: '0.875rem',
-                      color: '#86868b',
-                      marginBottom: '0.5rem',
-                      fontWeight: '600'
-                    }}>Ultimo Pagamento</h4>
-                    <p style={{
-                      fontSize: '1rem',
-                      color: '#1d1d1f',
-                      fontWeight: '500',
-                      margin: 0
-                    }}>{getUltimoPagamento() ? formatData(getUltimoPagamento().data) : 'Nessun pagamento'}</p>
-                  </div>
+                  {getUltimoPagamento() && (
+                    <div className="detail-item">
+                      <h4 style={{
+                        fontSize: '0.875rem',
+                        color: '#86868b',
+                        marginBottom: '0.5rem',
+                        fontWeight: '600'
+                      }} className="detail-title">
+                        Ultimo Pagamento
+                      </h4>
+                      <p style={{
+                        fontSize: '1rem',
+                        color: '#1d1d1f',
+                        margin: 0,
+                        fontWeight: '500'
+                      }} className="detail-value">
+                        {formatData(getUltimoPagamento().data)}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Quota per Persona */}
+                  {(subscription.persone && subscription.persone.length > 0) && (
+                    <div className="detail-item">
+                      <h4 style={{
+                        fontSize: '0.875rem',
+                        color: '#86868b',
+                        marginBottom: '0.5rem',
+                        fontWeight: '600'
+                      }} className="detail-title">
+                        Quota per Persona
+                      </h4>
+                      <p style={{
+                        fontSize: '1rem',
+                        color: '#1d1d1f',
+                        margin: 0,
+                        fontWeight: '500'
+                      }} className="detail-value">
+                        €{calcolaQuotaPerPersona().toFixed(2)}
+                      </p>
+                    </div>
+                  )}
                 </div>
 
-                {/* Persone Coinvolte */}
-                <div style={{
-                  marginTop: '2rem',
-                  background: 'white',
-                  borderRadius: '16px',
-                  padding: '1.5rem',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
-                  width: '100%'
-                }}>
-                  <h4 style={{
-                    fontSize: '0.875rem',
-                    color: '#86868b',
-                    marginBottom: '1rem',
-                    fontWeight: '600',
-                    textAlign: 'left'
-                  }}>Persone Coinvolte</h4>
+                {/* Promemoria pagamento */}
+                {shouldShowPaymentReminder() && (
                   <div style={{
+                    background: 'linear-gradient(135deg, rgba(255, 149, 0, 0.1) 0%, rgba(255, 123, 0, 0.1) 100%)',
+                    borderRadius: '16px',
+                    padding: '1.5rem',
+                    marginTop: '2rem',
+                    border: '1px solid rgba(255, 149, 0, 0.2)',
                     display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: '0.75rem',
-                    alignItems: 'flex-start'
-                  }}>
+                    alignItems: 'center',
+                    gap: '1rem'
+                  }} className="payment-reminder mobile-animate mobile-animate-delay-3">
                     <span style={{
-                      fontSize: '0.9375rem',
-                      color: '#007AFF',
-                      fontWeight: '500',
-                      background: 'rgba(0, 122, 255, 0.1)',
-                      padding: '6px 12px',
-                      borderRadius: '8px',
-                      border: '1px solid rgba(0, 122, 255, 0.2)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.5rem'
-                    }}>
-                      <span style={{ fontSize: '1.1em' }}>👤</span>
-                      Tu
-                    </span>
-                    {subscription.persone && subscription.persone.map((persona, index) => (
-                      <span key={index} style={{
-                        fontSize: '0.9375rem',
-                        color: '#5856D6',
-                        fontWeight: '500',
-                        background: 'rgba(88, 86, 214, 0.1)',
-                        padding: '6px 12px',
-                        borderRadius: '8px',
-                        border: '1px solid rgba(88, 86, 214, 0.2)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem'
-                      }}>
-                        <span style={{ fontSize: '1.1em' }}>👥</span>
-                        {persona}
-                      </span>
-                    ))}
+                      fontSize: '2rem',
+                      color: '#FF9500'
+                    }}>⚠️</span>
+                    <div>
+                      <h4 style={{
+                        fontSize: '1rem',
+                        color: '#FF9500',
+                        margin: '0 0 0.5rem 0',
+                        fontWeight: '600'
+                      }} className="reminder-title">
+                        Promemoria Pagamento
+                      </h4>
+                      <p style={{
+                        fontSize: '0.875rem',
+                        color: '#86868b',
+                        margin: 0,
+                        fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif'
+                      }} className="reminder-text">
+                        {getTestoPromemoria()}
+                      </p>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             )}
 
             {activeTab === 'pagamenti' && (
-              <div style={{ padding: '2rem' }}>
+              <div style={{ padding: '2rem' }} className="card-content">
                 {/* Cards Totali */}
                 <div style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
                   gap: '1.5rem',
                   marginBottom: '2rem'
-                }}>
+                }} className="stats-grid">
                   {/* Card Totale Pagamenti */}
                   <div style={{
                     background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(88, 86, 214, 0.1) 100%)',
                     borderRadius: '16px',
                     padding: '1.5rem',
                     border: '1px solid rgba(0, 122, 255, 0.2)'
-                  }}>
+                  }} className="stat-card mobile-animate">
                     <h4 style={{
                       fontSize: '0.9375rem',
                       color: '#007AFF',
@@ -971,14 +1014,14 @@ const SubscriptionDetail = () => {
                       fontWeight: '600',
                       textTransform: 'uppercase',
                       letterSpacing: '0.02em'
-                    }}>Totale Pagamenti</h4>
+                    }} className="stat-title">Totale Pagamenti</h4>
                     <p style={{
                       fontSize: '2rem',
                       color: '#1d1d1f',
                       fontWeight: '700',
                       margin: 0,
                       letterSpacing: '-0.02em'
-                    }}>€{formatTotale(calcolaTotale())}</p>
+                    }} className="stat-value">€{formatTotale(calcolaTotale())}</p>
                   </div>
 
                   {/* Card Mesi Pagati */}
@@ -987,7 +1030,7 @@ const SubscriptionDetail = () => {
                     borderRadius: '16px',
                     padding: '1.5rem',
                     border: '1px solid rgba(52, 199, 89, 0.2)'
-                  }}>
+                  }} className="stat-card mobile-animate mobile-animate-delay-1">
                     <h4 style={{
                       fontSize: '0.9375rem',
                       color: '#34C759',
@@ -995,14 +1038,14 @@ const SubscriptionDetail = () => {
                       fontWeight: '600',
                       textTransform: 'uppercase',
                       letterSpacing: '0.02em'
-                    }}>{subscription.frequenza === 'annuale' ? 'Anni Pagati' : 'Mesi Pagati'}</h4>
+                    }} className="stat-title">{subscription.frequenza === 'annuale' ? 'Anni Pagati' : 'Mesi Pagati'}</h4>
                     <p style={{
                       fontSize: '2rem',
                       color: '#1d1d1f',
                       fontWeight: '700',
                       margin: 0,
                       letterSpacing: '-0.02em'
-                    }}>{pagamenti.length}</p>
+                    }} className="stat-value">{pagamenti.length}</p>
                   </div>
                 </div>
 
@@ -1014,7 +1057,7 @@ const SubscriptionDetail = () => {
                     padding: '1.5rem',
                     marginBottom: '2rem',
                     border: '1px solid rgba(255, 149, 0, 0.2)'
-                  }}>
+                  }} className="payment-reminder mobile-animate mobile-animate-delay-2">
                     <div style={{
                       display: 'flex',
                       alignItems: 'center',
@@ -1027,7 +1070,7 @@ const SubscriptionDetail = () => {
                         fontWeight: '600',
                         color: '#1d1d1f',
                         margin: 0
-                      }}>
+                      }} className="reminder-title">
                         Pagamenti mancanti
                       </h3>
                     </div>
@@ -1036,14 +1079,14 @@ const SubscriptionDetail = () => {
                       color: '#86868b',
                       margin: '0 0 1rem 0',
                       lineHeight: '1.4'
-                    }}>
+                    }} className="reminder-text">
                       {getTestoPromemoria()}
                     </p>
                     <div style={{
                       display: 'flex',
                       gap: '1rem',
                       flexWrap: 'wrap'
-                    }}>
+                    }} className="action-table-buttons">
                       {mesiMancanti.map(({ mese, anno }, index) => (
                         <button
                           key={`${mese}-${anno}`}
@@ -1088,6 +1131,7 @@ const SubscriptionDetail = () => {
                             alignItems: 'center',
                             gap: '0.5rem'
                           }}
+                          className="action-table-button touch-target"
                           onMouseEnter={(e) => {
                             e.target.style.transform = 'translateY(-1px)';
                             e.target.style.boxShadow = '0 4px 12px rgba(255, 149, 0, 0.3)';
@@ -1113,7 +1157,7 @@ const SubscriptionDetail = () => {
                     padding: '1.5rem',
                     marginBottom: '2rem',
                     border: '1px solid rgba(52, 199, 89, 0.2)'
-                  }}>
+                  }} className="payment-reminder mobile-animate mobile-animate-delay-2">
                     <div style={{
                       display: 'flex',
                       alignItems: 'center',
@@ -1126,7 +1170,7 @@ const SubscriptionDetail = () => {
                         fontWeight: '600',
                         color: '#1d1d1f',
                         margin: 0
-                      }}>
+                      }} className="reminder-title">
                         Abbonamento in pari
                       </h3>
                     </div>
@@ -1135,7 +1179,7 @@ const SubscriptionDetail = () => {
                       color: '#86868b',
                       margin: 0,
                       lineHeight: '1.4'
-                    }}>
+                    }} className="reminder-text">
                       Sei in pari con tutti i pagamenti
                     </p>
                   </div>
@@ -1146,128 +1190,186 @@ const SubscriptionDetail = () => {
                   background: 'white',
                   borderRadius: '16px',
                   padding: '1.5rem',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
-                }}>
-                  <h4 style={{
-                    fontSize: '0.875rem',
-                    color: '#86868b',
-                    marginBottom: '1.5rem',
-                    fontWeight: '600'
-                  }}>Storico Pagamenti</h4>
-                  
-                  {pagamenti.length === 0 ? (
-                    <p style={{
-                      fontSize: '0.9375rem',
-                      color: '#86868b',
-                      textAlign: 'center',
-                      padding: '2rem',
-                      background: 'rgba(0, 0, 0, 0.02)',
-                      borderRadius: '12px',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
+                  width: '100%'
+                }} className="payments-table table-scroll-container">
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: '1.5rem'
+                  }}>
+                    <h3 style={{
+                      fontSize: '1.25rem',
+                      fontWeight: '600',
+                      color: '#1d1d1f',
                       margin: 0
                     }}>
-                      Nessun pagamento registrato
-                    </p>
-                  ) : (
+                      Storico Pagamenti
+                    </h3>
+                    <button
+                      onClick={handleAddPayment}
+                      style={{
+                        padding: '0.75rem 1rem',
+                        fontSize: '0.9375rem',
+                        fontWeight: '600',
+                        border: 'none',
+                        borderRadius: '10px',
+                        background: 'linear-gradient(135deg, #007AFF 0%, #5856D6 100%)',
+                        color: 'white',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.5rem'
+                      }}
+                      className="action-table-button touch-target"
+                      onMouseEnter={(e) => {
+                        e.target.style.transform = 'translateY(-1px)';
+                        e.target.style.boxShadow = '0 4px 12px rgba(0, 122, 255, 0.3)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.transform = 'none';
+                        e.target.style.boxShadow = 'none';
+                      }}
+                    >
+                      <span>+</span>
+                      Aggiungi Pagamento
+                    </button>
+                  </div>
+
+                  {pagamenti.length === 0 ? (
                     <div style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      gap: '1rem'
+                      textAlign: 'center',
+                      padding: '2rem',
+                      color: '#86868b'
                     }}>
-                      {pagamenti.sort((a, b) => new Date(b.data) - new Date(a.data)).map((pagamento, index) => (
-                        <div
-                          key={pagamento.data}
-                          style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            padding: '1rem',
-                            background: 'rgba(0, 0, 0, 0.02)',
-                            borderRadius: '12px',
-                            transition: 'all 0.2s ease'
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.background = 'rgba(0, 0, 0, 0.04)';
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.background = 'rgba(0, 0, 0, 0.02)';
-                          }}
-                        >
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                            <div style={{
-                              width: '40px',
-                              height: '40px',
-                              borderRadius: '10px',
-                              background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(88, 86, 214, 0.1) 100%)',
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              fontSize: '1.25rem'
-                            }}>
-                              💰
-                            </div>
-                            <div>
-                              <p style={{
-                                fontSize: '0.9375rem',
-                                fontWeight: '500',
-                                color: '#86868b',
-                                margin: '0 0 0.25rem 0'
-                              }}>
-                                {formatData(pagamento.data)}
-                              </p>
-                              <p style={{
-                                fontSize: '1rem',
-                                fontWeight: '600',
-                                color: '#1d1d1f',
-                                margin: 0
-                              }}>
-                                €{formatTotale(pagamento.importo)}
-                              </p>
-                            </div>
-                          </div>
-                          <button
-                            onClick={() => {
-                              setPagamentoDaEliminare(pagamento);
-                              setShowDeletePaymentModal(true);
-                            }}
-                            style={{
-                              padding: '8px',
-                              border: 'none',
-                              background: 'transparent',
-                              color: '#86868b',
-                              cursor: 'pointer',
-                              fontSize: '1.2rem',
-                              transition: 'color 0.2s ease',
-                              borderRadius: '8px'
-                            }}
-                            onMouseEnter={(e) => {
-                              e.currentTarget.style.background = 'rgba(0, 0, 0, 0.05)';
-                              e.currentTarget.style.color = '#FF3B30';
-                            }}
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.background = 'transparent';
-                              e.currentTarget.style.color = '#86868b';
-                            }}
-                            title="Elimina rata"
-                          >
-                            🗑️
-                          </button>
-                        </div>
-                      ))}
+                      <span style={{ fontSize: '3rem', display: 'block', marginBottom: '1rem' }}>📄</span>
+                      <p style={{ fontSize: '1rem', margin: 0 }}>Nessun pagamento registrato</p>
                     </div>
+                  ) : (
+                    <table style={{
+                      width: '100%',
+                      borderCollapse: 'collapse',
+                      fontSize: '0.9375rem'
+                    }}>
+                      <thead>
+                        <tr style={{
+                          borderBottom: '1px solid rgba(0, 0, 0, 0.1)'
+                        }}>
+                          <th style={{
+                            textAlign: 'left',
+                            padding: '1rem',
+                            fontWeight: '600',
+                            color: '#1d1d1f'
+                          }}>Data</th>
+                          <th style={{
+                            textAlign: 'left',
+                            padding: '1rem',
+                            fontWeight: '600',
+                            color: '#1d1d1f'
+                          }}>Importo</th>
+                          <th style={{
+                            textAlign: 'center',
+                            padding: '1rem',
+                            fontWeight: '600',
+                            color: '#1d1d1f'
+                          }}>Azioni</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {pagamenti.map((pagamento, index) => (
+                          <tr key={index} style={{
+                            borderBottom: '1px solid rgba(0, 0, 0, 0.05)'
+                          }}>
+                            <td style={{
+                              padding: '1rem',
+                              color: '#1d1d1f'
+                            }}>
+                              {formatData(pagamento.data)}
+                            </td>
+                            <td style={{
+                              padding: '1rem',
+                              color: '#1d1d1f',
+                              fontWeight: '500'
+                            }}>
+                              €{parseFloat(pagamento.importo).toFixed(2)}
+                            </td>
+                            <td style={{
+                              padding: '1rem',
+                              textAlign: 'center'
+                            }}>
+                              <div style={{
+                                display: 'flex',
+                                gap: '0.5rem',
+                                justifyContent: 'center'
+                              }} className="action-table-buttons">
+                                <button
+                                  onClick={() => handleEditPayment(pagamento)}
+                                  style={{
+                                    padding: '0.5rem',
+                                    fontSize: '0.875rem',
+                                    fontWeight: '600',
+                                    border: 'none',
+                                    borderRadius: '8px',
+                                    background: 'rgba(0, 122, 255, 0.1)',
+                                    color: '#007AFF',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.2s ease'
+                                  }}
+                                  className="table-button touch-target"
+                                  onMouseEnter={(e) => {
+                                    e.target.style.background = 'rgba(0, 122, 255, 0.2)';
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.target.style.background = 'rgba(0, 122, 255, 0.1)';
+                                  }}
+                                >
+                                  ✏️
+                                </button>
+                                <button
+                                  onClick={() => handleDeletePaymentInPaymentsTab(pagamento)}
+                                  style={{
+                                    padding: '0.5rem',
+                                    fontSize: '0.875rem',
+                                    fontWeight: '600',
+                                    border: 'none',
+                                    borderRadius: '8px',
+                                    background: 'rgba(255, 59, 48, 0.1)',
+                                    color: '#FF3B30',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.2s ease'
+                                  }}
+                                  className="table-button touch-target"
+                                  onMouseEnter={(e) => {
+                                    e.target.style.background = 'rgba(255, 59, 48, 0.2)';
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.target.style.background = 'rgba(255, 59, 48, 0.1)';
+                                  }}
+                                >
+                                  🗑️
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   )}
                 </div>
               </div>
             )}
 
-{activeTab === 'rate' && (
-              <div style={{ padding: '2rem' }}>
+            {activeTab === 'rate' && (
+              <div style={{ padding: '2rem' }} className="card-content">
                 {/* Card Rate Effettuate e Totale Rate */}
                 <div style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
                   gap: '1.5rem',
                   marginBottom: '2rem'
-                }}>
+                }} className="stats-grid">
 
                   {/* Card Totale Rate */}
                   <div style={{
@@ -1275,7 +1377,7 @@ const SubscriptionDetail = () => {
                     borderRadius: '16px',
                     padding: '1.5rem',
                     border: '1px solid rgba(0, 122, 255, 0.2)'
-                  }}>
+                  }} className="stat-card mobile-animate">
                     <h4 style={{
                       fontSize: '0.9375rem',
                       color: '#007AFF',
@@ -1283,14 +1385,14 @@ const SubscriptionDetail = () => {
                       fontWeight: '600',
                       textTransform: 'uppercase',
                       letterSpacing: '0.02em'
-                    }}>Totale Rate</h4>
+                    }} className="stat-title">Totale Rate</h4>
                     <p style={{
                       fontSize: '2rem',
                       color: '#1d1d1f',
                       fontWeight: '700',
                       margin: 0,
                       letterSpacing: '-0.02em'
-                    }}>
+                    }} className="stat-value">
                       €{subscription.pagamenti ? subscription.pagamenti.reduce((totale, pagamento) => totale + parseFloat(pagamento.importo), 0).toFixed(2) : '0.00'}
                     </p>
                   </div>
@@ -1301,7 +1403,7 @@ const SubscriptionDetail = () => {
                     borderRadius: '16px',
                     padding: '1.5rem',
                     border: '1px solid rgba(52, 199, 89, 0.2)'
-                  }}>
+                  }} className="stat-card mobile-animate mobile-animate-delay-1">
                     <h4 style={{
                       fontSize: '0.9375rem',
                       color: '#34C759',
@@ -1309,14 +1411,14 @@ const SubscriptionDetail = () => {
                       fontWeight: '600',
                       textTransform: 'uppercase',
                       letterSpacing: '0.02em'
-                    }}>Rate Effettuate</h4>
+                    }} className="stat-title">Rate Effettuate</h4>
                     <p style={{
                       fontSize: '2rem',
                       color: '#1d1d1f',
                       fontWeight: '700',
                       margin: 0,
                       letterSpacing: '-0.02em'
-                    }}>{pagamenti.length}</p>
+                    }} className="stat-value">{pagamenti.length}</p>
                   </div>
 
                   
@@ -1328,7 +1430,7 @@ const SubscriptionDetail = () => {
                   borderRadius: '16px',
                   padding: '1.5rem',
                   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
-                }}>
+                }} className="payments-table table-scroll-container">
                   <div style={{
                     display: 'flex',
                     justifyContent: 'space-between',
@@ -1357,6 +1459,7 @@ const SubscriptionDetail = () => {
                         alignItems: 'center',
                         gap: '0.5rem'
                       }}
+                      className="action-table-button touch-target"
                       onMouseEnter={(e) => {
                         e.target.style.background = 'rgba(0, 122, 255, 0.1)';
                       }}
@@ -1387,6 +1490,7 @@ const SubscriptionDetail = () => {
                             borderRadius: '12px',
                             transition: 'all 0.2s ease'
                           }}
+                          className="mobile-animate"
                           onMouseEnter={(e) => {
                             e.currentTarget.style.background = 'rgba(0, 0, 0, 0.04)';
                           }}
@@ -1411,7 +1515,7 @@ const SubscriptionDetail = () => {
                               <p style={{
                                 fontSize: '0.9375rem',
                                 fontWeight: '500',
-                                color: '#1d1d1f',
+                                color: '#86868b',
                                 margin: '0 0 0.25rem 0'
                               }}>
                                 {pagamento.descrizione}
@@ -1433,7 +1537,7 @@ const SubscriptionDetail = () => {
                             display: 'flex',
                             alignItems: 'center',
                             gap: '1rem'
-                          }}>
+                          }} className="action-table-buttons">
                             <p style={{
                               fontSize: '0.9375rem',
                               fontWeight: '600',
@@ -1453,11 +1557,14 @@ const SubscriptionDetail = () => {
                                   fontSize: '1.25rem',
                                   transition: 'all 0.2s ease'
                                 }}
+                                className="table-button touch-target"
                                 onMouseEnter={(e) => {
                                   e.target.style.transform = 'scale(1.1)';
+                                  e.target.style.color = '#007AFF';
                                 }}
                                 onMouseLeave={(e) => {
                                   e.target.style.transform = 'scale(1)';
+                                  e.target.style.color = '#86868b';
                                 }}
                               >
                                 ✏️
@@ -1469,11 +1576,14 @@ const SubscriptionDetail = () => {
                                   fontSize: '1.25rem',
                                   transition: 'all 0.2s ease'
                                 }}
+                                className="table-button touch-target"
                                 onMouseEnter={(e) => {
                                   e.target.style.transform = 'scale(1.1)';
+                                  e.target.style.color = '#FF3B30';
                                 }}
                                 onMouseLeave={(e) => {
                                   e.target.style.transform = 'scale(1)';
+                                  e.target.style.color = '#86868b';
                                 }}
                               >
                                 🗑️
@@ -1485,35 +1595,20 @@ const SubscriptionDetail = () => {
                     </div>
                   ) : (
                     <div style={{
-                      padding: '3rem 2rem',
                       textAlign: 'center',
-                      background: 'rgba(0, 0, 0, 0.02)',
-                      borderRadius: '12px'
+                      padding: '2rem',
+                      color: '#86868b'
                     }}>
-                      <div style={{
-                        fontSize: '3rem',
-                        marginBottom: '1rem',
-                        color: '#86868b'
-                      }}>
-                        💸
-                      </div>
-                      <p style={{
-                        fontSize: '1rem',
-                        color: '#86868b',
-                        margin: 0,
-                        lineHeight: '1.5'
-                      }}>
-                        Nessun pagamento registrato
-                      </p>
+                      <span style={{ fontSize: '3rem', display: 'block', marginBottom: '1rem' }}>📄</span>
+                      <p style={{ fontSize: '1rem', margin: 0 }}>Nessuna rata registrata</p>
                     </div>
                   )}
                 </div>
               </div>
             )}
 
-
             {activeTab === 'quote' && (
-              <div style={{ padding: '2rem' }}>
+              <div style={{ padding: '2rem' }} className="card-content">
                 {/* Card Totale Quotes */}
                 <div style={{
                   background: 'linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(88, 86, 214, 0.1) 100%)',
@@ -1521,7 +1616,7 @@ const SubscriptionDetail = () => {
                   padding: '1.5rem',
                   border: '1px solid rgba(0, 122, 255, 0.2)',
                   marginBottom: '2rem'
-                }}>
+                }} className="stat-card mobile-animate">
                   <h4 style={{
                     fontSize: '0.9375rem',
                     color: '#007AFF',
@@ -1529,14 +1624,14 @@ const SubscriptionDetail = () => {
                     fontWeight: '600',
                     textTransform: 'uppercase',
                     letterSpacing: '0.02em'
-                  }}>Quota per Persona</h4>
+                  }} className="stat-title">Quota per Persona</h4>
                   <p style={{
                     fontSize: '2rem',
                     color: '#1d1d1f',
                     fontWeight: '700',
                     margin: 0,
                     letterSpacing: '-0.02em'
-                  }}>€{calcolaQuotaPerPersona().toFixed(2)}</p>
+                  }} className="stat-value">€{calcolaQuotaPerPersona().toFixed(2)}</p>
                 </div>
 
                 {/* Lista Quote */}
@@ -1545,7 +1640,7 @@ const SubscriptionDetail = () => {
                   borderRadius: '16px',
                   padding: '1.5rem',
                   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
-                }}>
+                }} className="quotes-table table-scroll-container">
                   <div style={{
                     display: 'flex',
                     justifyContent: 'space-between',
@@ -1574,6 +1669,7 @@ const SubscriptionDetail = () => {
                           outline: 'none',
                           transition: 'all 0.2s ease'
                         }}
+                        className="touch-target"
                         onMouseEnter={(e) => {
                           e.target.style.borderColor = 'rgba(0, 122, 255, 0.5)';
                         }}
@@ -1598,7 +1694,7 @@ const SubscriptionDetail = () => {
                       display: 'flex',
                       flexDirection: 'column',
                       gap: '1.5rem'
-                    }}>
+                    }} className="people-section">
                       {subscription.persone.map((persona) => (
                         <div
                           key={persona}
@@ -1608,6 +1704,7 @@ const SubscriptionDetail = () => {
                             padding: '1.5rem',
                             transition: 'all 0.2s ease'
                           }}
+                          className="person-card mobile-animate"
                           onMouseEnter={(e) => {
                             e.currentTarget.style.background = 'rgba(0, 0, 0, 0.04)';
                           }}
@@ -1620,7 +1717,7 @@ const SubscriptionDetail = () => {
                             justifyContent: 'space-between',
                             alignItems: 'center',
                             marginBottom: '1rem'
-                          }}>
+                          }} className="person-header">
                             <div style={{
                               display: 'flex',
                               alignItems: 'center',
@@ -1644,14 +1741,14 @@ const SubscriptionDetail = () => {
                                   fontWeight: '600',
                                   color: '#1d1d1f',
                                   margin: '0 0 0.25rem 0'
-                                }}>
+                                }} className="person-name">
                                   {persona}
                                 </p>
                                 <p style={{
                                   fontSize: '0.8125rem',
                                   color: '#86868b',
                                   margin: 0
-                                }}>
+                                }} className="person-total">
                                   €{calcolaTotalePagato(persona)}
                                 </p>
                               </div>
@@ -1664,6 +1761,7 @@ const SubscriptionDetail = () => {
                                 cursor: 'pointer',
                                 transition: 'all 0.2s ease'
                               }}
+                              className="touch-target"
                               onMouseEnter={(e) => {
                                 e.target.style.color = '#FF3B30';
                               }}
@@ -1681,7 +1779,7 @@ const SubscriptionDetail = () => {
                             gridTemplateColumns: subscription.frequenza === 'annuale' ? 'repeat(auto-fill, minmax(150px, 1fr))' : 'repeat(auto-fill, minmax(100px, 1fr))',
                             gap: '0.75rem',
                             marginTop: '1rem'
-                          }}>
+                          }} className="people-grid">
                             {subscription.frequenza === 'annuale' ? (
                               // Per abbonamenti annuali, mostra solo gli anni
                               Array.from({ length: 5 }, (_, index) => {
@@ -1706,12 +1804,13 @@ const SubscriptionDetail = () => {
                                       display: 'flex',
                                       alignItems: 'center',
                                       justifyContent: 'center',
-                                      gap: '0.25rem'
+                                      gap: '0.5rem'
                                     }}
+                                    className="table-button touch-target"
                                     onMouseEnter={(e) => {
                                       if (!pagato) {
-                                        e.target.style.background = 'rgba(0, 0, 0, 0.05)';
-                                        e.target.style.borderColor = 'rgba(0, 0, 0, 0.2)';
+                                        e.target.style.background = 'rgba(52, 199, 89, 0.05)';
+                                        e.target.style.borderColor = 'rgba(52, 199, 89, 0.3)';
                                       }
                                     }}
                                     onMouseLeave={(e) => {
@@ -1721,24 +1820,23 @@ const SubscriptionDetail = () => {
                                       }
                                     }}
                                   >
-                                    Anno {anno}
+                                    {pagato && <span>✓</span>}
+                                    {anno}
                                   </button>
                                 );
                               })
                             ) : (
-                              // Per abbonamenti mensili, mostra i mesi dell'anno selezionato
-                              Array.from({ length: 12 }, (_, index) => {
-                                const mesi = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
-                                const mese = mesi[index];
+                              // Per abbonamenti mensili, mostra i mesi
+                              ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'].map((mese) => {
                                 const pagato = hasPagato(persona, mese, selectedYear);
 
                                 return (
                                   <button
-                                    key={`${persona}-${mese}`}
+                                    key={`${persona}-${mese}-${selectedYear}`}
                                     onClick={() => togglePagamentoPersona(persona, mese, selectedYear)}
                                     style={{
-                                      padding: '0.5rem',
-                                      fontSize: '0.8125rem',
+                                      padding: '0.75rem',
+                                      fontSize: '0.875rem',
                                       fontWeight: '500',
                                       border: '1px solid',
                                       borderColor: pagato ? '#34C759' : 'rgba(0, 0, 0, 0.1)',
@@ -1750,12 +1848,13 @@ const SubscriptionDetail = () => {
                                       display: 'flex',
                                       alignItems: 'center',
                                       justifyContent: 'center',
-                                      gap: '0.25rem'
+                                      gap: '0.5rem'
                                     }}
+                                    className="table-button touch-target"
                                     onMouseEnter={(e) => {
                                       if (!pagato) {
-                                        e.target.style.background = 'rgba(0, 0, 0, 0.05)';
-                                        e.target.style.borderColor = 'rgba(0, 0, 0, 0.2)';
+                                        e.target.style.background = 'rgba(52, 199, 89, 0.05)';
+                                        e.target.style.borderColor = 'rgba(52, 199, 89, 0.3)';
                                       }
                                     }}
                                     onMouseLeave={(e) => {
@@ -1765,7 +1864,8 @@ const SubscriptionDetail = () => {
                                       }
                                     }}
                                   >
-                                    {mese}
+                                    {pagato && <span>✓</span>}
+                                    {mese.substring(0, 3)}
                                   </button>
                                 );
                               })
@@ -1776,26 +1876,12 @@ const SubscriptionDetail = () => {
                     </div>
                   ) : (
                     <div style={{
-                      padding: '3rem 2rem',
                       textAlign: 'center',
-                      background: 'rgba(0, 0, 0, 0.02)',
-                      borderRadius: '12px'
+                      padding: '2rem',
+                      color: '#86868b'
                     }}>
-                      <div style={{
-                        fontSize: '3rem',
-                        marginBottom: '1rem',
-                        color: '#86868b'
-                      }}>
-                        👥
-                      </div>
-                      <p style={{
-                        fontSize: '1rem',
-                        color: '#86868b',
-                        margin: 0,
-                        lineHeight: '1.5'
-                      }}>
-                        Nessun partecipante registrato
-                      </p>
+                      <span style={{ fontSize: '3rem', display: 'block', marginBottom: '1rem' }}>👥</span>
+                      <p style={{ fontSize: '1rem', margin: 0 }}>Nessuna persona aggiunta</p>
                     </div>
                   )}
                 </div>
@@ -1985,13 +2071,13 @@ const SubscriptionDetail = () => {
             width: '90%',
             maxWidth: '400px',
             boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)'
-          }}>
+          }} className="modal-content">
             <h3 style={{
               fontSize: '1.25rem',
               fontWeight: '600',
               color: '#1d1d1f',
               margin: '0 0 1rem 0'
-            }}>
+            }} className="modal-title">
               Conferma eliminazione
             </h3>
             <p style={{
@@ -2006,7 +2092,7 @@ const SubscriptionDetail = () => {
               display: 'flex',
               gap: '1rem',
               justifyContent: 'flex-end'
-            }}>
+            }} className="modal-buttons">
               <button
                 onClick={() => setShowDeleteModal(false)}
                 style={{
@@ -2020,6 +2106,7 @@ const SubscriptionDetail = () => {
                   cursor: 'pointer',
                   transition: 'all 0.2s ease'
                 }}
+                className="modal-button touch-target"
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = 'rgba(0, 0, 0, 0.05)';
                 }}
@@ -2042,6 +2129,7 @@ const SubscriptionDetail = () => {
                   cursor: 'pointer',
                   transition: 'all 0.2s ease'
                 }}
+                className="modal-button touch-target"
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = '#FF2D55';
                 }}
@@ -2078,13 +2166,13 @@ const SubscriptionDetail = () => {
             width: '100%',
             maxWidth: '400px',
             boxShadow: '0 4px 24px rgba(0, 0, 0, 0.1)'
-          }}>
+          }} className="modal-content">
             <h3 style={{
               fontSize: '1.25rem',
               fontWeight: '600',
               color: '#1d1d1f',
               margin: '0 0 1.5rem 0'
-            }}>
+            }} className="modal-title">
               {editingPayment ? 'Modifica rata' : 'Aggiungi rata'}
             </h3>
             
@@ -2113,6 +2201,7 @@ const SubscriptionDetail = () => {
                     background: 'white',
                     transition: 'all 0.2s ease'
                   }}
+                  className="modal-input"
                 />
               </div>
 
@@ -2141,6 +2230,7 @@ const SubscriptionDetail = () => {
                     background: 'white',
                     transition: 'all 0.2s ease'
                   }}
+                  className="modal-input"
                 />
               </div>
 
@@ -2148,7 +2238,7 @@ const SubscriptionDetail = () => {
                 display: 'flex',
                 gap: '1rem',
                 marginTop: '1rem'
-              }}>
+              }} className="modal-buttons">
                 <button
                   onClick={() => {
                     setShowPaymentModal(false);
@@ -2168,6 +2258,7 @@ const SubscriptionDetail = () => {
                     cursor: 'pointer',
                     transition: 'all 0.2s ease'
                   }}
+                  className="modal-button touch-target"
                 >
                   Annulla
                 </button>
@@ -2186,6 +2277,7 @@ const SubscriptionDetail = () => {
                     transition: 'all 0.2s ease',
                     boxShadow: '0 2px 8px rgba(0, 122, 255, 0.2)'
                   }}
+                  className="modal-button touch-target"
                 >
                   {editingPayment ? 'Salva modifiche' : 'Aggiungi rata'}
                 </button>
@@ -2194,6 +2286,406 @@ const SubscriptionDetail = () => {
           </div>
         </div>
       )}
+
+      <style>
+        {`
+          @media (max-width: 768px) {
+            /* Container principale */
+            .subscription-detail-container {
+              padding: 1rem !important;
+            }
+            
+            /* Header responsive */
+            .subscription-header {
+              flex-direction: column !important;
+              align-items: flex-start !important;
+              gap: 1rem !important;
+              margin-bottom: 1.5rem !important;
+            }
+            
+            .subscription-info {
+              flex-direction: column !important;
+              align-items: flex-start !important;
+              gap: 1rem !important;
+              width: 100% !important;
+            }
+            
+            .subscription-logo {
+              width: 60px !important;
+              height: 60px !important;
+              border-radius: 12px !important;
+            }
+            
+            .subscription-title {
+              font-size: clamp(1.5rem, 6vw, 2rem) !important;
+              line-height: 1.2 !important;
+            }
+            
+            .subscription-subtitle {
+              font-size: clamp(0.875rem, 3vw, 1rem) !important;
+            }
+            
+            /* Pulsanti azione */
+            .action-buttons {
+              flex-direction: column !important;
+              width: 100% !important;
+              gap: 0.75rem !important;
+            }
+            
+            .action-button {
+              width: 100% !important;
+              justify-content: center !important;
+              padding: 0.875rem 1rem !important;
+              font-size: clamp(0.875rem, 3vw, 0.9375rem) !important;
+            }
+            
+            /* Tabs di navigazione */
+            .tabs-container {
+              width: 100% !important;
+              overflow-x: auto !important;
+              padding: 0.75rem !important;
+              margin-bottom: 1rem !important;
+            }
+            
+            .tabs-scroll {
+              display: flex !important;
+              gap: 0.5rem !important;
+              min-width: max-content !important;
+            }
+            
+            .tab-button {
+              padding: 0.75rem 1rem !important;
+              font-size: clamp(0.75rem, 2.5vw, 0.875rem) !important;
+              white-space: nowrap !important;
+              min-width: fit-content !important;
+            }
+            
+            /* Card principale */
+            .main-card {
+              border-radius: 16px !important;
+              margin: 0 !important;
+            }
+            
+            .card-content {
+              padding: 1rem !important;
+            }
+            
+            /* Grid delle statistiche */
+            .stats-grid {
+              grid-template-columns: 1fr !important;
+              gap: 1rem !important;
+              margin-bottom: 1.5rem !important;
+            }
+            
+            .stat-card {
+              padding: 1.25rem !important;
+              border-radius: 12px !important;
+            }
+            
+            .stat-title {
+              font-size: clamp(0.75rem, 2.5vw, 0.875rem) !important;
+            }
+            
+            .stat-value {
+              font-size: clamp(1.5rem, 5vw, 2rem) !important;
+            }
+            
+            /* Dettagli aggiuntivi */
+            .details-container {
+              grid-template-columns: 1fr !important;
+              gap: 1.5rem !important;
+              padding: 1.25rem !important;
+            }
+            
+            .detail-item {
+              padding: 1rem !important;
+            }
+            
+            .detail-title {
+              font-size: clamp(0.75rem, 2.5vw, 0.875rem) !important;
+            }
+            
+            .detail-value {
+              font-size: clamp(0.875rem, 3vw, 1rem) !important;
+            }
+            
+            /* Promemoria pagamento */
+            .payment-reminder {
+              margin: 1rem 0 !important;
+              padding: 1rem !important;
+              border-radius: 12px !important;
+            }
+            
+            .reminder-title {
+              font-size: clamp(0.875rem, 3vw, 1rem) !important;
+            }
+            
+            .reminder-text {
+              font-size: clamp(0.75rem, 2.5vw, 0.875rem) !important;
+            }
+            
+            /* Tabella pagamenti */
+            .payments-table {
+              overflow-x: auto !important;
+              border-radius: 12px !important;
+            }
+            
+            .payments-table table {
+              min-width: 500px !important;
+              font-size: clamp(0.75rem, 2.5vw, 0.875rem) !important;
+            }
+            
+            .payments-table th,
+            .payments-table td {
+              padding: 0.75rem 0.5rem !important;
+            }
+            
+            /* Tabella quote */
+            .quotes-table {
+              overflow-x: auto !important;
+              border-radius: 12px !important;
+            }
+            
+            .quotes-table table {
+              min-width: 600px !important;
+              font-size: clamp(0.75rem, 2.5vw, 0.875rem) !important;
+            }
+            
+            .quotes-table th,
+            .quotes-table td {
+              padding: 0.5rem !important;
+              min-width: 60px !important;
+            }
+            
+            /* Pulsanti nelle tabelle */
+            .table-button {
+              padding: 0.5rem !important;
+              font-size: clamp(0.75rem, 2.5vw, 0.875rem) !important;
+              min-width: 44px !important;
+              height: 44px !important;
+            }
+            
+            /* Modali */
+            .modal-content {
+              margin: 1rem !important;
+              padding: 1.5rem !important;
+              border-radius: 12px !important;
+              max-width: calc(100vw - 2rem) !important;
+            }
+            
+            .modal-title {
+              font-size: clamp(1.125rem, 4vw, 1.25rem) !important;
+            }
+            
+            .modal-input {
+              padding: 0.875rem !important;
+              font-size: clamp(0.875rem, 3vw, 0.9375rem) !important;
+            }
+            
+            .modal-buttons {
+              flex-direction: column !important;
+              gap: 0.75rem !important;
+            }
+            
+            .modal-button {
+              width: 100% !important;
+              padding: 0.875rem !important;
+              font-size: clamp(0.875rem, 3vw, 0.9375rem) !important;
+            }
+            
+            /* Pulsanti di azione nelle tabelle */
+            .action-table-buttons {
+              flex-direction: column !important;
+              gap: 0.5rem !important;
+              align-items: stretch !important;
+            }
+            
+            .action-table-button {
+              width: 100% !important;
+              justify-content: center !important;
+              padding: 0.75rem !important;
+              font-size: clamp(0.75rem, 2.5vw, 0.875rem) !important;
+            }
+            
+            /* Gestione persone */
+            .people-section {
+              padding: 1rem !important;
+            }
+            
+            .people-grid {
+              grid-template-columns: 1fr !important;
+              gap: 1rem !important;
+            }
+            
+            .person-card {
+              padding: 1rem !important;
+              border-radius: 12px !important;
+            }
+            
+            .person-header {
+              flex-direction: column !important;
+              align-items: flex-start !important;
+              gap: 0.75rem !important;
+            }
+            
+            .person-name {
+              font-size: clamp(1rem, 3.5vw, 1.125rem) !important;
+            }
+            
+            .person-total {
+              font-size: clamp(1.25rem, 4vw, 1.5rem) !important;
+            }
+            
+            /* Scroll orizzontale per tabelle */
+            .table-scroll-container {
+              overflow-x: auto !important;
+              -webkit-overflow-scrolling: touch !important;
+              border-radius: 12px !important;
+              margin: 0 -1rem !important;
+              padding: 0 1rem !important;
+            }
+            
+            /* Ottimizzazioni per touch */
+            .touch-target {
+              min-height: 44px !important;
+              min-width: 44px !important;
+            }
+            
+            /* Spacing ottimizzato per mobile */
+            .mobile-spacing {
+              margin-bottom: 1rem !important;
+            }
+            
+            .mobile-padding {
+              padding: 1rem !important;
+            }
+          }
+          
+          @media (max-width: 480px) {
+            /* Ottimizzazioni per schermi molto piccoli */
+            .subscription-detail-container {
+              padding: 0.75rem !important;
+            }
+            
+            .subscription-title {
+              font-size: clamp(1.25rem, 5vw, 1.75rem) !important;
+            }
+            
+            .subscription-subtitle {
+              font-size: clamp(0.75rem, 2.5vw, 0.875rem) !important;
+            }
+            
+            .action-button {
+              padding: 1rem !important;
+              font-size: clamp(0.875rem, 3vw, 0.9375rem) !important;
+            }
+            
+            .tab-button {
+              padding: 0.875rem 0.75rem !important;
+              font-size: clamp(0.75rem, 2.5vw, 0.875rem) !important;
+            }
+            
+            .card-content {
+              padding: 0.75rem !important;
+            }
+            
+            .stat-card {
+              padding: 1rem !important;
+            }
+            
+            .details-container {
+              padding: 1rem !important;
+            }
+            
+            .modal-content {
+              margin: 0.5rem !important;
+              padding: 1.25rem !important;
+            }
+            
+            /* Tabella responsive per schermi molto piccoli */
+            .payments-table table,
+            .quotes-table table {
+              font-size: clamp(0.625rem, 2vw, 0.75rem) !important;
+            }
+            
+            .payments-table th,
+            .payments-table td,
+            .quotes-table th,
+            .quotes-table td {
+              padding: 0.5rem 0.25rem !important;
+            }
+          }
+          
+          @media (min-width: 769px) {
+            /* Mantieni il layout desktop per schermi grandi */
+            .subscription-header {
+              flex-direction: row !important;
+              align-items: flex-start !important;
+            }
+            
+            .subscription-info {
+              flex-direction: row !important;
+              align-items: center !important;
+            }
+            
+            .action-buttons {
+              flex-direction: row !important;
+              width: auto !important;
+            }
+            
+            .action-button {
+              width: auto !important;
+            }
+            
+            .stats-grid {
+              grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+            }
+            
+            .details-container {
+              grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+            }
+            
+            .people-grid {
+              grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+            }
+            
+            .person-header {
+              flex-direction: row !important;
+              align-items: center !important;
+            }
+          }
+          
+          /* Animazioni per mobile */
+          @media (max-width: 768px) {
+            @keyframes slideInUp {
+              from {
+                opacity: 0;
+                transform: translateY(20px);
+              }
+              to {
+                opacity: 1;
+                transform: translateY(0);
+              }
+            }
+            
+            .mobile-animate {
+              animation: slideInUp 0.3s ease-out both;
+            }
+            
+            .mobile-animate-delay-1 {
+              animation-delay: 0.1s;
+            }
+            
+            .mobile-animate-delay-2 {
+              animation-delay: 0.2s;
+            }
+            
+            .mobile-animate-delay-3 {
+              animation-delay: 0.3s;
+            }
+          }
+        `}
+      </style>
     </Layout>
   );
 }
