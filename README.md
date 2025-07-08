@@ -1,70 +1,129 @@
-# Getting Started with Create React App
+# Nemoweb - Sito Web React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Un sito web moderno e responsive creato con React, caratterizzato da un design elegante e funzionalità complete.
 
-## Available Scripts
+## 🚀 Caratteristiche
 
-In the project directory, you can run:
+- **Design Moderno**: Interfaccia pulita e professionale
+- **Responsive**: Ottimizzato per tutti i dispositivi
+- **Componenti Modulari**: Struttura organizzata e riutilizzabile
+- **Animazioni Fluide**: Transizioni e hover effects
+- **Form di Contatto**: Funzionale e user-friendly
+- **SEO Ready**: Struttura ottimizzata per i motori di ricerca
 
-### `npm start`
+## 📋 Sezioni del Sito
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. **Header**: Navigazione fissa con menu responsive
+2. **Hero**: Sezione di benvenuto con call-to-action
+3. **Features**: Presentazione dei servizi principali
+4. **About**: Informazioni sull'azienda
+5. **Contact**: Form di contatto e informazioni
+6. **Footer**: Link utili e copyright
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🛠️ Tecnologie Utilizzate
 
-### `npm test`
+- React 18
+- CSS3 con Flexbox e Grid
+- HTML5 semantico
+- JavaScript ES6+
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 📦 Installazione
 
-### `npm run build`
+1. **Clona il repository**:
+   ```bash
+   git clone <url-repository>
+   cd nemoweb
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. **Installa le dipendenze**:
+   ```bash
+   npm install
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. **Avvia il server di sviluppo**:
+   ```bash
+   npm start
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+4. **Apri il browser**:
+   Naviga su `http://localhost:3000`
 
-### `npm run eject`
+## 🏗️ Struttura del Progetto
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+nemoweb/
+├── public/
+│   ├── index.html
+│   └── manifest.json
+├── src/
+│   ├── components/
+│   │   ├── Header.js
+│   │   ├── Header.css
+│   │   ├── Hero.js
+│   │   ├── Hero.css
+│   │   ├── Features.js
+│   │   ├── Features.css
+│   │   ├── About.js
+│   │   ├── About.css
+│   │   ├── Contact.js
+│   │   ├── Contact.css
+│   │   ├── Footer.js
+│   │   └── Footer.css
+│   ├── App.js
+│   ├── App.css
+│   ├── index.js
+│   └── index.css
+├── package.json
+└── README.md
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🎨 Personalizzazione
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Colori
+I colori principali sono definiti tramite CSS custom properties. Puoi modificarli in `src/index.css`:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```css
+:root {
+  --primary-color: #667eea;
+  --secondary-color: #764ba2;
+  --accent-color: #ffd700;
+}
+```
 
-## Learn More
+### Contenuti
+Modifica i testi direttamente nei componenti React:
+- `src/components/Hero.js` - Titolo e sottotitolo principale
+- `src/components/Features.js` - Lista dei servizi
+- `src/components/About.js` - Informazioni aziendali
+- `src/components/Contact.js` - Dati di contatto
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 📱 Responsive Design
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Il sito è completamente responsive e si adatta a:
+- Desktop (1200px+)
+- Tablet (768px - 1199px)
+- Mobile (< 768px)
 
-### Code Splitting
+## 🚀 Build per Produzione
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Per creare una versione ottimizzata per la produzione:
 
-### Analyzing the Bundle Size
+```bash
+npm run build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+I file ottimizzati saranno creati nella cartella `build/`.
 
-### Making a Progressive Web App
+## 📞 Supporto
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Per domande o supporto, contatta:
+- Email: info@nemoweb.it
+- Telefono: +39 123 456 7890
 
-### Advanced Configuration
+## 📄 Licenza
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Questo progetto è rilasciato sotto licenza MIT.
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Sviluppato con ❤️ in Italia** 

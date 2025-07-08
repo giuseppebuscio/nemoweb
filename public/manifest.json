@@ -1,46 +1,15 @@
 {
-  "short_name": "MagicSubs",
-  "name": "MagicSubs - Gestione Abbonamenti",
-  "description": "Gestisci i tuoi abbonamenti in modo intelligente",
+  "short_name": "Nemoweb",
+  "name": "Nemoweb - Sito Web Moderno",
   "icons": [
     {
       "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
-    },
-    {
-      "src": "Icona.png",
-      "type": "image/png",
-      "sizes": "192x192",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "Icona.png",
-      "type": "image/png",
-      "sizes": "512x512",
-      "purpose": "any maskable"
     }
   ],
-  "start_url": "/",
+  "start_url": ".",
   "display": "standalone",
-  "orientation": "portrait",
-  "theme_color": "#ffffff",
-  "background_color": "#fafafa",
-  "scope": "/",
-  "lang": "it",
-  "categories": ["finance", "productivity", "utilities"],
-  "screenshots": [
-    {
-      "src": "screenshot-wide.png",
-      "sizes": "1280x720",
-      "type": "image/png",
-      "form_factor": "wide"
-    },
-    {
-      "src": "screenshot-narrow.png",
-      "sizes": "750x1334",
-      "type": "image/png",
-      "form_factor": "narrow"
-    }
-  ]
-}
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+} 
