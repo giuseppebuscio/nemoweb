@@ -1,0 +1,786 @@
+/* ServiziPage specific styles - following HomePage design */
+.servizi-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+  color: #ffffff;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  overflow-x: hidden;
+}
+
+.servizi-page.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Header - following HomePage style */
+.servizi-page .page-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: linear-gradient(135deg, rgba(255, 115, 81, 0.1) 0%, rgba(249, 106, 177, 0.1) 100%);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.servizi-page .header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+}
+
+.servizi-page .logo-image {
+  height: 32px;
+  width: auto;
+  transition: all 0.3s ease;
+  filter: brightness(1);
+}
+
+.servizi-page .logo:hover .logo-image {
+  filter: brightness(1.1);
+  transform: scale(1.05);
+}
+
+.servizi-page .nav-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 2.5rem;
+}
+
+.servizi-page .nav-link {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  padding: 0.5rem 0;
+}
+
+.servizi-page .nav-link::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(135deg, #FF7351 0%, #F96AB1 100%);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.servizi-page .nav-link:hover {
+  color: #ffffff;
+}
+
+.servizi-page .nav-link:hover::before {
+  width: 100%;
+}
+
+.servizi-page .nav-link.active {
+  color: #ffffff;
+}
+
+.servizi-page .nav-link.active::before {
+  width: 100%;
+}
+
+.servizi-page .cta-button {
+  background: linear-gradient(135deg, #FF7351 0%, #F96AB1 100%);
+  color: white;
+  border: none;
+  padding: 0.875rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(255, 115, 81, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.servizi-page .cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.servizi-page .cta-button:hover::before {
+  left: 100%;
+}
+
+.servizi-page .cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 115, 81, 0.4);
+}
+
+/* Hero Section - following HomePage style */
+.servizi-page .hero-section {
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+  color: white;
+  padding: 120px 0 80px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.servizi-page .hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 20%, rgba(255, 115, 81, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 70% 80%, rgba(249, 106, 177, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.servizi-page .hero-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.servizi-page .hero-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.servizi-page .hero-title {
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+  animation: fadeInUp 0.8s ease-out 0.1s both;
+}
+
+.servizi-page .gradient-text {
+  background: linear-gradient(135deg, #FF7351 0%, #F96AB1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+}
+
+.servizi-page .hero-subtitle {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 2.5rem;
+  font-weight: 500;
+  line-height: 1.6;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+/* Services Section - following HomePage features style */
+.servizi-page .services-section {
+  padding: 160px 0;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.servizi-page .services-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(255, 115, 81, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(249, 106, 177, 0.08) 0%, transparent 50%),
+    linear-gradient(45deg, transparent 48%, rgba(255, 115, 81, 0.02) 50%, transparent 52%),
+    linear-gradient(-45deg, transparent 48%, rgba(249, 106, 177, 0.02) 50%, transparent 52%);
+  background-size: 100% 100%, 100% 100%, 80px 80px, 80px 80px;
+  pointer-events: none;
+  animation: patternFloat 30s ease-in-out infinite;
+}
+
+.servizi-page .services-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.servizi-page .services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 40px;
+  animation: fadeInUp 1s ease-out 0.6s both;
+}
+
+.servizi-page .service-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.8) 100%);
+  border-radius: 32px;
+  padding: 40px 32px;
+  text-align: left;
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.servizi-page .service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+  transition: left 0.8s ease;
+}
+
+.servizi-page .service-card:hover::before {
+  left: 100%;
+}
+
+.servizi-page .service-card:hover {
+  transform: translateY(-20px) scale(1.03);
+  box-shadow: 0 40px 80px rgba(255, 115, 81, 0.2);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.95) 100%);
+}
+
+.servizi-page .service-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 20px 0 0;
+  background: linear-gradient(135deg, rgba(255, 115, 81, 0.1) 0%, rgba(249, 106, 177, 0.1) 100%);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.5s ease;
+  flex-shrink: 0;
+  font-size: 2rem;
+}
+
+.servizi-page .service-icon::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #FF7351 0%, #F96AB1 100%);
+  border-radius: 18px;
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+.servizi-page .service-card:hover .service-icon::before {
+  opacity: 1;
+}
+
+.servizi-page .service-card:hover .service-icon {
+  transform: scale(1.15) rotate(8deg);
+  box-shadow: 0 20px 40px rgba(255, 115, 81, 0.4);
+}
+
+.servizi-page .service-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.servizi-page .service-card:hover .service-title {
+  background: linear-gradient(135deg, #FF7351 0%, #F96AB1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.servizi-page .service-description {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #4a5568;
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+}
+
+.servizi-page .service-card:hover .service-description {
+  color: #2d3748;
+}
+
+.servizi-page .service-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 2rem;
+}
+
+.servizi-page .service-feature {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  color: #4a5568;
+  transition: all 0.3s ease;
+}
+
+.servizi-page .service-card:hover .service-feature {
+  color: #2d3748;
+}
+
+.servizi-page .feature-check {
+  color: #FF7351;
+  font-weight: bold;
+  margin-right: 0.8rem;
+  font-size: 1.2rem;
+}
+
+.servizi-page .service-cta {
+  background: linear-gradient(135deg, #FF7351 0%, #F96AB1 100%);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 25px rgba(255, 115, 81, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.servizi-page .service-cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.servizi-page .service-cta:hover::before {
+  left: 100%;
+}
+
+.servizi-page .service-cta:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(255, 115, 81, 0.4);
+}
+
+.servizi-page .arrow-icon {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+.servizi-page .service-cta:hover .arrow-icon {
+  transform: translateX(4px);
+}
+
+/* Process Section - following HomePage style */
+.servizi-page .process-section {
+  padding: 160px 0;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.servizi-page .process-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 20%, rgba(255, 115, 81, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 70% 80%, rgba(249, 106, 177, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.servizi-page .process-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.servizi-page .section-header {
+  text-align: center;
+  margin-bottom: 100px;
+  animation: fadeInUp 1s ease-out;
+}
+
+.servizi-page .section-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.servizi-page .section-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 32px;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  position: relative;
+  animation: fadeInUp 1s ease-out 0.2s both;
+}
+
+.servizi-page .process-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+  animation: fadeInUp 1s ease-out 0.6s both;
+}
+
+.servizi-page .process-step {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  border-radius: 32px;
+  padding: 40px 32px;
+  text-align: center;
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.servizi-page .process-step::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.8s ease;
+}
+
+.servizi-page .process-step:hover::before {
+  left: 100%;
+}
+
+.servizi-page .process-step:hover {
+  transform: translateY(-20px) scale(1.03);
+  box-shadow: 0 40px 80px rgba(255, 115, 81, 0.2);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.1) 100%);
+}
+
+.servizi-page .step-number {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #FF7351;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #FF7351 0%, #F96AB1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.servizi-page .step-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+.servizi-page .step-description {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+/* CTA Section - following HomePage style */
+.servizi-page .cta-section {
+  padding: 160px 0;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.servizi-page .cta-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(255, 115, 81, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(249, 106, 177, 0.08) 0%, transparent 50%),
+    linear-gradient(45deg, transparent 48%, rgba(255, 115, 81, 0.02) 50%, transparent 52%),
+    linear-gradient(-45deg, transparent 48%, rgba(249, 106, 177, 0.02) 50%, transparent 52%);
+  background-size: 100% 100%, 100% 100%, 80px 80px, 80px 80px;
+  pointer-events: none;
+  animation: patternFloat 30s ease-in-out infinite;
+}
+
+.servizi-page .cta-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.servizi-page .cta-badge {
+  display: inline-block;
+  background: rgba(255, 115, 81, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 115, 81, 0.2);
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.servizi-page .cta-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+  color: #1a202c;
+  animation: fadeInUp 0.8s ease-out 0.1s both;
+}
+
+.servizi-page .cta-gradient-text {
+  background: linear-gradient(135deg, #FF7351 0%, #F96AB1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+}
+
+.servizi-page .cta-description {
+  font-size: 1.25rem;
+  color: #4a5568;
+  margin-bottom: 2.5rem;
+  font-weight: 500;
+  line-height: 1.6;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+.servizi-page .cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  animation: fadeInUp 0.8s ease-out 0.3s both;
+  flex-wrap: wrap;
+}
+
+.servizi-page .cta-primary-button {
+  background: linear-gradient(135deg, #FF7351 0%, #F96AB1 100%);
+  color: white;
+  border: none;
+  padding: 1.25rem 2.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 25px rgba(255, 115, 81, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.servizi-page .cta-primary-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.servizi-page .cta-primary-button:hover::before {
+  left: 100%;
+}
+
+.servizi-page .cta-primary-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(255, 115, 81, 0.4);
+}
+
+.servizi-page .cta-secondary-button {
+  background: transparent;
+  color: #1a202c;
+  border: 2px solid rgba(26, 32, 44, 0.3);
+  padding: 1.25rem 2.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.servizi-page .cta-secondary-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(26, 32, 44, 0.1);
+  transition: left 0.3s;
+}
+
+.servizi-page .cta-secondary-button:hover::before {
+  left: 0;
+}
+
+.servizi-page .cta-secondary-button:hover {
+  border-color: rgba(26, 32, 44, 0.6);
+  transform: translateY(-2px);
+}
+
+.servizi-page .cta-arrow-icon {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+.servizi-page .cta-primary-button:hover .cta-arrow-icon {
+  transform: translateX(4px);
+}
+
+/* Animations from HomePage */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes patternFloat {
+  0%, 100% {
+    transform: translateX(0) translateY(0);
+  }
+  25% {
+    transform: translateX(10px) translateY(-10px);
+  }
+  50% {
+    transform: translateX(-5px) translateY(5px);
+  }
+  75% {
+    transform: translateX(-10px) translateY(-5px);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .servizi-page .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .servizi-page .section-title {
+    font-size: 2rem;
+  }
+  
+  .servizi-page .cta-title {
+    font-size: 2rem;
+  }
+  
+  .servizi-page .services-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .servizi-page .process-steps {
+    grid-template-columns: 1fr;
+  }
+  
+  .servizi-page .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .servizi-page .header-container {
+    padding: 0 1rem;
+  }
+  
+  .servizi-page .nav-list {
+    gap: 1rem;
+  }
+} 

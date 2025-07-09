@@ -1,0 +1,627 @@
+/* ChiSiamoPage specific styles - isolated from HomePage */
+.chi-siamo-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+  color: #ffffff;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.chi-siamo-page.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Header - specific to chi-siamo page */
+.chi-siamo-page .page-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(15, 15, 35, 0.95);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.chi-siamo-page .header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chi-siamo-page .logo-image {
+  height: 40px;
+  width: auto;
+}
+
+.chi-siamo-page .nav-list {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.chi-siamo-page .nav-link {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.chi-siamo-page .nav-link:hover,
+.chi-siamo-page .nav-link.active {
+  color: #ff6b35;
+}
+
+.chi-siamo-page .nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #ff6b35, #ff8c42);
+  border-radius: 1px;
+}
+
+.chi-siamo-page .cta-button {
+  background: linear-gradient(135deg, #ff6b35, #ff8c42);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.chi-siamo-page .cta-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Hero Section */
+.chi-siamo-page .hero-section {
+  padding: 120px 0 80px;
+  text-align: center;
+}
+
+.chi-siamo-page .hero-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.chi-siamo-page .hero-badge {
+  display: inline-block;
+  background: rgba(255, 107, 53, 0.1);
+  color: #ff6b35;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.chi-siamo-page .hero-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.chi-siamo-page .gradient-text {
+  background: linear-gradient(135deg, #ff6b35, #ff8c42);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.chi-siamo-page .hero-subtitle {
+  font-size: 1.2rem;
+  color: #b0b0b0;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+/* Story Section */
+.chi-siamo-page .story-section {
+  padding: 80px 0;
+}
+
+.chi-siamo-page .story-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.chi-siamo-page .story-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.chi-siamo-page .story-text {
+  padding-right: 2rem;
+}
+
+.chi-siamo-page .section-badge {
+  display: inline-block;
+  background: rgba(255, 107, 53, 0.1);
+  color: #ff6b35;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.chi-siamo-page .section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.chi-siamo-page .story-description {
+  font-size: 1.1rem;
+  color: #b0b0b0;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.chi-siamo-page .story-visual {
+  position: relative;
+}
+
+.chi-siamo-page .story-image {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.chi-siamo-page .story-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.chi-siamo-page .image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255, 107, 53, 0.2), rgba(255, 140, 66, 0.2));
+}
+
+/* Values Section */
+.chi-siamo-page .values-section {
+  padding: 80px 0;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.chi-siamo-page .values-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.chi-siamo-page .section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.chi-siamo-page .values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.chi-siamo-page .value-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.chi-siamo-page .value-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 107, 53, 0.3);
+}
+
+.chi-siamo-page .value-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.chi-siamo-page .value-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+.chi-siamo-page .value-description {
+  color: #b0b0b0;
+  line-height: 1.6;
+}
+
+/* Team Section */
+.chi-siamo-page .team-section {
+  padding: 80px 0;
+}
+
+.chi-siamo-page .team-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.chi-siamo-page .team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.chi-siamo-page .team-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.chi-siamo-page .team-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 107, 53, 0.3);
+}
+
+.chi-siamo-page .member-avatar {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.chi-siamo-page .member-name {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+.chi-siamo-page .member-role {
+  color: #ff6b35;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.chi-siamo-page .member-description {
+  color: #b0b0b0;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.chi-siamo-page .member-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.chi-siamo-page .skill-tag {
+  background: rgba(255, 107, 53, 0.1);
+  color: #ff6b35;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* Timeline Section */
+.chi-siamo-page .timeline-section {
+  padding: 80px 0;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.chi-siamo-page .timeline-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.chi-siamo-page .timeline {
+  position: relative;
+  margin-top: 4rem;
+}
+
+.chi-siamo-page .timeline::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, #ff6b35, #ff8c42);
+  transform: translateX(-50%);
+}
+
+.chi-siamo-page .timeline-item {
+  position: relative;
+  margin-bottom: 3rem;
+}
+
+.chi-siamo-page .timeline-item.left {
+  padding-right: 50%;
+}
+
+.chi-siamo-page .timeline-item.right {
+  padding-left: 50%;
+}
+
+.chi-siamo-page .timeline-content {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 2rem;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.chi-siamo-page .timeline-content::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  background: #ff6b35;
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+
+.chi-siamo-page .timeline-item.left .timeline-content::before {
+  right: -60px;
+}
+
+.chi-siamo-page .timeline-item.right .timeline-content::before {
+  left: -60px;
+}
+
+.chi-siamo-page .timeline-content:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 107, 53, 0.3);
+  transform: translateY(-2px);
+}
+
+.chi-siamo-page .timeline-year {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ff6b35;
+  margin-bottom: 0.5rem;
+}
+
+.chi-siamo-page .timeline-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+}
+
+.chi-siamo-page .timeline-description {
+  color: #b0b0b0;
+  line-height: 1.6;
+}
+
+/* Stats Section */
+.chi-siamo-page .stats-section {
+  padding: 80px 0;
+}
+
+.chi-siamo-page .stats-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.chi-siamo-page .stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+.chi-siamo-page .stat-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.chi-siamo-page .stat-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 107, 53, 0.3);
+}
+
+.chi-siamo-page .stat-number {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #ff6b35;
+  margin-bottom: 0.5rem;
+}
+
+.chi-siamo-page .stat-label {
+  color: #b0b0b0;
+  font-weight: 500;
+}
+
+/* CTA Section */
+.chi-siamo-page .cta-section {
+  padding: 80px 0;
+  text-align: center;
+}
+
+.chi-siamo-page .cta-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.chi-siamo-page .cta-badge {
+  display: inline-block;
+  background: rgba(255, 107, 53, 0.1);
+  color: #ff6b35;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.chi-siamo-page .cta-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.chi-siamo-page .cta-gradient-text {
+  background: linear-gradient(135deg, #ff6b35, #ff8c42);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.chi-siamo-page .cta-description {
+  font-size: 1.1rem;
+  color: #b0b0b0;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.chi-siamo-page .cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.chi-siamo-page .cta-primary-button {
+  background: linear-gradient(135deg, #ff6b35, #ff8c42);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.chi-siamo-page .cta-primary-button:hover {
+  transform: translateY(-2px);
+}
+
+.chi-siamo-page .cta-secondary-button {
+  background: transparent;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.chi-siamo-page .cta-secondary-button:hover {
+  background: #ffffff;
+  color: #0f0f23;
+}
+
+.chi-siamo-page .cta-arrow-icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .chi-siamo-page .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .chi-siamo-page .section-title {
+    font-size: 2rem;
+  }
+  
+  .chi-siamo-page .cta-title {
+    font-size: 2rem;
+  }
+  
+  .chi-siamo-page .story-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .chi-siamo-page .story-text {
+    padding-right: 0;
+  }
+  
+  .chi-siamo-page .values-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .chi-siamo-page .team-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .chi-siamo-page .timeline::before {
+    left: 20px;
+  }
+  
+  .chi-siamo-page .timeline-item.left,
+  .chi-siamo-page .timeline-item.right {
+    padding-left: 60px;
+    padding-right: 0;
+  }
+  
+  .chi-siamo-page .timeline-item.left .timeline-content::before,
+  .chi-siamo-page .timeline-item.right .timeline-content::before {
+    left: -40px;
+    right: auto;
+  }
+  
+  .chi-siamo-page .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .chi-siamo-page .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .chi-siamo-page .header-container {
+    padding: 0 1rem;
+  }
+  
+  .chi-siamo-page .nav-list {
+    gap: 1rem;
+  }
+} 

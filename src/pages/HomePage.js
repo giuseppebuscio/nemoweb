@@ -37,11 +37,11 @@ const HomePage = () => {
           
           <nav className={`nav ${isMenuOpen ? 'nav-open' : ''}`}>
             <ul className="nav-list">
-              <li><a href="#home" className="nav-link" onClick={closeMenu}>Home</a></li>
-              <li><a href="#services" className="nav-link" onClick={closeMenu}>Servizi</a></li>
-              <li><a href="#prices" className="nav-link" onClick={closeMenu}>Prezzi</a></li>
-              <li><a href="#about" className="nav-link" onClick={closeMenu}>Chi Siamo</a></li>
-              <li><a href="#contact" className="nav-link" onClick={closeMenu}>Contatti</a></li>
+              <li><a href="/" className="nav-link" onClick={closeMenu}>Home</a></li>
+              <li><a href="/servizi" className="nav-link" onClick={closeMenu}>Servizi</a></li>
+              <li><a href="/prezzi" className="nav-link" onClick={closeMenu}>Prezzi</a></li>
+              <li><a href="/chi-siamo" className="nav-link" onClick={closeMenu}>Chi Siamo</a></li>
+              <li><a href="/contatti" className="nav-link" onClick={closeMenu}>Contatti</a></li>
             </ul>
           </nav>
 
