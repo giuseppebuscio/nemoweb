@@ -1,41 +1,62 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import './ChiSiamoPage.css';
 
 const ChiSiamoPage = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [currentTimelineIndex, setCurrentTimelineIndex] = useState(0);
+  const timelineRef = useRef(null);
 
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
+  const scrollTimeline = (direction) => {
+    const container = timelineRef.current;
+    if (!container) return;
+    
+    const cardWidth = container.querySelector('.timeline-item').offsetWidth;
+    const gap = 32; // gap tra le card
+    const scrollAmount = cardWidth + gap;
+    
+    if (direction === 'left') {
+      container.scrollLeft -= scrollAmount;
+      setCurrentTimelineIndex(prev => Math.max(0, prev - 1));
+    } else {
+      container.scrollLeft += scrollAmount;
+      setCurrentTimelineIndex(prev => Math.min(milestones.length - 1, prev + 1));
+    }
+  };
+
   const teamMembers = [
     {
-      name: "Marco Rossi",
-      role: "Founder & CEO",
-      description: "Esperto di strategia digitale con oltre 10 anni di esperienza nel settore web",
-      image: "👨‍💼",
-      skills: ["Strategia Digitale", "Business Development", "Leadership"]
-    },
-    {
-      name: "Laura Bianchi",
-      role: "Lead Designer",
-      description: "Designer creativa specializzata in UX/UI design e brand identity",
-      image: "👩‍🎨",
-      skills: ["UX/UI Design", "Brand Identity", "Creative Direction"]
-    },
-    {
-      name: "Alessandro Verdi",
-      role: "Senior Developer",
-      description: "Sviluppatore full-stack con passione per le tecnologie moderne",
+      name: "Giuseppe Buscio",
+      role: "Founder e Sviluppatore",
+      description: "Esperto di sviluppo web e strategia digitale con passione per le tecnologie moderne",
       image: "👨‍💻",
-      skills: ["React/Next.js", "Node.js", "DevOps"]
+      skills: ["React/Next.js", "Node.js", "Strategia Digitale"]
     },
     {
-      name: "Sofia Neri",
-      role: "Marketing Manager",
-      description: "Specialista in digital marketing e strategie di crescita",
+      name: "Valeria Quattrone",
+      role: "Founder e Sviluppatore",
+      description: "Sviluppatrice creativa specializzata in UX/UI design e sviluppo frontend",
+      image: "👩‍💻",
+      skills: ["UX/UI Design", "React", "Creative Development"]
+    },
+    {
+      name: "Alessia Scopelliti",
+      role: "Founder",
+      description: "Specialista in strategia aziendale e sviluppo business con focus sull'innovazione",
       image: "👩‍💼",
-      skills: ["SEO/SEM", "Social Media", "Growth Hacking"]
+      skills: ["Business Strategy", "Innovation", "Leadership"]
+    },
+    {
+      name: "Luca Cristarella",
+      role: "Founder",
+      description: "Esperto in digital marketing e strategie di crescita per startup e aziende",
+      image: "👨‍💼",
+      skills: ["Digital Marketing", "Growth Hacking", "SEO/SEM"]
     }
   ];
 
@@ -97,28 +118,7 @@ const ChiSiamoPage = () => {
 
   return (
     <div className={`chi-siamo-page ${isVisible ? 'visible' : ''}`}>
-      {/* Header */}
-      <header className="page-header">
-        <div className="header-container">
-          <div className="logo">
-            <img src="/Bianco-Arancio.png" alt="Nemo Agency Logo" className="logo-image" />
-          </div>
-          
-          <nav className="nav">
-            <ul className="nav-list">
-              <li><a href="/" className="nav-link">Home</a></li>
-              <li><a href="/servizi" className="nav-link">Servizi</a></li>
-              <li><a href="/prezzi" className="nav-link">Prezzi</a></li>
-              <li><a href="/chi-siamo" className="nav-link active">Chi Siamo</a></li>
-              <li><a href="/contatti" className="nav-link">Contatti</a></li>
-            </ul>
-          </nav>
-
-          <div className="header-cta">
-            <button className="cta-button">Contattaci</button>
-          </div>
-        </div>
-      </header>
+      <Navbar />
 
       {/* Hero Section */}
       <section className="hero-section">
@@ -223,11 +223,6 @@ const ChiSiamoPage = () => {
                 <h3 className="member-name">{member.name}</h3>
                 <div className="member-role">{member.role}</div>
                 <p className="member-description">{member.description}</p>
-                <div className="member-skills">
-                  {member.skills.map((skill, skillIndex) => (
-                    <span key={skillIndex} className="skill-tag">{skill}</span>
-                  ))}
-                </div>
               </div>
             ))}
           </div>
@@ -247,16 +242,28 @@ const ChiSiamoPage = () => {
             </h2>
           </div>
 
-          <div className="timeline">
-            {milestones.map((milestone, index) => (
-              <div key={index} className={`timeline-item ${index % 2 === 0 ? 'left' : 'right'}`}>
-                <div className="timeline-content">
-                  <div className="timeline-year">{milestone.year}</div>
-                  <h3 className="timeline-title">{milestone.title}</h3>
-                  <p className="timeline-description">{milestone.description}</p>
+          <div className="timeline-wrapper">
+            <div className="timeline" ref={timelineRef}>
+              {milestones.map((milestone, index) => (
+                <div key={index} className={`timeline-item ${index % 2 === 0 ? 'left' : 'right'}`}>
+                  <div className="timeline-content">
+                    <div className="timeline-year">{milestone.year}</div>
+                    <h3 className="timeline-title">{milestone.title}</h3>
+                    <p className="timeline-description">{milestone.description}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <button className="timeline-nav-button left-arrow" onClick={() => scrollTimeline('left')}>
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+            <button className="timeline-nav-button right-arrow" onClick={() => scrollTimeline('right')}>
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
           </div>
         </div>
       </section>
@@ -317,6 +324,9 @@ const ChiSiamoPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

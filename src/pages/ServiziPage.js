@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import './ServiziPage.css';
 
 const ServiziPage = () => {
@@ -49,32 +51,11 @@ const ServiziPage = () => {
 
   return (
     <div className={`servizi-page ${isVisible ? 'visible' : ''}`}>
-      {/* Header */}
-      <header className="page-header">
-        <div className="header-container">
-          <div className="logo">
-            <img src="/Bianco-Arancio.png" alt="Nemo Agency Logo" className="logo-image" />
-          </div>
-          
-          <nav className="nav">
-            <ul className="nav-list">
-              <li><a href="/" className="nav-link">Home</a></li>
-              <li><a href="/servizi" className="nav-link active">Servizi</a></li>
-              <li><a href="/prezzi" className="nav-link">Prezzi</a></li>
-              <li><a href="/chi-siamo" className="nav-link">Chi Siamo</a></li>
-              <li><a href="/contatti" className="nav-link">Contatti</a></li>
-            </ul>
-          </nav>
-
-          <div className="header-cta">
-            <button className="cta-button">Contattaci</button>
-          </div>
-        </div>
-      </header>
+      <Navbar />
 
       {/* Hero Section */}
       <section className="hero-section">
-        <div className="hero-container">
+        <div className="hero-container two-columns">
           <div className="hero-content">
             <div className="hero-badge">
               <span>🛠️ I Nostri Servizi</span>
@@ -90,12 +71,24 @@ const ServiziPage = () => {
               ti accompagniamo in ogni fase del tuo progetto web
             </p>
           </div>
+          <div className="hero-image">
+            <img src="/chisiamo.jpg" alt="Team al lavoro" />
+          </div>
         </div>
       </section>
 
       {/* Services Grid */}
       <section className="services-section">
         <div className="services-container">
+          <div className="services-header" style={{textAlign: 'center', marginBottom: '60px'}}>
+            <div className="section-badge">
+              <span>🔍 Cosa Facciamo</span>
+            </div>
+            <h2 className="section-title">I nostri servizi digitali</h2>
+            <p className="section-subtitle" style={{color: '#4a5568', fontSize: '1.2rem', maxWidth: '600px', margin: '0 auto'}}>
+              Dalla progettazione grafica allo sviluppo, dalla SEO al marketing: scopri tutte le soluzioni che possiamo offrirti per far crescere il tuo business online.
+            </p>
+          </div>
           <div className="services-grid">
             {services.map((service, index) => (
               <div key={index} className="service-card">
@@ -200,6 +193,9 @@ const ServiziPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

@@ -1,12 +1,12 @@
-/* ContattiPage specific styles - isolated from HomePage */
+/* ContattiPage Styles */
 .contatti-page {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-  color: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  line-height: 1.6;
+  color: #1a1a1a;
+  overflow-x: hidden;
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.6s ease;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
 .contatti-page.visible {
@@ -14,90 +14,58 @@
   transform: translateY(0);
 }
 
-/* Header - specific to contatti page */
-.contatti-page .page-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: rgba(15, 15, 35, 0.95);
-  backdrop-filter: blur(10px);
-  z-index: 1000;
-  padding: 1rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
 
-.contatti-page .header-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.contatti-page .logo-image {
-  height: 40px;
-  width: auto;
-}
-
-.contatti-page .nav-list {
-  display: flex;
-  list-style: none;
-  gap: 2rem;
-  margin: 0;
-  padding: 0;
-}
-
-.contatti-page .nav-link {
-  color: #ffffff;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s ease;
-  position: relative;
-}
-
-.contatti-page .nav-link:hover,
-.contatti-page .nav-link.active {
-  color: #ff6b35;
-}
-
-.contatti-page .nav-link.active::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #ff6b35, #ff8c42);
-  border-radius: 1px;
-}
-
-.contatti-page .cta-button {
-  background: linear-gradient(135deg, #ff6b35, #ff8c42);
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 25px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-.contatti-page .cta-button:hover {
-  transform: translateY(-2px);
-}
 
 /* Hero Section */
 .contatti-page .hero-section {
   padding: 120px 0 80px;
-  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.contatti-page .hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 25% 25%, rgba(255, 115, 81, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(249, 106, 177, 0.1) 0%, transparent 50%);
+  pointer-events: none;
 }
 
 .contatti-page .hero-container {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.contatti-page .hero-container.two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.contatti-page .hero-content {
+  text-align: left;
+}
+
+.contatti-page .hero-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contatti-page .hero-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
 .contatti-page .hero-badge {
@@ -116,18 +84,19 @@
   font-weight: 700;
   margin-bottom: 1.5rem;
   line-height: 1.2;
+  color: #1e293b;
 }
 
 .contatti-page .gradient-text {
-  background: linear-gradient(135deg, #ff6b35, #ff8c42);
+  background: linear-gradient(135deg, #FF7351 0%, #F96AB1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .contatti-page .hero-subtitle {
-  font-size: 1.2rem;
-  color: #b0b0b0;
+  font-size: 1.25rem;
+  color: #64748b;
   line-height: 1.6;
   margin-bottom: 2rem;
 }
@@ -135,23 +104,37 @@
 /* Contact Section */
 .contatti-page .contact-section {
   padding: 80px 0;
+  background: #f8fafc;
+  position: relative;
+  overflow: hidden;
+}
+
+.contatti-page .contact-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 25% 25%, rgba(255, 115, 81, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(249, 106, 177, 0.05) 0%, transparent 50%);
+  pointer-events: none;
 }
 
 .contatti-page .contact-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
+  position: relative;
+  z-index: 1;
 }
 
-.contatti-page .contact-content {
+.contatti-page .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   align-items: start;
-}
-
-.contatti-page .contact-info {
-  padding-right: 2rem;
 }
 
 .contatti-page .section-badge {
@@ -232,16 +215,40 @@
 
 /* Contact Form */
 .contatti-page .contact-form-container {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: white;
   border-radius: 20px;
-  padding: 2rem;
+  padding: 2.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.contatti-page .form-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.contatti-page .form-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+
+.contatti-page .form-subtitle {
+  color: #64748b;
+  font-size: 1.1rem;
 }
 
 .contatti-page .contact-form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+}
+
+.contatti-page .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
 }
 
 .contatti-page .form-group {
@@ -251,8 +258,8 @@
 }
 
 .contatti-page .form-group label {
-  font-weight: 500;
-  color: #ffffff;
+  font-weight: 600;
+  color: #374151;
   font-size: 0.9rem;
 }
 
@@ -260,10 +267,10 @@
 .contatti-page .form-group textarea,
 .contatti-page .form-group select {
   padding: 1rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid #e5e7eb;
   border-radius: 10px;
-  color: #ffffff;
+  background: white;
+  color: #1f2937;
   font-size: 1rem;
   transition: all 0.3s ease;
 }
@@ -272,13 +279,13 @@
 .contatti-page .form-group textarea:focus,
 .contatti-page .form-group select:focus {
   outline: none;
-  border-color: #ff6b35;
-  background: rgba(255, 255, 255, 0.15);
+  border-color: #FF7351;
+  box-shadow: 0 0 0 3px rgba(255, 115, 81, 0.1);
 }
 
 .contatti-page .form-group input::placeholder,
 .contatti-page .form-group textarea::placeholder {
-  color: #b0b0b0;
+  color: #9ca3af;
 }
 
 .contatti-page .form-group textarea {
@@ -287,29 +294,169 @@
 }
 
 .contatti-page .submit-button {
-  background: linear-gradient(135deg, #ff6b35, #ff8c42);
+  background: linear-gradient(135deg, #FF7351 0%, #F96AB1 100%);
   color: white;
   border: none;
   padding: 1rem 2rem;
-  border-radius: 25px;
+  border-radius: 50px;
   font-weight: 600;
+  font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  margin-top: 1rem;
+  box-shadow: 0 4px 15px rgba(255, 115, 81, 0.3);
 }
 
 .contatti-page .submit-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+  box-shadow: 0 8px 25px rgba(255, 115, 81, 0.4);
 }
 
-.contatti-page .submit-arrow {
-  width: 18px;
-  height: 18px;
+.contatti-page .arrow-icon {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+.contatti-page .submit-button:hover .arrow-icon {
+  transform: translateX(4px);
+}
+
+/* Contact Info */
+.contatti-page .contact-info-container {
+  background: white;
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.contatti-page .info-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.contatti-page .info-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+
+.contatti-page .info-subtitle {
+  color: #64748b;
+  font-size: 1.1rem;
+}
+
+.contatti-page .contact-info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.contatti-page .contact-info-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.contatti-page .contact-info-item:hover {
+  background: #f1f5f9;
+  border-color: #FF7351;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.contatti-page .info-icon {
+  font-size: 1.5rem;
+  color: #FF7351;
+  min-width: 40px;
+}
+
+.contatti-page .info-content {
+  flex: 1;
+}
+
+.contatti-page .info-label {
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+}
+
+.contatti-page .info-value {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.contatti-page .info-value.link {
+  color: #FF7351;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contatti-page .info-value.link:hover {
+  color: #F96AB1;
+}
+
+/* Social Section */
+.contatti-page .social-section {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.contatti-page .social-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 1rem;
+}
+
+.contatti-page .social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.contatti-page .social-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 15px;
+  text-decoration: none;
+  color: #374151;
+  transition: all 0.3s ease;
+  min-width: 80px;
+}
+
+.contatti-page .social-link:hover {
+  background: #f1f5f9;
+  border-color: #FF7351;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.contatti-page .social-icon {
+  font-size: 1.5rem;
+}
+
+.contatti-page .social-name {
+  font-size: 0.8rem;
+  font-weight: 500;
 }
 
 /* Office Section */
@@ -389,116 +536,253 @@
 /* FAQ Section */
 .contatti-page .faq-section {
   padding: 80px 0;
+  background: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.contatti-page .faq-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 25% 25%, rgba(255, 115, 81, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(249, 106, 177, 0.05) 0%, transparent 50%);
+  pointer-events: none;
 }
 
 .contatti-page .faq-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
+  position: relative;
+  z-index: 1;
 }
 
 .contatti-page .faq-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
   margin-top: 3rem;
 }
 
 .contatti-page .faq-item {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: white;
+  border: 1px solid #e5e7eb;
   border-radius: 15px;
   padding: 2rem;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 .contatti-page .faq-item:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 107, 53, 0.3);
+  background: #f8fafc;
+  border-color: #FF7351;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
 .contatti-page .faq-question {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 1rem;
-  color: #ffffff;
+  color: #1e293b;
+  line-height: 1.4;
 }
 
 .contatti-page .faq-answer {
-  color: #b0b0b0;
+  color: #64748b;
   line-height: 1.6;
+  font-size: 1rem;
 }
 
 /* Map Section */
 .contatti-page .map-section {
   padding: 80px 0;
-  background: rgba(255, 255, 255, 0.02);
+  background: #f8fafc;
+  position: relative;
+  overflow: hidden;
+}
+
+.contatti-page .map-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 25% 25%, rgba(255, 115, 81, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(249, 106, 177, 0.05) 0%, transparent 50%);
+  pointer-events: none;
 }
 
 .contatti-page .map-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.contatti-page .map-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.contatti-page .map-info {
+  text-align: left;
+}
+
+.contatti-page .map-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 1rem;
+}
+
+.contatti-page .map-description {
+  color: #64748b;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.contatti-page .map-address {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 15px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 2rem;
+  color: #374151;
+  line-height: 1.6;
+}
+
+.contatti-page .map-button {
+  background: linear-gradient(135deg, #FF7351 0%, #F96AB1 100%);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 15px rgba(255, 115, 81, 0.3);
+}
+
+.contatti-page .map-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 115, 81, 0.4);
 }
 
 .contatti-page .map-placeholder {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: white;
+  border: 1px solid #e5e7eb;
   border-radius: 20px;
   height: 400px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #b0b0b0;
+  color: #64748b;
   font-size: 1.1rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
 }
 
-.contatti-page .map-placeholder::before {
-  content: '🗺️';
-  font-size: 3rem;
-  margin-right: 1rem;
+.contatti-page .map-image {
+  text-align: center;
+}
+
+.contatti-page .map-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  display: block;
 }
 
 /* CTA Section */
 .contatti-page .cta-section {
   padding: 80px 0;
-  text-align: center;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.contatti-page .cta-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 25% 25%, rgba(255, 115, 81, 0.1) 0%, transparent 40%),
+    radial-gradient(circle at 75% 75%, rgba(249, 106, 177, 0.1) 0%, transparent 40%);
+  pointer-events: none;
 }
 
 .contatti-page .cta-container {
   max-width: 800px;
   margin: 0 auto;
   padding: 0 2rem;
+  position: relative;
+  z-index: 1;
+  text-align: center;
 }
 
 .contatti-page .cta-badge {
   display: inline-block;
-  background: rgba(255, 107, 53, 0.1);
-  color: #ff6b35;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 2rem;
+  background: linear-gradient(135deg, rgba(255, 115, 81, 0.1) 0%, rgba(249, 106, 177, 0.1) 100%);
+  border: 1px solid rgba(255, 115, 81, 0.2);
+  border-radius: 50px;
+  padding: 0.5rem 1.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #FF7351;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.contatti-page .cta-badge:hover {
+  background: linear-gradient(135deg, rgba(255, 115, 81, 0.15) 0%, rgba(249, 106, 177, 0.15) 100%);
+  border-color: rgba(255, 115, 81, 0.3);
+  transform: translateY(-2px);
+}
+
+.contatti-page .cta-badge span {
+  background: linear-gradient(135deg, #FF7351 0%, #F96AB1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .contatti-page .cta-title {
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
+  color: #f8fafc;
   line-height: 1.2;
 }
 
 .contatti-page .cta-gradient-text {
-  background: linear-gradient(135deg, #ff6b35, #ff8c42);
+  background: linear-gradient(135deg, #FF7351 0%, #F96AB1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .contatti-page .cta-description {
-  font-size: 1.1rem;
-  color: #b0b0b0;
+  font-size: 1.25rem;
+  color: #cbd5e1;
   line-height: 1.6;
   margin-bottom: 2rem;
 }
@@ -511,46 +795,58 @@
 }
 
 .contatti-page .cta-primary-button {
-  background: linear-gradient(135deg, #ff6b35, #ff8c42);
+  background: linear-gradient(135deg, #FF7351 0%, #F96AB1 100%);
   color: white;
   border: none;
   padding: 1rem 2rem;
-  border-radius: 25px;
+  border-radius: 50px;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  box-shadow: 0 4px 15px rgba(255, 115, 81, 0.3);
 }
 
 .contatti-page .cta-primary-button:hover {
   transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 115, 81, 0.4);
 }
 
 .contatti-page .cta-secondary-button {
   background: transparent;
-  color: #ffffff;
-  border: 2px solid #ffffff;
+  color: #f8fafc;
+  border: 2px solid rgba(255, 255, 255, 0.3);
   padding: 1rem 2rem;
-  border-radius: 25px;
+  border-radius: 50px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .contatti-page .cta-secondary-button:hover {
-  background: #ffffff;
-  color: #0f0f23;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .contatti-page .cta-arrow-icon {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+.contatti-page .cta-primary-button:hover .cta-arrow-icon {
+  transform: translateX(4px);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .contatti-page .hero-container.two-columns {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
   .contatti-page .hero-title {
     font-size: 2.5rem;
   }
@@ -563,17 +859,18 @@
     font-size: 2rem;
   }
   
-  .contatti-page .contact-content {
+  .contatti-page .contact-grid {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
   
-  .contatti-page .contact-info {
-    padding-right: 0;
+  .contatti-page .form-row {
+    grid-template-columns: 1fr;
   }
   
-  .contatti-page .office-grid {
+  .contatti-page .map-content {
     grid-template-columns: 1fr;
+    gap: 2rem;
   }
   
   .contatti-page .faq-grid {
@@ -585,21 +882,26 @@
     align-items: center;
   }
   
-  .contatti-page .header-container {
-    padding: 0 1rem;
+  .contatti-page .social-links {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .contatti-page .hero-title {
+    font-size: 2rem;
   }
   
-  .contatti-page .nav-list {
-    gap: 1rem;
+  .contatti-page .section-title {
+    font-size: 1.75rem;
   }
   
-  .contatti-page .contact-method {
-    flex-direction: column;
-    text-align: center;
-    gap: 1rem;
+  .contatti-page .contact-form-container,
+  .contatti-page .contact-info-container {
+    padding: 1.5rem;
   }
   
-  .contatti-page .method-icon {
-    min-width: auto;
+  .contatti-page .faq-item {
+    padding: 1.5rem;
   }
 } 

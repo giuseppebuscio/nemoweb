@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import './ContattiPage.css';
 
 const ContattiPage = () => {
@@ -91,32 +93,11 @@ const ContattiPage = () => {
 
   return (
     <div className={`contatti-page ${isVisible ? 'visible' : ''}`}>
-      {/* Header */}
-      <header className="page-header">
-        <div className="header-container">
-          <div className="logo">
-            <img src="/Bianco-Arancio.png" alt="Nemo Agency Logo" className="logo-image" />
-          </div>
-          
-          <nav className="nav">
-            <ul className="nav-list">
-              <li><a href="/" className="nav-link">Home</a></li>
-              <li><a href="/servizi" className="nav-link">Servizi</a></li>
-              <li><a href="/prezzi" className="nav-link">Prezzi</a></li>
-              <li><a href="/chi-siamo" className="nav-link">Chi Siamo</a></li>
-              <li><a href="/contatti" className="nav-link active">Contatti</a></li>
-            </ul>
-          </nav>
-
-          <div className="header-cta">
-            <button className="cta-button">Contattaci</button>
-          </div>
-        </div>
-      </header>
+      <Navbar />
 
       {/* Hero Section */}
       <section className="hero-section">
-        <div className="hero-container">
+        <div className="hero-container two-columns">
           <div className="hero-content">
             <div className="hero-badge">
               <span>📞 Contattaci</span>
@@ -131,6 +112,9 @@ const ContattiPage = () => {
               Siamo qui per aiutarti a trasformare la tua idea in realtà digitale. 
               Contattaci per una consulenza gratuita e senza impegno.
             </p>
+          </div>
+          <div className="hero-image">
+            <img src="/chisiamo.jpg" alt="Team al lavoro" />
           </div>
         </div>
       </section>
@@ -369,6 +353,7 @@ const ContattiPage = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };
