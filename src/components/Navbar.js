@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,6 +25,11 @@ const Navbar = () => {
     setIsMenuOpen(false);
   };
 
+  const handleContattaci = () => {
+    navigate('/contatti');
+    closeMenu(); // Chiude il menu mobile se aperto
+  };
+
   return (
     <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
       <div className="header-container">
@@ -35,13 +42,12 @@ const Navbar = () => {
             <li><a href="/" className="nav-link" onClick={closeMenu}>Home</a></li>
             <li><a href="/servizi" className="nav-link" onClick={closeMenu}>Servizi</a></li>
             <li><a href="/chi-siamo" className="nav-link" onClick={closeMenu}>Chi Siamo</a></li>
-            <li><a href="/dove-siamo" className="nav-link" onClick={closeMenu}>Dove Siamo</a></li>
             <li><a href="/contatti" className="nav-link" onClick={closeMenu}>Contatti</a></li>
           </ul>
         </nav>
 
         <div className="header-cta">
-          <button className="cta-button">Contattaci</button>
+          <button className="cta-button" onClick={handleContattaci}>Contattaci</button>
         </div>
 
         <button className="mobile-menu-toggle" onClick={toggleMenu}>

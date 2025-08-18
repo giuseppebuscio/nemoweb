@@ -4,6 +4,16 @@
   overflow-x: hidden;
 }
 
+/* Rimuovo gli stili che bloccano lo scroll globale */
+/* body.loading {
+  overflow: hidden;
+  height: 100vh;
+}
+
+.App.loading {
+  display: none;
+} */
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
