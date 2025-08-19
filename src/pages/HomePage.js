@@ -7,6 +7,7 @@ import './HomePage.css';
 const HomePage = () => {
   const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   
   const backgroundImages = [
     '/1.jpg',
@@ -24,6 +25,159 @@ const HomePage = () => {
 
     return () => clearInterval(interval);
   }, [backgroundImages.length]);
+
+  // Mouse tracking per effetti parallax
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth - 0.5) * 2,
+        y: (e.clientY / window.innerHeight - 0.5) * 2
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Animazione numeri statistiche
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.5,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const statNumbers = entry.target.querySelectorAll('.stat-number');
+          statNumbers.forEach(statNumber => {
+            const target = parseInt(statNumber.getAttribute('data-target'));
+            const duration = 2000; // 2 secondi
+            const step = target / (duration / 16); // 60fps
+            let current = 0;
+            
+            const timer = setInterval(() => {
+              current += step;
+              if (current >= target) {
+                current = target;
+                clearInterval(timer);
+              }
+              statNumber.textContent = Math.floor(current);
+            }, 16);
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    const statsSection = document.querySelector('.hero-stats');
+    if (statsSection) {
+      observer.observe(statsSection);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Carosello automatico loghi
+  useEffect(() => {
+    const logosTrack = document.querySelector('.logos-track');
+    if (!logosTrack) return;
+
+    let animationId;
+    let currentPosition = 0;
+    const logoWidth = 320; // Larghezza di ogni logo + gap (300px + 20px gap) per schermo intero
+    const totalLogos = 16; // Numero totale di loghi unici (15 reali + 1 duplicato per il loop)
+    const visibleLogos = 5; // Loghi visibili su desktop
+
+    const animateLogos = () => {
+      currentPosition -= 0.5; // Velocità di scorrimento
+      
+      // Reset per loop infinito
+      if (currentPosition <= -(totalLogos * logoWidth)) {
+        currentPosition = 0;
+      }
+      
+      logosTrack.style.transform = `translateX(${currentPosition}px)`;
+      animationId = requestAnimationFrame(animateLogos);
+    };
+
+    // Avvia animazione solo su desktop
+    const startAnimation = () => {
+      if (window.innerWidth > 768) {
+        animateLogos();
+      }
+    };
+
+    // Pausa animazione su mobile
+    const pauseAnimation = () => {
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
+    };
+
+    // Gestione responsive
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        startAnimation();
+      } else {
+        pauseAnimation();
+        currentPosition = 0;
+        logosTrack.style.transform = 'translateX(0)';
+      }
+    };
+
+    // Avvia animazione iniziale
+    startAnimation();
+
+    // Gestione resize
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  // Intersection Observer per animazioni di scroll
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1, // Si attiva quando il 10% dell'elemento è visibile
+      rootMargin: '0px 0px -50px 0px' // Si attiva 50px prima che l'elemento entri completamente
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+        }
+      });
+    }, observerOptions);
+
+    // Elementi da osservare per le animazioni
+    const animatedElements = [
+      '.hero-badge-coherent',
+      '.hero-title-coherent',
+      '.hero-subtitle-coherent',
+      '.hero-buttons-coherent',
+      '.hero-image-coherent',
+      '.hero-ball',
+      '.section-header',
+      '.feature-card',
+      '.prices-badge',
+      '.price-card'
+    ];
+
+    animatedElements.forEach(selector => {
+      const elements = document.querySelectorAll(selector);
+      elements.forEach(element => {
+        observer.observe(element);
+      });
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleEsploraNemo = () => {
     navigate('/chi-siamo');
@@ -45,93 +199,65 @@ const HomePage = () => {
     <div className="home-page">
       <Navbar />
       
-      <section className="hero">
-        {/* Carosello di immagini di sfondo */}
-        <div className="hero-background-carousel">
-          {backgroundImages.map((image, index) => (
-            <div
-              key={index}
-              className={`hero-background-image ${index === currentImageIndex ? 'active' : ''}`}
-              style={{ backgroundImage: `url(${image})` }}
-            />
-          ))}
+      {/* Hero Section coerente con il resto della pagina */}
+      <section className="hero-coherent">
+        {/* Background con pattern coerente */}
+        <div className="hero-background-coherent">
+          <div className="hero-pattern-coherent"></div>
         </div>
         
-        {/* Overlay scuro per migliorare la leggibilità del testo */}
-        <div className="hero-overlay"></div>
+        {/* Palline di luce arancione fluttuanti */}
+        <div className="hero-floating-balls">
+          <div className="hero-ball"></div>
+          <div className="hero-ball"></div>
+          <div className="hero-ball"></div>
+          <div className="hero-ball"></div>
+        </div>
         
-        <div className="hero-container">
-          <div className="hero-content">
-            <div className="hero-badge">
-              <span>🚀 Migliora la tua attività</span>
+        {/* Contenuto principale con immagine */}
+        <div className="hero-container-coherent">
+          <div className="hero-content-coherent">
+            {/* Badge con stile coerente */}
+            <div className="hero-badge-coherent">
+              <span>🚀 Trasforma la tua presenza digitale</span>
             </div>
             
-            <h1 className="hero-title">
-              Realizziamo siti web
-              <span className="gradient-text"> su misura per te</span>
+            {/* Titolo principale */}
+            <h1 className="hero-title-coherent">
+              Creiamo il tuo
+              <br />
+              <span className="gradient-text-coherent">successo digitale</span>
             </h1>
             
-            <p className="hero-subtitle">
-              Design moderno, performance elevate e ottimizzazione SEO: tutto ciò che ti serve per avere successo online
+            {/* Descrizione */}
+            <p className="hero-subtitle-coherent">
+              Creiamo esperienze digitali che trasformano visitatori in clienti. 
+              Design moderno, performance elevate e strategie SEO avanzate per il tuo successo online.
             </p>
             
-            <div className="hero-buttons">
-              <button className="primary-button" onClick={handleEsploraNemo}>
-                Esplora Nemo
-                <svg className="arrow-icon" viewBox="0 0 24 24" fill="none">
+            {/* CTA Buttons */}
+            <div className="hero-buttons-coherent">
+              <button className="hero-primary-button" onClick={handleRichiediPreventivo}>
+                <span>Inizia il tuo progetto</span>
+                <svg className="button-arrow" viewBox="0 0 24 24" fill="none">
                   <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </button>
-              <button className="secondary-button" onClick={handleContattaci}>
-                Contattaci
-                <svg className="arrow-icon" viewBox="0 0 24 24" fill="none">
-                  <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+              
+              <button className="hero-secondary-button" onClick={handleEsploraNemo}>
+                <span>Scopri di più</span>
               </button>
             </div>
           </div>
           
-          <div className="hero-visual">
-            <div className="hero-showcase">
-              <div className="showcase-device">
-                <div className="device-frame">
-                  <div className="device-screen">
-                    <div className="screen-content">
-                      <div className="app-grid">
-                        <div className="app-item">
-                          <div className="app-icon">🎨</div>
-                          <div className="app-name">Design</div>
-                        </div>
-                        <div className="app-item">
-                          <div className="app-icon">💻</div>
-                          <div className="app-name">Code</div>
-                        </div>
-                        <div className="app-item">
-                          <div className="app-icon">🚀</div>
-                          <div className="app-name">Launch</div>
-                        </div>
-                        <div className="app-item">
-                          <div className="app-icon">✨</div>
-                          <div className="app-name">Magic</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Geometric Shapes Background */}
-              <div className="geometric-shapes">
-                <div className="shape shape-1"></div>
-                <div className="shape shape-2"></div>
-                <div className="shape shape-3"></div>
-                <div className="shape shape-4"></div>
-                <div className="shape shape-5"></div>
-              </div>
-            </div>
+          {/* Immagine a destra */}
+          <div className="hero-image-coherent">
+            <img src="/manpc.png" alt="Uomo al computer" />
           </div>
         </div>
       </section>
+
+
 
       {/* About Section */}
       <section id="about" className="about">
@@ -180,6 +306,14 @@ const HomePage = () => {
 
       {/* CTA Section */}
       <section className="cta-section">
+        {/* Palline fluttuanti decorative */}
+        <div className="cta-floating-balls">
+          <div className="cta-ball"></div>
+          <div className="cta-ball"></div>
+          <div className="cta-ball"></div>
+          <div className="cta-ball"></div>
+        </div>
+        
         <div className="cta-container">
           <div className="cta-content">
             <div className="cta-badge">
@@ -331,11 +465,11 @@ const HomePage = () => {
             <h2 className="section-title">
               Soluzioni alla portata di tutti
             </h2>
-            <p className="section-subtitle">
-              Inizia pagando solo il 20% del costo totale
-            </p>
             <p className="prices-intro">
-              Piani flessibili e trasparenti, senza sorprese. Ogni pacchetto include tutto quello che serve per far crescere il tuo business online.
+            Inizia pagando solo il 20% del costo totale
+            </p>
+            <p className="section-subtitle">
+            Piani flessibili e trasparenti, senza sorprese. Ogni pacchetto include tutto quello che serve per far crescere il tuo business online.
             </p>
           </div>
           
@@ -350,6 +484,7 @@ const HomePage = () => {
                   </svg>
                 </div>
                 <h3 className="price-title">Sito Vetrina</h3>
+                <div className="price-amount">da 400€</div>
                 <p className="price-description">Ideale per attività locali, professionisti e artisti che vogliono presentarsi online</p>
               </div>
               
@@ -400,6 +535,7 @@ const HomePage = () => {
                   </svg>
                 </div>
                 <h3 className="price-title">Sito Prenotazioni</h3>
+                <div className="price-amount">da 1200€</div>
                 <p className="price-description">Perfetto per ristoranti, saloni, studi medici e B&B che vogliono gestire le prenotazioni online</p>
               </div>
               
@@ -449,6 +585,7 @@ const HomePage = () => {
                   </svg>
                 </div>
                 <h3 className="price-title">Sito E-commerce</h3>
+                <div className="price-amount">da 1600€</div>
                 <p className="price-description">Per vendere online in modo semplice e veloce, con gestione completa del negozio</p>
               </div>
               
@@ -583,6 +720,92 @@ const HomePage = () => {
                 </svg>
               </button>
             </form>
+          </div>
+        </div>
+      </section>
+
+      {/* Trusted By Section */}
+      <section className="trusted-by">
+        <div className="trusted-by-container">
+          <div className="trusted-by-header">
+            <h2 className="trusted-by-title">
+              Aziende che si fidano di noi
+            </h2>
+            <p className="trusted-by-subtitle">
+              Oltre 15 aziende hanno scelto Nemo per la loro presenza digitale
+            </p>
+          </div>
+          
+          <div className="trusted-by-logos">
+            <div className="logos-carousel">
+              <div className="logos-track">
+                {/* Primo set di loghi reali */}
+                <div className="logo-item">
+                  <img src="/partner/SocialSail.png" alt="SocialSail" className="partner-logo" />
+                </div>
+                <div className="logo-item">
+                  <img src="/partner/AccademiaDelGusto.png" alt="Accademia del Gusto" className="partner-logo" />
+                </div>
+                <div className="logo-item">
+                  <img src="/partner/MangiareSicano.png" alt="Mangiare Sicano" className="partner-logo" />
+                </div>
+                <div className="logo-item">
+                  <img src="/partner/BonifatoCalcio.png" alt="Bonifato Calcio" className="partner-logo" />
+                </div>
+                <div className="logo-item">
+                  <img src="/partner/FigliDItalia.png" alt="Figli d'Italia" className="partner-logo" />
+                </div>
+                <div className="logo-item">
+                  <img src="/partner/DueCLimited.png" alt="DueC Limited" className="partner-logo" />
+                </div>
+                <div className="logo-item">
+                  <img src="/partner/Scopeltour.png" alt="Scopeltour" className="partner-logo" />
+                </div>
+                <div className="logo-item">
+                  <img src="/partner/BarBonventre.png" alt="Bar Bonventre" className="partner-logo" />
+                </div>
+                <div className="logo-item">
+                  <img src="/partner/Riverloop.png" alt="Riverloop" className="partner-logo" />
+                </div>
+                <div className="logo-item">
+                  <img src="/partner/SimoneGrasso.png" alt="Simone Grasso" className="partner-logo" />
+                </div>
+                <div className="logo-item">
+                  <img src="/partner/AndreaAsaro.png" alt="Andrea Asaro" className="partner-logo" />
+                </div>
+                <div className="logo-item">
+                  <img src="/partner/HolidaySicily.png" alt="Holiday Sicily" className="partner-logo" />
+                </div>
+                <div className="logo-item">
+                  <img src="/partner/LivingLab.png" alt="Living Lab" className="partner-logo" />
+                </div>
+                <div className="logo-item">
+                  <img src="/partner/BeYou.png" alt="BeYou" className="partner-logo" />
+                </div>
+                <div className="logo-item">
+                  <img src="/partner/CarlaFerroni.png" alt="Carla Ferroni" className="partner-logo" />
+                </div>
+                <div className="logo-item">
+                  <img src="/partner/ales.png" alt="Ales" className="partner-logo" />
+                </div>
+                {/* Duplico i primi loghi per un loop infinito */}
+                <div className="logo-item">
+                  <img src="/partner/SocialSail.png" alt="SocialSail" className="partner-logo" />
+                </div>
+                <div className="logo-item">
+                  <img src="/partner/AccademiaDelGusto.png" alt="Accademia del Gusto" className="partner-logo" />
+                </div>
+                <div className="logo-item">
+                  <img src="/partner/MangiareSicano.png" alt="Mangiare Sicano" className="partner-logo" />
+                </div>
+                <div className="logo-item">
+                  <img src="/partner/BonifatoCalcio.png" alt="Bonifato Calcio" className="partner-logo" />
+                </div>
+                <div className="logo-item">
+                  <img src="/partner/FigliDItalia.png" alt="Figli d'Italia" className="partner-logo" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
