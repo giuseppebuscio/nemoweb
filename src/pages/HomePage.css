@@ -3040,9 +3040,26 @@
 /* ===== TRUSTED BY SECTION ===== */
 .trusted-by {
   padding: 100px 0;
-  background: #ffffff;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   position: relative;
   overflow: hidden;
+}
+
+.trusted-by::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(255, 115, 81, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(249, 106, 177, 0.08) 0%, transparent 50%),
+    linear-gradient(45deg, transparent 48%, rgba(255, 115, 81, 0.02) 50%, transparent 52%),
+    linear-gradient(-45deg, transparent 48%, rgba(249, 106, 177, 0.02) 50%, transparent 52%);
+  background-size: 100% 100%, 100% 100%, 80px 80px, 80px 80px;
+  pointer-events: none;
+  animation: patternFloat 30s ease-in-out infinite;
 }
 
 /* Pattern decorativo rimosso per sfondo bianco pulito */
@@ -3102,7 +3119,7 @@
 
 .logo-item {
   flex-shrink: 0;
-  width: 300px;
+  width: 350px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -3113,15 +3130,15 @@
 .partner-logo {
   width: 100%;
   height: auto;
-  max-height: 160px;
+  max-height: 200px;
   object-fit: contain;
   transition: all 0.3s ease;
-  filter: grayscale(100%) opacity(0.7);
+  filter: grayscale(70%) brightness(0.8) contrast(1.1);
 }
 
 .logo-item:hover .partner-logo {
   transform: scale(1.05);
-  filter: grayscale(0%) opacity(1);
+  filter: grayscale(80%) brightness(0.7) contrast(1.2);
 }
 
 /* Responsive Design per Hero Section */
@@ -3172,11 +3189,11 @@
   }
   
   .logo-item {
-    width: 220px;
+    width: 260px;
   }
   
   .partner-logo {
-    max-height: 130px;
+    max-height: 160px;
   }
 }
 
@@ -3190,11 +3207,11 @@
   }
   
   .logo-item {
-    width: 180px;
+    width: 220px;
   }
   
   .partner-logo {
-    max-height: 110px;
+    max-height: 140px;
   }
 }
 
