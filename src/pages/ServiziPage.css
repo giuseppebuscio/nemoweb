@@ -156,6 +156,81 @@
   pointer-events: none;
 }
 
+/* Background pattern coerente con HomePage */
+.servizi-page .hero-background-coherent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.servizi-page .hero-pattern-coherent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 30% 20%, rgba(255, 115, 81, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(249, 106, 177, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Palline di luce arancione fluttuanti nella hero section */
+.servizi-page .hero-floating-balls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.servizi-page .hero-ball {
+  position: absolute;
+  border-radius: 50%;
+  animation: ctaBallFloat 45s ease-in-out infinite;
+}
+
+.servizi-page .hero-ball:nth-child(1) {
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 115, 81, 0.15);
+  top: 15%;
+  left: 20%;
+  animation-delay: 0s;
+}
+
+.servizi-page .hero-ball:nth-child(2) {
+  width: 50px;
+  height: 50px;
+  background: rgba(249, 106, 177, 0.2);
+  top: 25%;
+  right: 25%;
+  animation-delay: 5s;
+}
+
+.servizi-page .hero-ball:nth-child(3) {
+  width: 70px;
+  height: 70px;
+  background: rgba(255, 115, 81, 0.12);
+  bottom: 20%;
+  left: 30%;
+  animation-delay: 10s;
+}
+
+.servizi-page .hero-ball:nth-child(4) {
+  width: 55px;
+  height: 55px;
+  background: rgba(249, 106, 177, 0.18);
+  bottom: 30%;
+  right: 20%;
+  animation-delay: 15s;
+}
+
 .servizi-page .hero-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -163,6 +238,20 @@
   position: relative;
   z-index: 1;
   text-align: center;
+}
+
+/* Container coerente con HomePage */
+.servizi-page .hero-container-coherent {
+  width: 1200px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  position: relative;
+  z-index: 2;
 }
 
 .servizi-page .hero-container.two-columns {
@@ -177,6 +266,12 @@
   min-width: 0;
 }
 
+/* Contenuto coerente con HomePage */
+.servizi-page .hero-content-coherent {
+  max-width: 100%;
+  text-align: left;
+}
+
 .servizi-page .hero-image {
   flex: 1 1 0%;
   display: flex;
@@ -184,6 +279,20 @@
   justify-content: center;
   min-width: 0;
   padding-left: 40px;
+}
+
+/* Immagine coerente con HomePage */
+.servizi-page .hero-image-coherent {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  align-self: end;
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.servizi-page .hero-image-coherent.animate {
+  animation: fadeInRight 1s ease-out forwards;
 }
 
 .servizi-page .hero-image img {
@@ -209,6 +318,37 @@
   animation: fadeInUp 0.8s ease-out;
 }
 
+/* Badge coerente con HomePage */
+.servizi-page .hero-badge-coherent {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, rgba(255, 115, 81, 0.1) 0%, rgba(249, 106, 177, 0.1) 100%);
+  border: 1px solid rgba(255, 115, 81, 0.2);
+  border-radius: 50px;
+  padding: 12px 24px;
+  margin-bottom: 32px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.servizi-page .hero-badge-coherent.animate {
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+.servizi-page .hero-badge-coherent:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 115, 81, 0.2);
+}
+
+.servizi-page .hero-badge-coherent span {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #FF7351;
+  letter-spacing: 0.5px;
+}
+
 .servizi-page .hero-title {
   font-size: 4rem;
   font-weight: 700;
@@ -218,11 +358,44 @@
   animation: fadeInUp 0.8s ease-out 0.1s both;
 }
 
+/* Titolo coerente con HomePage */
+.servizi-page .hero-title-coherent {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.servizi-page .hero-title-coherent.animate {
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+.servizi-page .gradient-text-coherent {
+  background: linear-gradient(135deg, #FF7351 0%, #F96AB1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+}
+
 .servizi-page .gradient-text {
   background: linear-gradient(135deg, #FF7351 0%, #F96AB1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  position: relative;
+}
+
+/* CTA gradient text coerente con HomePage */
+.servizi-page .cta-gradient-text {
+  background: linear-gradient(135deg, #FF7351 0%, #F96AB1 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
   position: relative;
 }
 
@@ -235,9 +408,23 @@
   animation: fadeInUp 0.8s ease-out 0.2s both;
 }
 
+/* Sottotitolo coerente con HomePage */
+.servizi-page .hero-subtitle-coherent {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #ffffff;
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.servizi-page .hero-subtitle-coherent.animate {
+  animation: fadeInUp 1s ease-out forwards;
+}
+
 /* Services Section - following HomePage features style */
 .servizi-page .services-section {
-  padding: 160px 0;
+  padding: 80px 0;
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   position: relative;
   overflow: hidden;
@@ -268,47 +455,89 @@
   z-index: 1;
 }
 
-.servizi-page .services-grid {
+/* Section header coerente con HomePage */
+.servizi-page .section-header {
+  text-align: center;
+  margin-bottom: 60px;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.servizi-page .section-header.animate {
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+.servizi-page .features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 40px;
   animation: fadeInUp 1s ease-out 0.6s both;
 }
 
-.servizi-page .service-card {
+/* Section title e subtitle coerenti con HomePage */
+.servizi-page .section-title {
+  font-size: 2.5rem !important;
+  font-weight: 800 !important;
+  margin-bottom: 32px !important;
+  letter-spacing: -0.02em !important;
+  color: #1a202c !important;
+  position: relative;
+  animation: fadeInUp 1s ease-out 0.2s both;
+}
+
+.servizi-page .section-subtitle {
+  font-size: 1rem !important;
+  color: #4a5568 !important;
+  line-height: 1.6 !important;
+  max-width: 700px !important;
+  margin: 0 auto !important;
+  animation: fadeInUp 1s ease-out 0.4s both;
+}
+
+.servizi-page .feature-card {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.servizi-page .feature-card.animate {
+  animation: scaleIn 0.8s ease-out forwards;
+}
+
+.servizi-page .feature-card {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.8) 100%);
   border-radius: 32px;
   padding: 40px 32px;
   text-align: left;
+  backdrop-filter: blur(25px);
   border: 1px solid rgba(255, 255, 255, 0.4);
-  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
   cursor: pointer;
 }
 
-.servizi-page .service-card::before {
+.servizi-page .feature-card::before {
   content: '';
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
-  transition: left 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+  transition: left 0.8s ease;
 }
 
-.servizi-page .service-card:hover::before {
+.servizi-page .feature-card:hover::before {
   left: 100%;
 }
 
-.servizi-page .service-card:hover {
-  transform: translateY(-6px) scale(1.01);
-  box-shadow: 0 8px 24px rgba(255, 115, 81, 0.10);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.97) 100%);
+.servizi-page .feature-card:hover {
+  transform: translateY(-20px) scale(1.03);
+  box-shadow: 0 40px 80px rgba(255, 115, 81, 0.2);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.95) 100%);
 }
 
-.servizi-page .service-icon {
+.servizi-page .feature-icon {
   width: 60px;
   height: 60px;
   margin: 0 20px 0 0;
@@ -318,36 +547,47 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.5s ease;
   flex-shrink: 0;
-  font-size: 2rem;
-  z-index: 1;
 }
 
-.servizi-page .service-icon::before {
+.servizi-page .feature-icon svg {
+  width: 30px;
+  height: 30px;
+  color: #FF7351;
+  position: relative;
+  z-index: 1;
+  transition: all 0.5s ease;
+}
+
+.servizi-page .feature-card:hover .feature-icon svg {
+  color: #ffffff;
+  transform: scale(1.2);
+}
+
+.servizi-page .feature-icon::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(255, 115, 81, 0.18) 0%, rgba(249, 106, 177, 0.18) 100%);
+  background: linear-gradient(135deg, #FF7351 0%, #F96AB1 100%);
   border-radius: 18px;
   opacity: 0;
-  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 0;
+  transition: all 0.5s ease;
 }
 
-.servizi-page .service-card:hover .service-icon::before {
+.servizi-page .feature-card:hover .feature-icon::before {
   opacity: 1;
 }
 
-.servizi-page .service-card:hover .service-icon {
-  transform: scale(1.07) rotate(3deg);
-  box-shadow: 0 4px 12px rgba(255, 115, 81, 0.13);
+.servizi-page .feature-card:hover .feature-icon {
+  transform: scale(1.15) rotate(8deg);
+  box-shadow: 0 20px 40px rgba(255, 115, 81, 0.4);
 }
 
-.servizi-page .service-title {
+.servizi-page .feature-title {
   font-size: 1.5rem;
   font-weight: 700;
   color: #1a202c;
@@ -358,70 +598,99 @@
   align-items: center;
 }
 
-.servizi-page .service-card:hover .service-title {
+.servizi-page .feature-card:hover .feature-title {
   background: linear-gradient(135deg, #FF7351 0%, #F96AB1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.servizi-page .service-description {
-  font-size: 1.2rem;
-  line-height: 1.8;
+.servizi-page .feature-description {
+  font-size: 1rem;
+  line-height: 1.6;
   color: #4a5568;
   transition: all 0.3s ease;
-  margin-bottom: 1.5rem;
 }
 
-.servizi-page .service-card:hover .service-description {
+.servizi-page .feature-card:hover .feature-description {
   color: #2d3748;
 }
 
-.servizi-page .service-features {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  margin-bottom: 2rem;
+
+
+/* Process Section - following HomePage style */
+.servizi-page .process-section {
+  padding: 160px 0;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+  position: relative;
+  overflow: hidden;
 }
 
-.servizi-page .service-feature {
+/* CTA Section - following HomePage style */
+.servizi-page .cta-section {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.servizi-page .cta-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(255, 115, 81, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(249, 106, 177, 0.08) 0%, transparent 50%),
+    linear-gradient(45deg, transparent 48%, rgba(255, 115, 81, 0.02) 50%, transparent 52%),
+    linear-gradient(-45deg, transparent 48%, rgba(249, 106, 177, 0.02) 50%, transparent 52%);
+  background-size: 100% 100%, 100% 100%, 80px 80px, 80px 80px;
+  pointer-events: none;
+  animation: patternFloat 30s ease-in-out infinite;
+}
+
+.servizi-page .cta-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.servizi-page .cta-content {
+  animation: fadeInUp 1s ease-out;
+}
+
+.servizi-page .cta-buttons {
   display: flex;
-  align-items: center;
-  margin-bottom: 0.8rem;
-  color: #4a5568;
-  transition: all 0.3s ease;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 40px;
+  animation: fadeInUp 1s ease-out 0.6s both;
 }
 
-.servizi-page .service-card:hover .service-feature {
-  color: #2d3748;
-}
-
-.servizi-page .feature-check {
-  color: #FF7351;
-  font-weight: bold;
-  margin-right: 0.8rem;
-  font-size: 1.2rem;
-}
-
-.servizi-page .service-cta {
+.servizi-page .cta-primary-button {
   background: linear-gradient(135deg, #FF7351 0%, #F96AB1 100%);
   color: white;
   border: none;
-  padding: 1rem 2rem;
+  padding: 16px 32px;
   border-radius: 50px;
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 8px 25px rgba(255, 115, 81, 0.3);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-.servizi-page .service-cta::before {
+.servizi-page .cta-primary-button::before {
   content: '';
   position: absolute;
   top: 0;
@@ -432,31 +701,43 @@
   transition: left 0.5s;
 }
 
-.servizi-page .service-cta:hover::before {
+.servizi-page .cta-primary-button:hover::before {
   left: 100%;
 }
 
-.servizi-page .service-cta:hover {
+.servizi-page .cta-primary-button:hover {
   transform: translateY(-3px);
   box-shadow: 0 12px 35px rgba(255, 115, 81, 0.4);
 }
 
-.servizi-page .arrow-icon {
+.servizi-page .cta-secondary-button {
+  background: transparent;
+  color: #FF7351;
+  border: 2px solid #FF7351;
+  padding: 16px 32px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255, 115, 81, 0.05);
+}
+
+.servizi-page .cta-secondary-button:hover {
+  background: #FF7351;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 115, 81, 0.3);
+}
+
+.servizi-page .cta-arrow-icon {
   width: 20px;
   height: 20px;
   transition: transform 0.3s ease;
 }
 
-.servizi-page .service-cta:hover .arrow-icon {
+.servizi-page .cta-primary-button:hover .cta-arrow-icon {
   transform: translateX(4px);
-}
-
-/* Process Section - following HomePage style */
-.servizi-page .process-section {
-  padding: 160px 0;
-  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-  position: relative;
-  overflow: hidden;
 }
 
 .servizi-page .process-section::before {
@@ -481,7 +762,7 @@
 
 .servizi-page .section-header {
   text-align: center;
-  margin-bottom: 100px;
+  margin-bottom: 60px;
   animation: fadeInUp 1s ease-out;
 }
 
@@ -498,6 +779,32 @@
   animation: fadeInUp 0.8s ease-out;
 }
 
+/* CTA badge coerente con HomePage */
+.servizi-page .cta-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  background: linear-gradient(135deg, rgba(255, 115, 81, 0.2) 0%, rgba(249, 106, 177, 0.2) 100%) !important;
+  border: 1px solid rgba(255, 115, 81, 0.3) !important;
+  border-radius: 50px !important;
+  padding: 12px 24px !important;
+  margin-bottom: 24px !important;
+  backdrop-filter: blur(10px) !important;
+  transition: all 0.3s ease !important;
+}
+
+.servizi-page .cta-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 115, 81, 0.2);
+  background: linear-gradient(135deg, rgba(255, 115, 81, 0.25) 0%, rgba(249, 106, 177, 0.25) 100%);
+}
+
+.servizi-page .cta-badge span {
+  font-size: 14px;
+  font-weight: 600;
+  color: #FF7351;
+  letter-spacing: 0.5px;
+}
+
 .servizi-page .section-title {
   font-size: 3.5rem;
   font-weight: 800;
@@ -505,6 +812,16 @@
   letter-spacing: -0.02em;
   color: #ffffff;
   position: relative;
+  animation: fadeInUp 1s ease-out 0.2s both;
+}
+
+/* CTA title coerente con HomePage */
+.servizi-page .cta-title {
+  font-size: 2.5rem !important;
+  font-weight: 700 !important;
+  line-height: 1.1 !important;
+  margin-bottom: 24px !important;
+  color: #ffffff !important;
   animation: fadeInUp 1s ease-out 0.2s both;
 }
 
@@ -748,6 +1065,28 @@
   }
 }
 
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @keyframes float {
   0%, 100% {
     transform: translateY(0px);
@@ -778,6 +1117,22 @@
   }
   75% {
     transform: translateX(-10px) translateY(-5px);
+  }
+}
+
+/* Animazione per le palline fluttuanti della sezione CTA */
+@keyframes ctaBallFloat {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) scale(1);
+  }
+  25% {
+    transform: translateY(-20px) translateX(15px) scale(1.1);
+  }
+  50% {
+    transform: translateY(10px) translateX(-10px) scale(0.9);
+  }
+  75% {
+    transform: translateY(-15px) translateX(8px) scale(1.05);
   }
 }
 
