@@ -18,6 +18,39 @@ const ContattiPage = () => {
     setIsVisible(true);
   }, []);
 
+  // Intersection Observer per animazioni di scroll
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+        }
+      });
+    }, observerOptions);
+
+    // Elementi da osservare per le animazioni
+    const animatedElements = [
+      '.hero-badge-coherent',
+      '.hero-title-coherent',
+      '.hero-subtitle-coherent',
+      '.hero-image-coherent'
+    ];
+
+    animatedElements.forEach(selector => {
+      const elements = document.querySelectorAll(selector);
+      elements.forEach(element => {
+        observer.observe(element);
+      });
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -96,24 +129,37 @@ const ContattiPage = () => {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="hero-section">
-        <div className="hero-container two-columns">
-          <div className="hero-content">
-            <div className="hero-badge">
+      <section className="hero-section hero-coherent">
+        {/* Background con pattern coerente */}
+        <div className="hero-background-coherent">
+          <div className="hero-pattern-coherent"></div>
+        </div>
+        
+        {/* Palline di luce arancione fluttuanti */}
+        <div className="hero-floating-balls">
+          <div className="hero-ball"></div>
+          <div className="hero-ball"></div>
+          <div className="hero-ball"></div>
+          <div className="hero-ball"></div>
+        </div>
+        
+        <div className="hero-container two-columns hero-container-coherent">
+          <div className="hero-content hero-content-coherent">
+            <div className="hero-badge hero-badge-coherent">
               <span>📞 Contattaci</span>
             </div>
             
-            <h1 className="hero-title">
-              Iniziamo a lavorare sul tuo
-              <span className="gradient-text"> progetto</span>
+            <h1 className="hero-title hero-title-coherent">
+              Iniziamo a lavorare sul <span className="gradient-text gradient-text-coherent">tuo</span>
+              <span className="gradient-text gradient-text-coherent"> progetto</span>
             </h1>
             
-            <p className="hero-subtitle">
+            <p className="hero-subtitle hero-subtitle-coherent">
               Siamo qui per aiutarti a trasformare la tua idea in realtà digitale. 
               Contattaci per una consulenza gratuita e senza impegno.
             </p>
           </div>
-          <div className="hero-image">
+          <div className="hero-image hero-image-coherent">
             <img src="/chisiamo.jpg" alt="Team al lavoro" />
           </div>
         </div>
