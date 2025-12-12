@@ -9,11 +9,13 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div className="space-y-4">
-            <img 
-              src="/Bianco-Arancio.png" 
-              alt="Nemo Web Agency" 
-              className="h-10 w-auto"
-            />
+            <Link to="/">
+              <img 
+                src="/Bianco-Arancio.png" 
+                alt="Nemo Web Agency" 
+                className="h-10 w-auto hover:opacity-80 transition-opacity cursor-pointer"
+              />
+            </Link>
             <p className="text-gray-400 text-sm">
               Creiamo siti web moderni e professionali per far crescere il tuo business online.
             </p>
@@ -24,17 +26,17 @@ const Footer = () => {
             <h4 className="font-semibold text-lg mb-4">Servizi</h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/servizi" className="text-gray-400 hover:text-primary transition-colors text-sm">
+                <Link to="/servizi#sito-vetrina" className="text-gray-400 hover:text-primary transition-colors text-sm">
                   Siti Vetrina
                 </Link>
               </li>
               <li>
-                <Link to="/servizi" className="text-gray-400 hover:text-primary transition-colors text-sm">
+                <Link to="/servizi#sito-prenotazione" className="text-gray-400 hover:text-primary transition-colors text-sm">
                   Siti Prenotazione
                 </Link>
               </li>
               <li>
-                <Link to="/servizi" className="text-gray-400 hover:text-primary transition-colors text-sm">
+                <Link to="/servizi#e-commerce" className="text-gray-400 hover:text-primary transition-colors text-sm">
                   E-commerce
                 </Link>
               </li>
@@ -73,11 +75,11 @@ const Footer = () => {
             <h4 className="font-semibold text-lg mb-4">Contatti</h4>
             <div className="space-y-3">
               <a 
-                href="mailto:nemowebagency@gmail.com" 
+                href="mailto:info@nemoagency.it" 
                 className="flex items-center space-x-2 text-gray-400 hover:text-primary transition-colors text-sm"
               >
                 <Mail className="w-4 h-4" />
-                <span>nemowebagency@gmail.com</span>
+                <span>info@nemoagency.it</span>
               </a>
               <a 
                 href="tel:+393465745184" 
@@ -129,7 +131,13 @@ const Footer = () => {
             </p>
             <div className="flex gap-6 mt-4 md:mt-0">
               <Link to="/privacy" className="text-gray-400 hover:text-primary transition-colors text-sm">
-                Privacy & Cookie
+                Privacy
+              </Link>
+              <Link to="/cookie-policy" className="text-gray-400 hover:text-primary transition-colors text-sm">
+                Cookie Policy
+              </Link>
+              <Link to="/termini-condizioni" className="text-gray-400 hover:text-primary transition-colors text-sm">
+                Termini e Condizioni
               </Link>
             </div>
           </div>

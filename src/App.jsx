@@ -7,6 +7,8 @@ import ServiziPage from './pages/ServiziPage';
 import ContattiPage from './pages/ContattiPage';
 import RichiediPreventivoPage from './pages/RichiediPreventivoPage';
 import PrivacyPage from './pages/PrivacyPage';
+import CookiePolicyPage from './pages/CookiePolicyPage';
+import TerminiCondizioniPage from './pages/TerminiCondizioniPage';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path="/contatti" element={<ContattiPage />} />
         <Route path="/richiedi-preventivo" element={<RichiediPreventivoPage />} />
         <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/cookie-policy" element={<CookiePolicyPage />} />
+        <Route path="/termini-condizioni" element={<TerminiCondizioniPage />} />
       </Routes>
     </Router>
   );

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { Mail, Phone, MapPin, Send, CheckCircle2, Clock } from 'lucide-react';
+import { Mail, Phone, Send, CheckCircle2, Clock } from 'lucide-react';
 
 const ContattiPage = () => {
   const [formData, setFormData] = useState({
@@ -100,7 +100,7 @@ const ContattiPage = () => {
 
               <div className="space-y-6">
                 <a 
-                  href="mailto:nemowebagency@gmail.com"
+                  href="mailto:info@nemoagency.it"
                   className="flex items-start space-x-4 p-6 bg-gray-50 rounded-xl hover:bg-[#ff7351]/5 transition-colors group border border-gray-200 hover:border-[#ff7351]"
                 >
                   <div className="w-12 h-12 bg-[#ff7351]/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-[#ff7351] group-hover:scale-110 transition-all">
@@ -109,7 +109,7 @@ const ContattiPage = () => {
                   <div>
                     <h3 className="font-semibold text-lg mb-1 text-gray-900">Email</h3>
                     <p className="text-gray-600 group-hover:text-[#ff7351] transition-colors">
-                      nemowebagency@gmail.com
+                      info@nemoagency.it
                     </p>
                   </div>
                 </a>
@@ -131,25 +131,13 @@ const ContattiPage = () => {
 
                 <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-xl border border-gray-200">
                   <div className="w-12 h-12 bg-[#ff7351]/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-6 h-6 text-[#ff7351]" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-lg mb-1 text-gray-900">Zona</h3>
-                    <p className="text-gray-600">
-                      Serviamo clienti in tutta Italia e all'estero
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-4 p-6 bg-gray-50 rounded-xl border border-gray-200">
-                  <div className="w-12 h-12 bg-[#ff7351]/10 rounded-xl flex items-center justify-center flex-shrink-0">
                     <Clock className="w-6 h-6 text-[#ff7351]" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-lg mb-2 text-gray-900">Orari di disponibilità</h3>
                     <div className="space-y-1 text-gray-600">
                       <p>Lunedì - Venerdì: 9:00 - 18:00</p>
-                      <p>Sabato: Su appuntamento</p>
+                      <p>Sabato: Chiuso</p>
                       <p>Domenica: Chiuso</p>
                     </div>
                   </div>
