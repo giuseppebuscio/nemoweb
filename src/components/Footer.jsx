@@ -56,6 +56,11 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/chi-siamo" className="text-gray-400 hover:text-primary transition-colors text-sm">
+                  Chi Siamo
+                </Link>
+              </li>
+              <li>
                 <Link to="/contatti" className="text-gray-400 hover:text-primary transition-colors text-sm">
                   Contatti
                 </Link>
@@ -122,6 +127,11 @@ const Footer = () => {
             <p className="text-gray-400 text-sm">
               &copy; 2025 Nemo Web Agency. Tutti i diritti riservati.
             </p>
+            <div className="flex gap-6 mt-4 md:mt-0">
+              <Link to="/privacy" className="text-gray-400 hover:text-primary transition-colors text-sm">
+                Privacy & Cookie
+              </Link>
+            </div>
           </div>
         </div>
       </div>

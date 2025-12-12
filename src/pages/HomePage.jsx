@@ -80,18 +80,21 @@ const HomePage = () => {
     {
       icon: Home,
       title: 'Siti Vetrina',
+      value: 'sito-vetrina',
       description: 'Siti web professionali e moderni per presentare la tua attività online. Design responsive e ottimizzato per tutti i dispositivi.',
       features: ['Design Personalizzato', 'SEO Ottimizzato', 'Mobile First']
     },
     {
       icon: Calendar,
       title: 'Siti di Prenotazione',
+      value: 'sito-prenotazione',
       description: 'Sistemi di prenotazione online completi per ristoranti, saloni, studi medici e B&B. Gestione calendari e notifiche automatiche.',
       features: ['Calendario Integrato', 'Notifiche Automatiche', 'Pagamenti Online']
     },
     {
       icon: ShoppingBag,
       title: 'E-commerce',
+      value: 'e-commerce',
       description: 'Piattaforme di vendita online complete con catalogo prodotti, carrello, pagamenti sicuri e gestione ordini.',
       features: ['Catalogo Completo', 'Pagamenti Sicuri', 'Gestione Ordini']
     }
@@ -427,7 +430,7 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div data-scroll className="text-center mb-16 opacity-0 translate-y-8 transition-all duration-700">
             <h2 className="font-bold text-gray-900 mb-4" style={{ fontSize: '35px' }}>
-              Le Nostre <span className="text-[#ff7351]">Soluzioni</span>
+              Le Nostre <span className="text-[#ff7351]">oluzioni</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Offriamo servizi completi per ogni esigenza digitale, dalla vetrina al negozio online completo
@@ -465,7 +468,7 @@ const HomePage = () => {
                   </ul>
                   
                   <button
-                    onClick={() => navigate('/servizi')}
+                    onClick={() => navigate(`/servizi#${service.value}`)}
                     className="text-[#ff7351] font-semibold hover:text-[#ff8466] inline-flex items-center space-x-2 group-hover:translate-x-2 transition-all"
                   >
                     <span>Scopri di più</span>

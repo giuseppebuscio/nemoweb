@@ -17,7 +17,9 @@ const Navbar = () => {
 
   const navLinks = [
     { path: '/', label: 'Home' },
+    { path: '/chi-siamo', label: 'Chi Siamo' },
     { path: '/servizi', label: 'Servizi' },
+    { path: '/contatti', label: 'Contatti' },
   ];
 
   // Se siamo sulla home e non abbiamo scrollato, la navbar è trasparente
@@ -68,14 +70,14 @@ const Navbar = () => {
               </Link>
             ))}
             <Link
-              to="/contatti"
+              to="/richiedi-preventivo"
               className={`px-6 py-2.5 rounded-full font-medium text-base hover:shadow-lg  transition-all ${
                 isTransparent
                   ? 'bg-white/20 backdrop-blur-sm text-white border border-white/30 hover:bg-white/30'
                   : 'bg-gradient-to-r from-primary to-secondary text-white'
               }`}
             >
-              Contattaci
+              Richiedi un preventivo
             </Link>
           </div>
 
@@ -119,11 +121,11 @@ const Navbar = () => {
             </Link>
           ))}
           <Link
-            to="/contatti"
+            to="/richiedi-preventivo"
             onClick={() => setIsMobileMenuOpen(false)}
             className="block w-full mt-4 px-6 py-3 bg-gradient-to-r from-primary to-secondary text-white rounded-full font-medium text-center"
           >
-            Contattaci
+            Richiedi un preventivo
           </Link>
         </div>
       </div>
