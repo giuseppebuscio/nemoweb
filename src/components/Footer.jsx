@@ -40,6 +40,11 @@ const Footer = () => {
                   E-commerce
                 </Link>
               </li>
+              <li>
+                <Link to="/richiedi-preventivo" className="text-gray-400 hover:text-primary transition-colors text-sm">
+                  Richiedi preventivo
+                </Link>
+              </li>
             </ul>
           </div>
           
