@@ -158,28 +158,60 @@ const HomePage = () => {
 
   const portfolio = [
     {
-      title: 'E-commerce Fashion',
-      category: 'E-commerce',
-      image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800',
-      description: 'Piattaforma completa per brand di moda con oltre 1000 prodotti'
-    },
-    {
-      title: 'Sito Ristorante',
+      title: 'Accademia del Gusto',
       category: 'Prenotazioni',
-      image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800',
-      description: 'Sistema di prenotazione integrato con menu digitale interattivo'
+      image: 'https://www.accademiated.it/wp-content/uploads/2024/12/61946.jpg',
+      description: 'Piattaforma di prenotazione per il ristorante didattico della scuola TED',
+      url: 'https://accademiated.it'
     },
     {
-      title: 'Portfolio Aziendale',
+      title: 'Riverloop',
       category: 'Vetrina',
-      image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800',
-      description: 'Sito corporate moderno con sezione portfolio e blog integrato'
+      image: 'https://riverloop.it/media/2025/01/1933.webp',
+      description: 'Sito vetrina moderno e professionale per startup specializzata in sviluppo software e formazione tech',
+      url: 'https://riverloop.it/'
     },
     {
-      title: 'E-commerce Tech',
-      category: 'E-commerce',
-      image: 'https://images.unsplash.com/photo-1556740758-90de374c12ad?w=800',
-      description: 'E-commerce B2B per azienda tech con gestione ordini avanzata'
+      title: 'Simone Grasso Private Banker',
+      category: 'Vetrina',
+      image: 'https://simonegrassopb.com/wp-content/uploads/2025/03/close-up-businesspeople-hands-discussion-business-plan-scaled.jpg',
+      description: 'Sito professionale ed elegante per consulente patrimoniale e private banker',
+      url: 'https://simonegrassopb.com/'
+    },
+    {
+      title: 'Bar Bonventre',
+      category: 'Vetrina',
+      image: 'https://www.barbonventre.it/wp-content/uploads/2024/09/IMG-20240907-WA0068.jpg',
+      description: 'Sito vetrina accogliente e tradizionale per bar, pasticceria e gelateria',
+      url: 'https://www.barbonventre.it/'
+    },
+    {
+      title: 'BeYou',
+      category: 'Prenotazioni',
+      image: 'https://www.beyou.it/wp-content/uploads/2024/12/slider1.png',
+      description: 'Sistema di prenotazione per centri beauty e benessere',
+      url: 'https://www.beyou.it/'
+    },
+    {
+      title: 'Social Sail',
+      category: 'Prenotazioni',
+      image: 'https://socialsail.it/wp-content/uploads/2025/03/01-vacanza-alle-isole-eolie-copertina_wide.jpg',
+      description: 'Piattaforma di prenotazione per esperienze di vela in Sicilia',
+      url: 'https://socialsail.it/'
+    },
+    {
+      title: 'Villa Leuke',
+      category: 'Vetrina',
+      image: 'https://www.villaleuke.it/wp-content/uploads/2024/09/41dd4441-ceb9-4375-ad5f-91cad8112483.webp',
+      description: 'Sito vetrina per una villa a Scopello',
+      url: 'https://www.villaleuke.it/'
+    },
+    {
+      title: 'Ville Pisciotta',
+      category: 'Vetrina',
+      image: 'https://www.villepisciotta.com/mirascopello/1.jpg',
+      description: 'Sito vetrina completo per due ville in Sicilia',
+      url: 'https://villepisciotta.it'
     }
   ];
 
@@ -563,10 +595,15 @@ const HomePage = () => {
                       <div className="p-6">
                         <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
                         <p className="text-gray-400 mb-4">{project.description}</p>
-                        <button className="text-[#ff7351] font-semibold inline-flex items-center space-x-2 hover:text-[#ff8466] transition-colors">
+                        <a
+                          href={project.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[#ff7351] font-semibold inline-flex items-center space-x-2 hover:text-[#ff8466] transition-colors cursor-pointer"
+                        >
                           <span>Vedi Progetto</span>
                           <ArrowRight className="w-4 h-4" />
-                        </button>
+                        </a>
                       </div>
                     </div>
                   </div>
