@@ -41,7 +41,7 @@ const CookiePolicyPage = () => {
             </div>
 
             <h1 className="font-bold leading-tight mb-6" style={{ fontSize: '60px' }}>
-              Policy dei <span className="text-[#ff7351]">Cookie</span>
+              Cookie <span className="text-[#ff7351]">Policy</span>
             </h1>
 
             <p className="text-xl text-gray-300 leading-relaxed">
@@ -162,7 +162,7 @@ const CookiePolicyPage = () => {
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#ff7351] to-[#ff8466] text-white rounded-full font-semibold hover:shadow-xl hover:scale-105 transition-all"
             >
               <Mail className="w-5 h-5" />
-              <span>Contattaci</span>
+              <span>Contattaci via mail</span>
             </a>
           </div>
         </div>
