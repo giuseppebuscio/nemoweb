@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ScrollToTop from './components/ScrollToTop';
 import PageTitle from './components/PageTitle';
+import CustomCursor from './components/CustomCursor';
+import ScrollToTopButton from './components/ScrollToTopButton';
 import HomePage from './pages/HomePage';
 import ChiSiamoPage from './pages/ChiSiamoPage';
 import ServiziPage from './pages/ServiziPage';
@@ -16,6 +18,8 @@ function App() {
     <Router>
       <ScrollToTop />
       <PageTitle />
+      <CustomCursor />
+      <ScrollToTopButton />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/chi-siamo" element={<ChiSiamoPage />} />
