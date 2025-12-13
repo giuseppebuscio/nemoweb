@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import emailjs from '@emailjs/browser';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { Mail, Phone, Send, CheckCircle2, Clock } from 'lucide-react';
+import { Mail, Phone, Send, CheckCircle2, Clock, AlertCircle, Loader2 } from 'lucide-react';
+import { EMAILJS_CONFIG } from '../config/emailjs';
 
 const ContattiPage = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +14,8 @@ const ContattiPage = () => {
     message: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -36,21 +40,54 @@ const ContattiPage = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitted(true);
+    setIsLoading(true);
+    setError('');
     
-    // Reset form after 5 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        service: '',
-        message: ''
-      });
-    }, 5000);
+    try {
+      // Verifica che le credenziali siano configurate
+      if (EMAILJS_CONFIG.SERVICE_ID === 'YOUR_SERVICE_ID' || 
+          EMAILJS_CONFIG.TEMPLATE_ID_QUOTE === 'YOUR_TEMPLATE_ID_QUOTE' ||
+          EMAILJS_CONFIG.PUBLIC_KEY === 'YOUR_PUBLIC_KEY') {
+        throw new Error('EmailJS non è configurato. Controlla il file src/config/emailjs.js');
+      }
+
+      await emailjs.send(
+        EMAILJS_CONFIG.SERVICE_ID,
+        EMAILJS_CONFIG.TEMPLATE_ID_QUOTE,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          phone: formData.phone || 'Non fornito',
+          service: formData.service || 'Non specificato',
+          budget: 'Non specificato',
+          deadline: 'Non specificato',
+          message: formData.message,
+          to_email: 'info@nemoagency.it', // Email di destinazione
+        },
+        EMAILJS_CONFIG.PUBLIC_KEY
+      );
+
+      setIsSubmitted(true);
+      setIsLoading(false);
+      
+      // Reset form after 5 seconds
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          service: '',
+          message: ''
+        });
+      }, 5000);
+    } catch (err) {
+      console.error('Errore invio email:', err);
+      setError('Errore nell\'invio del messaggio. Riprova più tardi o contattaci direttamente.');
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -151,6 +188,16 @@ const ContattiPage = () => {
                 Invia un <span className="text-[#ff7351]">messaggio</span>
               </h2>
               
+              {error && (
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl flex items-start space-x-3">
+                  <AlertCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-semibold text-red-900">Errore</p>
+                    <p className="text-sm text-red-700">{error}</p>
+                  </div>
+                </div>
+              )}
+
               {isSubmitted && (
                 <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl flex items-center space-x-3">
                   <CheckCircle2 className="w-6 h-6 text-green-600 flex-shrink-0" />
@@ -246,10 +293,20 @@ const ContattiPage = () => {
 
                 <button
                   type="submit"
-                  className="w-full px-8 py-4 bg-gradient-to-r from-[#ff7351] to-[#ff8466] text-white rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center space-x-2"
+                  disabled={isLoading}
+                  className="w-full px-8 py-4 bg-gradient-to-r from-[#ff7351] to-[#ff8466] text-white rounded-xl font-semibold hover:shadow-xl hover:scale-105 transition-all flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                 >
-                  <span>Invia messaggio</span>
-                  <Send className="w-5 h-5" />
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      <span>Invio in corso...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Invia messaggio</span>
+                      <Send className="w-5 h-5" />
+                    </>
+                  )}
                 </button>
               </form>
             </div>
