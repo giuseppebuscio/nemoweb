@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { useLanguage } from '../contexts/LanguageContext';
 import { 
   Home, Calendar, ShoppingBag, ArrowRight, Check,
   Globe, Smartphone, CreditCard, Mail, Settings,
@@ -10,6 +11,7 @@ import {
 
 const ServiziPage = () => {
   const navigate = useNavigate();
+  const { language } = useLanguage();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -49,73 +51,167 @@ const ServiziPage = () => {
     }
   }, []);
 
+  const translations = {
+    it: {
+      heroBadge: 'Le Nostre Soluzioni',
+      heroTitle: 'I nostri',
+      heroSpan: 'servizi',
+      heroDesc: 'Soluzioni web complete e personalizzate per far crescere il tuo business online',
+      richiediPreventivo: 'Richiedi preventivo',
+      includeTitle: 'Cosa include ogni',
+      includeSpan: 'progetto',
+      includeDesc: 'Caratteristiche standard in tutti i nostri servizi'
+    },
+    en: {
+      heroBadge: 'Our Solutions',
+      heroTitle: 'Our',
+      heroSpan: 'Services',
+      heroDesc: 'Complete and personalized web solutions to grow your online business',
+      richiediPreventivo: 'Request quote',
+      includeTitle: 'What every',
+      includeSpan: 'project includes',
+      includeDesc: 'Standard features in all our services'
+    }
+  };
+
+  const t = translations[language];
+
   const services = [
     {
       icon: Home,
-      title: 'Siti Vetrina',
+      title: { it: 'Siti Vetrina', en: 'Showcase Websites' },
       value: 'sito-vetrina',
-      price: 'da 400€',
-      description: 'Siti web professionali e moderni per presentare la tua attività online. Perfetti per attività locali, professionisti e artisti che vogliono una presenza digitale di qualità.',
-      features: [
-        'Design moderno e responsive',
-        'Fino a 5 pagine personalizzate',
-        'Modulo di contatto avanzato',
-        'Ottimizzazione SEO base',
-        'Pannello di gestione contenuti',
-        'Supporto tecnico incluso',
-        'Velocità di caricamento ottimizzata',
-        'Integrazione social media'
-      ],
+      price: { it: 'da 400€', en: 'from €400' },
+      description: { 
+        it: 'Siti web professionali e moderni per presentare la tua attività online. Perfetti per attività locali, professionisti e artisti che vogliono una presenza digitale di qualità.',
+        en: 'Professional and modern websites to present your business online. Perfect for local businesses, professionals and artists who want quality digital presence.'
+      },
+      features: {
+        it: [
+          'Design moderno e responsive',
+          'Fino a 5 pagine personalizzate',
+          'Modulo di contatto avanzato',
+          'Ottimizzazione SEO base',
+          'Pannello di gestione contenuti',
+          'Supporto tecnico incluso',
+          'Velocità di caricamento ottimizzata',
+          'Integrazione social media'
+        ],
+        en: [
+          'Modern and responsive design',
+          'Up to 5 customized pages',
+          'Advanced contact form',
+          'Basic SEO optimization',
+          'Content management panel',
+          'Technical support included',
+          'Optimized loading speed',
+          'Social media integration'
+        ]
+      },
       image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&q=80',
-      alt: 'Immagine che raffigura una scrivania con dei computer'
+      alt: { it: 'Immagine che raffigura una scrivania con dei computer', en: 'Image depicting a desk with computers' }
     },
     {
       icon: Calendar,
-      title: 'Siti di Prenotazione',
+      title: { it: 'Siti di Prenotazione', en: 'Booking Websites' },
       value: 'sito-prenotazione',
-      price: 'da 1200€',
-      description: 'Sistemi di prenotazione online completi per ristoranti, saloni, studi medici, B&B e tutte le attività che necessitano di gestione prenotazioni.',
-      features: [
-        'Sistema di calendario interattivo',
-        'Gestione disponibilità in tempo reale',
-        'Notifiche email automatiche',
-        'Pannello amministrativo completo',
-        'Integrazione con calendari esterni',
-        'Sistema di conferma automatica',
-        'Gestione cancellazioni',
-        'Statistiche e report prenotazioni'
-      ],
+      price: { it: 'da 1200€', en: 'from €1200' },
+      description: { 
+        it: 'Sistemi di prenotazione online completi per ristoranti, saloni, studi medici, B&B e tutte le attività che necessitano di gestione prenotazioni.',
+        en: 'Complete online booking systems for restaurants, salons, medical practices, B&Bs and all businesses that need booking management.'
+      },
+      features: {
+        it: [
+          'Sistema di calendario interattivo',
+          'Gestione disponibilità in tempo reale',
+          'Notifiche email automatiche',
+          'Pannello amministrativo completo',
+          'Integrazione con calendari esterni',
+          'Sistema di conferma automatica',
+          'Gestione cancellazioni',
+          'Statistiche e report prenotazioni'
+        ],
+        en: [
+          'Interactive calendar system',
+          'Real-time availability management',
+          'Automatic email notifications',
+          'Complete administrative panel',
+          'Integration with external calendars',
+          'Automatic confirmation system',
+          'Cancellation management',
+          'Statistics and booking reports'
+        ]
+      },
       image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&q=80',
-      alt: 'Immagine che raffigura un tavolo con dei computer portatili'
+      alt: { it: 'Immagine che raffigura un tavolo con dei computer portatili', en: 'Image depicting a table with laptops' }
     },
     {
       icon: ShoppingBag,
-      title: 'E-commerce',
+      title: { it: 'E-commerce', en: 'E-commerce' },
       value: 'e-commerce',
-      price: 'da 1600€',
-      description: 'Piattaforme di vendita online complete con catalogo prodotti, sistema di pagamento sicuro, gestione ordini e spedizioni per far crescere il tuo business.',
-      features: [
-        'Catalogo prodotti illimitato',
-        'Carrello e checkout sicuro',
-        'Integrazione pagamenti (PayPal, Stripe, etc.)',
-        'Gestione ordini e spedizioni',
-        'Pannello amministrativo avanzato',
-        'Integrazione con corrieri',
-        'Sistema di gestione inventario',
-        'Marketing e coupon system'
-      ],
+      price: { it: 'da 1600€', en: 'from €1600' },
+      description: { 
+        it: 'Piattaforme di vendita online complete con catalogo prodotti, sistema di pagamento sicuro, gestione ordini e spedizioni per far crescere il tuo business.',
+        en: 'Complete online sales platforms with product catalog, secure payment system, order and shipping management to grow your business.'
+      },
+      features: {
+        it: [
+          'Catalogo prodotti illimitato',
+          'Carrello e checkout sicuro',
+          'Integrazione pagamenti (PayPal, Stripe, etc.)',
+          'Gestione ordini e spedizioni',
+          'Pannello amministrativo avanzato',
+          'Integrazione con corrieri',
+          'Sistema di gestione inventario',
+          'Marketing e coupon system'
+        ],
+        en: [
+          'Unlimited product catalog',
+          'Secure cart and checkout',
+          'Payment integration (PayPal, Stripe, etc.)',
+          'Order and shipping management',
+          'Advanced administrative panel',
+          'Courier integration',
+          'Inventory management system',
+          'Marketing and coupon system'
+        ]
+      },
       image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80',
-      alt: 'Immagine che raffigura un uomo che vende qualcosa'
+      alt: { it: 'Immagine che raffigura un uomo che vende qualcosa', en: 'Image depicting a man selling something' }
     }
   ];
 
   const additionalFeatures = [
-    { icon: Globe, title: 'Design Responsive', desc: 'Perfetto su ogni dispositivo' },
-    { icon: Zap, title: 'Performance Ottimizzate', desc: 'Caricamento velocissimo' },
-    { icon: Shield, title: 'Sicurezza Avanzata', desc: 'Protezione dati garantita' },
-    { icon: BarChart, title: 'Analytics Integrati', desc: 'Monitora le performance' },
-    { icon: Settings, title: 'Facile da Gestire', desc: 'Pannello intuitivo' },
-    { icon: Palette, title: 'Design Personalizzato', desc: 'Unico come la tua attività' }
+    { 
+      icon: Globe, 
+      title: { it: 'Design Responsive', en: 'Responsive Design' }, 
+      desc: { it: 'Perfetto su ogni dispositivo', en: 'Perfect on every device' } 
+    },
+    { 
+      icon: Zap, 
+      title: { it: 'Performance Ottimizzate', en: 'Optimized Performance' }, 
+      desc: { it: 'Caricamento velocissimo', en: 'Very fast loading' } 
+    },
+    { 
+      icon: Shield, 
+      title: { it: 'Sicurezza Avanzata', en: 'Advanced Security' }, 
+      desc: { it: 'Protezione dati garantita', en: 'Guaranteed data protection' } 
+    },
+    { 
+      icon: BarChart, 
+      title: { it: 'Analytics Integrati', en: 'Integrated Analytics' }, 
+      desc: { it: 'Monitora le performance', en: 'Monitor performance' } 
+    },
+    { 
+      icon: Settings, 
+      title: { it: 'Facile da Gestire', en: 'Easy to Manage' }, 
+      desc: { it: 'Pannello intuitivo', en: 'Intuitive panel' } 
+    },
+    { 
+      icon: Palette, 
+      title: { it: 'Design Personalizzato', en: 'Custom Design' }, 
+      desc: { it: 'Unico come la tua attività', en: 'Unique like your business' } 
+    }
   ];
 
   return (
@@ -132,15 +228,15 @@ const ServiziPage = () => {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full mb-6 border border-white/20">
-              <span className="text-sm font-medium">Le Nostre Soluzioni</span>
+              <span className="text-sm font-medium">{t.heroBadge}</span>
             </div>
 
             <h1 className="font-bold leading-tight mb-6" style={{ fontSize: '60px' }}>
-              I nostri <span className="text-[#ff7351]">servizi</span>
+              {t.heroTitle} <span className="text-[#ff7351]">{t.heroSpan}</span>
             </h1>
 
             <p className="text-xl text-gray-300 leading-relaxed">
-              Soluzioni web complete e personalizzate per far crescere il tuo business online
+              {t.heroDesc}
             </p>
           </div>
         </div>
@@ -165,17 +261,17 @@ const ServiziPage = () => {
                   <div className={isEven ? '' : 'lg:col-start-2'}>
                     <div className="inline-flex items-center space-x-2 px-4 py-2 bg-[#ff7351]/10 rounded-full text-[#ff7351] font-medium mb-6">
                       <Icon className="w-5 h-5" />
-                      <span>{service.title}</span>
+                      <span>{service.title[language]}</span>
                     </div>
                     
-                    <h2 className="text-4xl font-bold mb-2 text-gray-900">{service.title}</h2>
+                    <h2 className="text-4xl font-bold mb-2 text-gray-900">{service.title[language]}</h2>
                     
-                    <div className="text-4xl font-bold text-[#ff7351] mb-6">{service.price}</div>
+                    <div className="text-4xl font-bold text-[#ff7351] mb-6">{service.price[language]}</div>
                     
-                    <p className="text-xl text-gray-600 mb-8 leading-relaxed">{service.description}</p>
+                    <p className="text-xl text-gray-600 mb-8 leading-relaxed">{service.description[language]}</p>
                     
                     <ul className="grid sm:grid-cols-2 gap-4 mb-8">
-                      {service.features.map((feature, i) => (
+                      {service.features[language].map((feature, i) => (
                         <li key={i} className="flex items-start space-x-3">
                           <Check className="w-5 h-5 text-[#ff7351] flex-shrink-0 mt-0.5" />
                           <span className="text-gray-700">{feature}</span>
@@ -187,7 +283,7 @@ const ServiziPage = () => {
                       onClick={() => navigate(`/richiedi-preventivo?service=${service.value}`)}
                       className="px-8 py-4 bg-gradient-to-r from-[#ff7351] to-[#ff8466] text-white rounded-full font-semibold hover:shadow-xl hover:scale-105 transition-all inline-flex items-center space-x-2"
                     >
-                      <span>Richiedi preventivo</span>
+                      <span>{t.richiediPreventivo}</span>
                       <ArrowRight className="w-5 h-5" />
                     </button>
                   </div>
@@ -196,7 +292,7 @@ const ServiziPage = () => {
                     <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                       <img 
                         src={service.image} 
-                        alt={service.alt || service.title} 
+                        alt={service.alt[language] || service.title[language]} 
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
@@ -214,10 +310,10 @@ const ServiziPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div data-scroll className="text-center mb-16 opacity-0 translate-y-8 transition-all duration-700">
             <h2 className="font-bold text-gray-900 mb-4" style={{ fontSize: '35px' }}>
-              Cosa include ogni <span className="text-[#ff7351]">progetto</span>
+              {t.includeTitle} <span className="text-[#ff7351]">{t.includeSpan}</span>
             </h2>
             <p className="text-xl text-gray-600">
-              Caratteristiche standard in tutti i nostri servizi
+              {t.includeDesc}
             </p>
           </div>
           
@@ -233,8 +329,8 @@ const ServiziPage = () => {
                   <div className="w-12 h-12 bg-[#ff7351]/10 rounded-xl flex items-center justify-center mb-4">
                     <Icon className="w-6 h-6 text-[#ff7351]" />
                   </div>
-                  <h3 className="text-xl font-bold mb-2 text-gray-900">{feature.title}</h3>
-                  <p className="text-gray-600">{feature.desc}</p>
+                  <h3 className="text-xl font-bold mb-2 text-gray-900">{feature.title[language]}</h3>
+                  <p className="text-gray-600">{feature.desc[language]}</p>
                 </div>
               );
             })}

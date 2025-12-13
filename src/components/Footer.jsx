@@ -1,8 +1,50 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, Facebook, Instagram } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const Footer = () => {
+  const { language } = useLanguage();
+
+  const translations = {
+    it: {
+      description: 'Creiamo siti web moderni e professionali per far crescere il tuo business online.',
+      servizi: 'Servizi',
+      sitiVetrina: 'Siti Vetrina',
+      sitiPrenotazione: 'Siti Prenotazione',
+      ecommerce: 'E-commerce',
+      richiediPreventivo: 'Richiedi preventivo',
+      navigazione: 'Navigazione',
+      home: 'Home',
+      chiSiamo: 'Chi Siamo',
+      contatti: 'Contatti',
+      contattiTitle: 'Contatti',
+      privacy: 'Privacy',
+      cookiePolicy: 'Cookie Policy',
+      terminiCondizioni: 'Termini e Condizioni',
+      copyright: `© ${new Date().getFullYear()} Nemo Web Agency. Tutti i diritti riservati.`
+    },
+    en: {
+      description: 'We create modern and professional websites to grow your online business.',
+      servizi: 'Services',
+      sitiVetrina: 'Showcase Websites',
+      sitiPrenotazione: 'Booking Websites',
+      ecommerce: 'E-commerce',
+      richiediPreventivo: 'Request Quote',
+      navigazione: 'Navigation',
+      home: 'Home',
+      chiSiamo: 'About Us',
+      contatti: 'Contact',
+      contattiTitle: 'Contact',
+      privacy: 'Privacy',
+      cookiePolicy: 'Cookie Policy',
+      terminiCondizioni: 'Terms and Conditions',
+      copyright: `© ${new Date().getFullYear()} Nemo Web Agency. All rights reserved.`
+    }
+  };
+
+  const t = translations[language];
+
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -17,32 +59,32 @@ const Footer = () => {
               />
             </Link>
             <p className="text-gray-400 text-sm">
-              Creiamo siti web moderni e professionali per far crescere il tuo business online.
+              {t.description}
             </p>
           </div>
           
           {/* Servizi */}
           <div>
-            <h4 className="font-semibold text-lg mb-4">Servizi</h4>
+            <h4 className="font-semibold text-lg mb-4">{t.servizi}</h4>
             <ul className="space-y-2">
               <li>
                 <Link to="/servizi#sito-vetrina" className="text-gray-400 hover:text-primary transition-colors text-sm">
-                  Siti Vetrina
+                  {t.sitiVetrina}
                 </Link>
               </li>
               <li>
                 <Link to="/servizi#sito-prenotazione" className="text-gray-400 hover:text-primary transition-colors text-sm">
-                  Siti Prenotazione
+                  {t.sitiPrenotazione}
                 </Link>
               </li>
               <li>
                 <Link to="/servizi#e-commerce" className="text-gray-400 hover:text-primary transition-colors text-sm">
-                  E-commerce
+                  {t.ecommerce}
                 </Link>
               </li>
               <li>
                 <Link to="/richiedi-preventivo" className="text-gray-400 hover:text-primary transition-colors text-sm">
-                  Richiedi preventivo
+                  {t.richiediPreventivo}
                 </Link>
               </li>
             </ul>
@@ -50,26 +92,26 @@ const Footer = () => {
           
           {/* Navigazione */}
           <div>
-            <h4 className="font-semibold text-lg mb-4">Navigazione</h4>
+            <h4 className="font-semibold text-lg mb-4">{t.navigazione}</h4>
             <ul className="space-y-2">
               <li>
                 <Link to="/" className="text-gray-400 hover:text-primary transition-colors text-sm">
-                  Home
+                  {t.home}
                 </Link>
               </li>
               <li>
                 <Link to="/servizi" className="text-gray-400 hover:text-primary transition-colors text-sm">
-                  Servizi
+                  {t.servizi}
                 </Link>
               </li>
               <li>
                 <Link to="/chi-siamo" className="text-gray-400 hover:text-primary transition-colors text-sm">
-                  Chi Siamo
+                  {t.chiSiamo}
                 </Link>
               </li>
               <li>
                 <Link to="/contatti" className="text-gray-400 hover:text-primary transition-colors text-sm">
-                  Contatti
+                  {t.contatti}
                 </Link>
               </li>
             </ul>
@@ -77,7 +119,7 @@ const Footer = () => {
           
           {/* Contatti */}
           <div>
-            <h4 className="font-semibold text-lg mb-4">Contatti</h4>
+            <h4 className="font-semibold text-lg mb-4">{t.contattiTitle}</h4>
             <div className="space-y-3">
               <a 
                 href="mailto:info@nemoagency.it" 
@@ -132,17 +174,17 @@ const Footer = () => {
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm">
-              &copy; 2025 Nemo Web Agency. Tutti i diritti riservati.
+              {t.copyright}
             </p>
             <div className="flex gap-6 mt-4 md:mt-0">
               <Link to="/privacy" className="text-gray-400 hover:text-primary transition-colors text-sm">
-                Privacy
+                {t.privacy}
               </Link>
               <Link to="/cookie-policy" className="text-gray-400 hover:text-primary transition-colors text-sm">
-                Cookie Policy
+                {t.cookiePolicy}
               </Link>
               <Link to="/termini-condizioni" className="text-gray-400 hover:text-primary transition-colors text-sm">
-                Termini e Condizioni
+                {t.terminiCondizioni}
               </Link>
             </div>
           </div>

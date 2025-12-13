@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { useLanguage } from '../contexts/LanguageContext';
 import { 
   ArrowRight, Home, Calendar, ShoppingBag, 
   Code, Palette, Rocket, Check,
@@ -13,6 +14,7 @@ import {
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const { language } = useLanguage();
   const [animatedStats, setAnimatedStats] = useState({
     clients: 0,
     projects: 0,
@@ -53,6 +55,79 @@ const HomePage = () => {
     return () => observer.disconnect();
   }, []);
 
+  const translations = {
+    it: {
+      heroBadge: 'Web Agency dal 2016',
+      heroTitle: 'Creiamo il tuo',
+      heroSuccess: 'successo digitale',
+      heroDescription: 'Sviluppiamo soluzioni digitali innovative con design moderno e tecnologie all\'avanguardia per trasformare la tua presenza online.',
+      heroButton1: 'Inizia il Tuo Progetto',
+      heroButton2: 'Scopri i Servizi',
+      clientsHappy: 'Clienti Felici',
+      projects: 'Progetti',
+      yearsExp: 'Anni Esperienza',
+      soluzioni: 'Le Nostre',
+      soluzioniSpan: 'oluzioni',
+      soluzioniDesc: 'Offriamo servizi completi per ogni esigenza digitale, dalla vetrina al negozio online completo',
+      scopriDiPiu: 'Scopri di più',
+      tecnologie: 'Tecnologie',
+      tecnologieSpan: 'Moderne',
+      tecnologieDesc: 'Utilizziamo le tecnologie più avanzate per garantire performance e scalabilità',
+      processo: 'Il Nostro',
+      processoSpan: 'Processo',
+      processoDesc: 'Un approccio strutturato per garantire risultati eccellenti ad ogni step',
+      progetti: 'I nostri',
+      progettiSpan: 'progetti',
+      progettiDesc: 'Esplora alcuni dei nostri lavori più recenti e di successo',
+      vediProgetto: 'Vedi Progetto',
+      clienti: 'Cosa dicono i',
+      clientiSpan: 'clienti',
+      clientiDesc: 'La soddisfazione dei nostri clienti è la nostra migliore testimonianza',
+      partner: 'I Nostri',
+      partnerSpan: 'Partner',
+      ctaTitle: 'Pronto a Trasformare la Tua Presenza Digitale?',
+      ctaDesc: 'Contattaci oggi stesso per una consulenza gratuita e scopri come possiamo aiutare il tuo business a crescere online.',
+      ctaButton1: 'Prenota una Consulenza Gratuita',
+      ctaButton2: 'Scopri i Servizi'
+    },
+    en: {
+      heroBadge: 'Web Agency since 2016',
+      heroTitle: 'We create your',
+      heroSuccess: 'digital success',
+      heroDescription: 'We develop innovative digital solutions with modern design and cutting-edge technologies to transform your online presence.',
+      heroButton1: 'Start Your Project',
+      heroButton2: 'Discover Services',
+      clientsHappy: 'Happy Clients',
+      projects: 'Projects',
+      yearsExp: 'Years Experience',
+      soluzioni: 'Our',
+      soluzioniSpan: 'Solutions',
+      soluzioniDesc: 'We offer complete services for every digital need, from showcase to complete online store',
+      scopriDiPiu: 'Learn more',
+      tecnologie: 'Modern',
+      tecnologieSpan: 'Technologies',
+      tecnologieDesc: 'We use the most advanced technologies to ensure performance and scalability',
+      processo: 'Our',
+      processoSpan: 'Process',
+      processoDesc: 'A structured approach to ensure excellent results at every step',
+      progetti: 'Our',
+      progettiSpan: 'projects',
+      progettiDesc: 'Explore some of our most recent and successful works',
+      vediProgetto: 'View Project',
+      clienti: 'What our',
+      clientiSpan: 'clients say',
+      clientiDesc: 'Our clients\' satisfaction is our best testimony',
+      partner: 'Our',
+      partnerSpan: 'Partners',
+      ctaTitle: 'Ready to Transform Your Digital Presence?',
+      ctaDesc: 'Contact us today for a free consultation and discover how we can help your business grow online.',
+      ctaButton1: 'Book a Free Consultation',
+      ctaButton2: 'Discover Services'
+    }
+  };
+
+  const t = translations[language];
+
   const animateStats = () => {
     const targets = { clients: 150, projects: 300, years: 8 };
     const duration = 2000;
@@ -79,24 +154,42 @@ const HomePage = () => {
   const services = [
     {
       icon: Home,
-      title: 'Siti Vetrina',
+      title: { it: 'Siti Vetrina', en: 'Showcase Websites' },
       value: 'sito-vetrina',
-      description: 'Siti web professionali e moderni per presentare la tua attività online. Design responsive e ottimizzato per tutti i dispositivi.',
-      features: ['Design Personalizzato', 'SEO Ottimizzato', 'Mobile First']
+      description: { 
+        it: 'Siti web professionali e moderni per presentare la tua attività online. Design responsive e ottimizzato per tutti i dispositivi.',
+        en: 'Professional and modern websites to present your business online. Responsive design optimized for all devices.'
+      },
+      features: { 
+        it: ['Design Personalizzato', 'SEO Ottimizzato', 'Mobile First'],
+        en: ['Custom Design', 'SEO Optimized', 'Mobile First']
+      }
     },
     {
       icon: Calendar,
-      title: 'Siti di Prenotazione',
+      title: { it: 'Siti di Prenotazione', en: 'Booking Websites' },
       value: 'sito-prenotazione',
-      description: 'Sistemi di prenotazione online completi per ristoranti, saloni, studi medici e B&B. Gestione calendari e notifiche automatiche.',
-      features: ['Calendario Integrato', 'Notifiche Automatiche', 'Pagamenti Online']
+      description: { 
+        it: 'Sistemi di prenotazione online completi per ristoranti, saloni, studi medici e B&B. Gestione calendari e notifiche automatiche.',
+        en: 'Complete online booking systems for restaurants, salons, medical practices and B&Bs. Calendar management and automatic notifications.'
+      },
+      features: { 
+        it: ['Calendario Integrato', 'Notifiche Automatiche', 'Pagamenti Online'],
+        en: ['Integrated Calendar', 'Automatic Notifications', 'Online Payments']
+      }
     },
     {
       icon: ShoppingBag,
-      title: 'E-commerce',
+      title: { it: 'E-commerce', en: 'E-commerce' },
       value: 'e-commerce',
-      description: 'Piattaforme di vendita online complete con catalogo prodotti, carrello, pagamenti sicuri e gestione ordini.',
-      features: ['Catalogo Completo', 'Pagamenti Sicuri', 'Gestione Ordini']
+      description: { 
+        it: 'Piattaforme di vendita online complete con catalogo prodotti, carrello, pagamenti sicuri e gestione ordini.',
+        en: 'Complete online sales platforms with product catalog, cart, secure payments and order management.'
+      },
+      features: { 
+        it: ['Catalogo Completo', 'Pagamenti Sicuri', 'Gestione Ordini'],
+        en: ['Complete Catalog', 'Secure Payments', 'Order Management']
+      }
     }
   ];
 
@@ -114,26 +207,38 @@ const HomePage = () => {
   const process = [
     {
       step: '01',
-      title: 'Discovery & Strategy',
-      description: 'Analizziamo le tue esigenze e obiettivi per creare una strategia personalizzata.',
+      title: { it: 'Discovery & Strategy', en: 'Discovery & Strategy' },
+      description: { 
+        it: 'Analizziamo le tue esigenze e obiettivi per creare una strategia personalizzata.',
+        en: 'We analyze your needs and objectives to create a customized strategy.'
+      },
       icon: Target
     },
     {
       step: '02',
-      title: 'Design & Prototyping',
-      description: 'Creiamo design moderni e prototipi interattivi per visualizzare il risultato finale.',
+      title: { it: 'Design & Prototyping', en: 'Design & Prototyping' },
+      description: { 
+        it: 'Creiamo design moderni e prototipi interattivi per visualizzare il risultato finale.',
+        en: 'We create modern designs and interactive prototypes to visualize the final result.'
+      },
       icon: Palette
     },
     {
       step: '03',
-      title: 'Development',
-      description: 'Sviluppiamo il sito con tecnologie moderne e codice pulito e performante.',
+      title: { it: 'Development', en: 'Development' },
+      description: { 
+        it: 'Sviluppiamo il sito con tecnologie moderne e codice pulito e performante.',
+        en: 'We develop the site with modern technologies and clean, performant code.'
+      },
       icon: Code
     },
     {
       step: '04',
-      title: 'Launch & Optimization',
-      description: 'Lanciamo il sito e ottimizziamo le performance per risultati eccellenti.',
+      title: { it: 'Launch & Optimization', en: 'Launch & Optimization' },
+      description: { 
+        it: 'Lanciamo il sito e ottimizziamo le performance per risultati eccellenti.',
+        en: 'We launch the site and optimize performance for excellent results.'
+      },
       icon: Rocket
     }
   ];
@@ -141,20 +246,29 @@ const HomePage = () => {
   const testimonials = [
     {
       name: 'Claudio Marfia',
-      role: 'CEO, Riverloop',
-      content: 'Perfetto per la nostra startup di sviluppo e formazione. Il sito riflette perfettamente la nostra identità aziendale e ci ha aiutato a presentare i nostri servizi in modo professionale.',
+      role: { it: 'CEO, Riverloop', en: 'CEO, Riverloop' },
+      content: { 
+        it: 'Perfetto per la nostra startup di sviluppo e formazione. Il sito riflette perfettamente la nostra identità aziendale e ci ha aiutato a presentare i nostri servizi in modo professionale.',
+        en: 'Perfect for our development and training startup. The site perfectly reflects our corporate identity and helped us present our services professionally.'
+      },
       rating: 5
     },
     {
       name: 'Paola Bonventre',
-      role: 'Bar Bonventre',
-      content: 'Sito vetrina elegante e funzionale che rappresenta perfettamente l\'atmosfera del nostro bar. I clienti lo trovano facilmente e apprezzano le informazioni sempre aggiornate.',
+      role: { it: 'Bar Bonventre', en: 'Bar Bonventre' },
+      content: { 
+        it: 'Sito vetrina elegante e funzionale che rappresenta perfettamente l\'atmosfera del nostro bar. I clienti lo trovano facilmente e apprezzano le informazioni sempre aggiornate.',
+        en: 'Elegant and functional showcase website that perfectly represents the atmosphere of our bar. Customers find it easily and appreciate the always updated information.'
+      },
       rating: 5
     },
     {
       name: 'Lorenzo La Monica',
-      role: 'Presidente, Bonifato Alcamo Futsal',
-      content: 'Il sito vetrina per la nostra squadra di futsal è fantastico! Design moderno, facile da navigare e perfetto per condividere news, risultati e informazioni con i tifosi.',
+      role: { it: 'Presidente, Bonifato Alcamo Futsal', en: 'President, Bonifato Alcamo Futsal' },
+      content: { 
+        it: 'Il sito vetrina per la nostra squadra di futsal è fantastico! Design moderno, facile da navigare e perfetto per condividere news, risultati e informazioni con i tifosi.',
+        en: 'The showcase website for our futsal team is fantastic! Modern design, easy to navigate and perfect for sharing news, results and information with fans.'
+      },
       rating: 5
     }
   ];
@@ -162,66 +276,90 @@ const HomePage = () => {
   const portfolio = [
     {
       title: 'Accademia del Gusto',
-      category: 'Prenotazioni',
+      category: { it: 'Prenotazioni', en: 'Booking' },
       image: 'https://www.accademiated.it/wp-content/uploads/2024/12/61946.jpg',
       alt: 'Foto copertina del progetto Accademia del Gusto',
-      description: 'Piattaforma di prenotazione per il ristorante didattico della scuola TED',
+      description: { 
+        it: 'Piattaforma di prenotazione per il ristorante didattico della scuola TED',
+        en: 'Booking platform for the educational restaurant of the TED school'
+      },
       url: 'https://accademiated.it'
     },
     {
       title: 'Riverloop',
-      category: 'Vetrina',
+      category: { it: 'Vetrina', en: 'Showcase' },
       image: 'https://riverloop.it/media/2025/01/1933.webp',
       alt: 'Foto copertina del progetto Riverloop',
-      description: 'Sito vetrina moderno e professionale per startup specializzata in sviluppo software e formazione tech',
+      description: { 
+        it: 'Sito vetrina moderno e professionale per startup specializzata in sviluppo software e formazione tech',
+        en: 'Modern and professional showcase website for startup specialized in software development and tech training'
+      },
       url: 'https://riverloop.it/'
     },
     {
       title: 'Simone Grasso Private Banker',
-      category: 'Vetrina',
+      category: { it: 'Vetrina', en: 'Showcase' },
       image: 'https://simonegrassopb.com/wp-content/uploads/2025/03/close-up-businesspeople-hands-discussion-business-plan-scaled.jpg',
       alt: 'Foto copertina del progetto Simone Grasso Private Banker',
-      description: 'Sito professionale ed elegante per consulente patrimoniale e private banker',
+      description: { 
+        it: 'Sito professionale ed elegante per consulente patrimoniale e private banker',
+        en: 'Professional and elegant website for wealth advisor and private banker'
+      },
       url: 'https://simonegrassopb.com/'
     },
     {
       title: 'Bar Bonventre',
-      category: 'Vetrina',
+      category: { it: 'Vetrina', en: 'Showcase' },
       image: 'https://www.barbonventre.it/wp-content/uploads/2024/09/IMG-20240907-WA0068.jpg',
       alt: 'Foto copertina del progetto Bar Bonventre',
-      description: 'Sito vetrina accogliente e tradizionale per bar, pasticceria e gelateria',
+      description: { 
+        it: 'Sito vetrina accogliente e tradizionale per bar, pasticceria e gelateria',
+        en: 'Welcoming and traditional showcase website for bar, pastry shop and ice cream parlor'
+      },
       url: 'https://www.barbonventre.it/'
     },
     {
       title: 'BeYou',
-      category: 'Prenotazioni',
+      category: { it: 'Prenotazioni', en: 'Booking' },
       image: 'https://www.beyou.it/wp-content/uploads/2024/12/slider1.png',
       alt: 'Foto copertina del progetto BeYou',
-      description: 'Sistema di prenotazione per centri beauty e benessere',
+      description: { 
+        it: 'Sistema di prenotazione per centri beauty e benessere',
+        en: 'Booking system for beauty and wellness centers'
+      },
       url: 'https://www.beyou.it/'
     },
     {
       title: 'Social Sail',
-      category: 'Prenotazioni',
+      category: { it: 'Prenotazioni', en: 'Booking' },
       image: 'https://socialsail.it/wp-content/uploads/2025/03/01-vacanza-alle-isole-eolie-copertina_wide.jpg',
       alt: 'Foto copertina del progetto Social Sail',
-      description: 'Piattaforma di prenotazione per esperienze di vela in Sicilia',
+      description: { 
+        it: 'Piattaforma di prenotazione per esperienze di vela in Sicilia',
+        en: 'Booking platform for sailing experiences in Sicily'
+      },
       url: 'https://socialsail.it/'
     },
     {
       title: 'Villa Leuke',
-      category: 'Vetrina',
+      category: { it: 'Vetrina', en: 'Showcase' },
       image: 'https://www.villaleuke.it/wp-content/uploads/2024/09/41dd4441-ceb9-4375-ad5f-91cad8112483.webp',
       alt: 'Foto copertina del progetto Villa Leuke',
-      description: 'Sito vetrina per una villa a Scopello',
+      description: { 
+        it: 'Sito vetrina per una villa a Scopello',
+        en: 'Showcase website for a villa in Scopello'
+      },
       url: 'https://www.villaleuke.it/'
     },
     {
       title: 'Ville Pisciotta',
-      category: 'Vetrina',
+      category: { it: 'Vetrina', en: 'Showcase' },
       image: 'https://www.villepisciotta.com/mirascopello/1.jpg',
       alt: 'Foto copertina del progetto Ville Pisciotta',
-      description: 'Sito vetrina completo per due ville in Sicilia',
+      description: { 
+        it: 'Sito vetrina completo per due ville in Sicilia',
+        en: 'Complete showcase website for two villas in Sicily'
+      },
       url: 'https://villepisciotta.it'
     }
   ];
@@ -229,23 +367,35 @@ const HomePage = () => {
   const features = [
     {
       icon: Zap,
-      title: 'Velocità',
-      description: 'Siti ultra-veloci e ottimizzati per le performance migliori'
+      title: { it: 'Velocità', en: 'Speed' },
+      description: { 
+        it: 'Siti ultra-veloci e ottimizzati per le performance migliori',
+        en: 'Ultra-fast and optimized websites for best performance'
+      }
     },
     {
       icon: Shield,
-      title: 'Sicurezza',
-      description: 'Protezione avanzata e backup automatici per i tuoi dati'
+      title: { it: 'Sicurezza', en: 'Security' },
+      description: { 
+        it: 'Protezione avanzata e backup automatici per i tuoi dati',
+        en: 'Advanced protection and automatic backups for your data'
+      }
     },
     {
       icon: TrendingUp,
-      title: 'SEO',
-      description: 'Ottimizzazione per i motori di ricerca per massima visibilità'
+      title: { it: 'SEO', en: 'SEO' },
+      description: { 
+        it: 'Ottimizzazione per i motori di ricerca per massima visibilità',
+        en: 'Search engine optimization for maximum visibility'
+      }
     },
     {
       icon: Clock,
-      title: 'Supporto',
-      description: 'Assistenza continua e aggiornamenti regolari'
+      title: { it: 'Supporto', en: 'Support' },
+      description: { 
+        it: 'Assistenza continua e aggiornamenti regolari',
+        en: 'Continuous assistance and regular updates'
+      }
     }
   ];
 
@@ -363,16 +513,16 @@ const HomePage = () => {
             <div className={`transition-all duration-1000 ease-out ${heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
               <div className={`inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full mb-6 border border-white/20 transition-all duration-1000 delay-200 ${heroVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
                 <Sparkles className="w-4 h-4 text-[#ff7351]" />
-                <span className="text-sm font-medium">Web Agency dal 2016</span>
+                <span className="text-sm font-medium">{t.heroBadge}</span>
               </div>
               
               <h1 className={`text-6xl font-extrabold leading-tight mb-6 transition-all duration-1000 delay-300 ${heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                Creiamo il tuo{' '}
-                <span className="text-[#ff7351]">successo digitale</span>
+                {t.heroTitle}{' '}
+                <span className="text-[#ff7351]">{t.heroSuccess}</span>
               </h1>
               
               <p className={`text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed transition-all duration-1000 delay-500 ${heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                Sviluppiamo soluzioni digitali innovative con design moderno e tecnologie all'avanguardia per trasformare la tua presenza online.
+                {t.heroDescription}
               </p>
               
               <div className={`flex flex-col sm:flex-row gap-4 mb-12 transition-all duration-1000 delay-700 ${heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
@@ -380,14 +530,14 @@ const HomePage = () => {
                   onClick={() => navigate('/contatti')}
                   className="group px-8 py-4 bg-[#ff7351] text-white rounded-full font-semibold hover:bg-[#ff8466] transition-all flex items-center justify-center space-x-2 shadow-lg shadow-[#ff7351]/30 hover:shadow-xl hover:shadow-[#ff7351]/40 "
                 >
-                  <span>Inizia il Tuo Progetto</span>
+                  <span>{t.heroButton1}</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
                 <button
                   onClick={() => navigate('/servizi')}
                   className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white border-2 border-white/30 rounded-full font-semibold hover:bg-white/20 hover:border-white/50 transition-all"
                 >
-                  Scopri i Servizi
+                  {t.heroButton2}
                 </button>
               </div>
               
@@ -397,19 +547,19 @@ const HomePage = () => {
                   <div className="text-4xl md:text-5xl font-bold mb-2 text-[#ff7351]">
                     {animatedStats.clients}+
                   </div>
-                  <div className="text-gray-400 text-sm font-medium">Clienti Felici</div>
+                  <div className="text-gray-400 text-sm font-medium">{t.clientsHappy}</div>
                 </div>
                 <div>
                   <div className="text-4xl md:text-5xl font-bold mb-2 text-[#ff7351]">
                     {animatedStats.projects}+
                   </div>
-                  <div className="text-gray-400 text-sm font-medium">Progetti</div>
+                  <div className="text-gray-400 text-sm font-medium">{t.projects}</div>
                 </div>
                 <div>
                   <div className="text-4xl md:text-5xl font-bold mb-2 text-[#ff7351]">
                     {animatedStats.years}+
                   </div>
-                  <div className="text-gray-400 text-sm font-medium">Anni Esperienza</div>
+                  <div className="text-gray-400 text-sm font-medium">{t.yearsExp}</div>
                 </div>
               </div>
             </div>
@@ -443,8 +593,8 @@ const HomePage = () => {
                   <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-[#ff7351] to-[#ff8466] rounded-2xl mb-4">
                     <Icon className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{feature.title}</h3>
-                  <p className="text-gray-600">{feature.description}</p>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">{feature.title[language]}</h3>
+                  <p className="text-gray-600">{feature.description[language]}</p>
                 </div>
               );
             })}
@@ -457,10 +607,10 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div data-scroll className="text-center mb-16 opacity-0 translate-y-8 transition-all duration-700">
             <h2 className="font-bold text-gray-900 mb-4" style={{ fontSize: '35px' }}>
-              Le Nostre <span className="text-[#ff7351]">oluzioni</span>
+              {t.soluzioni} <span className="text-[#ff7351]">{t.soluzioniSpan}</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Offriamo servizi completi per ogni esigenza digitale, dalla vetrina al negozio online completo
+              {t.soluzioniDesc}
             </p>
           </div>
 
@@ -478,15 +628,15 @@ const HomePage = () => {
                   </div>
                   
                   <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-[#ff7351] transition-colors">
-                    {service.title}
+                    {service.title[language]}
                   </h3>
                   
                   <p className="text-gray-600 mb-6 leading-relaxed">
-                    {service.description}
+                    {service.description[language]}
                   </p>
                   
                   <ul className="space-y-2 mb-6">
-                    {service.features.map((feature, idx) => (
+                    {service.features[language].map((feature, idx) => (
                       <li key={idx} className="flex items-center text-sm text-gray-600">
                         <CheckCircle2 className="w-4 h-4 text-[#ff7351] mr-2 flex-shrink-0" />
                         {feature}
@@ -498,7 +648,7 @@ const HomePage = () => {
                     onClick={() => navigate(`/servizi#${service.value}`)}
                     className="text-[#ff7351] font-semibold hover:text-[#ff8466] inline-flex items-center space-x-2 group-hover:translate-x-2 transition-all"
                   >
-                    <span>Scopri di più</span>
+                    <span>{t.scopriDiPiu}</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
@@ -513,10 +663,10 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div data-scroll className="text-center mb-12 opacity-0 translate-y-8 transition-all duration-700">
             <h2 className="font-bold text-gray-900 mb-4" style={{ fontSize: '35px' }}>
-              Tecnologie <span className="text-[#ff7351]">Moderne</span>
+              {t.tecnologie} <span className="text-[#ff7351]">{t.tecnologieSpan}</span>
             </h2>
             <p className="text-xl text-gray-600">
-              Utilizziamo le tecnologie più avanzate per garantire performance e scalabilità
+              {t.tecnologieDesc}
             </p>
           </div>
 
@@ -545,10 +695,10 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div data-scroll className="text-center mb-16 opacity-0 translate-y-8 transition-all duration-700">
             <h2 className="font-bold text-gray-900 mb-4" style={{ fontSize: '35px' }}>
-              Il Nostro <span className="text-[#ff7351]">Processo</span>
+              {t.processo} <span className="text-[#ff7351]">{t.processoSpan}</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Un approccio strutturato per garantire risultati eccellenti ad ogni step
+              {t.processoDesc}
             </p>
           </div>
 
@@ -568,11 +718,11 @@ const HomePage = () => {
                   </div>
                   
                   <h3 className="text-xl font-bold text-gray-900 mb-3">
-                    {step.title}
+                    {step.title[language]}
                   </h3>
                   
                   <p className="text-gray-600 leading-relaxed">
-                    {step.description}
+                    {step.description[language]}
                   </p>
                 </div>
               );
@@ -586,10 +736,10 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div data-scroll className="text-center mb-16 opacity-0 translate-y-8 transition-all duration-700">
             <h2 className="font-bold mb-4" style={{ fontSize: '35px' }}>
-              I nostri <span className="text-[#ff7351]">progetti</span>
+              {t.progetti} <span className="text-[#ff7351]">{t.progettiSpan}</span>
             </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-              Esplora alcuni dei nostri lavori più recenti e di successo
+              {t.progettiDesc}
             </p>
           </div>
 
@@ -618,20 +768,20 @@ const HomePage = () => {
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                         <div className="absolute bottom-4 left-4 right-4">
                           <span className="inline-block px-3 py-1 bg-[#ff7351] rounded-full text-xs font-semibold">
-                            {project.category}
+                            {project.category[language]}
                           </span>
                         </div>
                       </div>
                       <div className="p-6">
                         <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
-                        <p className="text-gray-400 mb-4">{project.description}</p>
+                        <p className="text-gray-400 mb-4">{project.description[language]}</p>
                         <a
                           href={project.url}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-[#ff7351] font-semibold inline-flex items-center space-x-2 hover:text-[#ff8466] transition-colors cursor-pointer"
                         >
-                          <span>Vedi Progetto</span>
+                          <span>{t.vediProgetto}</span>
                           <ArrowRight className="w-4 h-4" />
                         </a>
                       </div>
@@ -664,10 +814,10 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div data-scroll className="text-center mb-16 opacity-0 translate-y-8 transition-all duration-700">
             <h2 className="font-bold text-gray-900 mb-4" style={{ fontSize: '35px' }}>
-              Cosa dicono i <span className="text-[#ff7351]">clienti</span>
+              {t.clienti} <span className="text-[#ff7351]">{t.clientiSpan}</span>
             </h2>
             <p className="text-xl text-gray-600">
-              La soddisfazione dei nostri clienti è la nostra migliore testimonianza
+              {t.clientiDesc}
             </p>
           </div>
 
@@ -687,7 +837,7 @@ const HomePage = () => {
                 </div>
                 
                 <p className="text-gray-700 mb-6 leading-relaxed italic">
-                  "{testimonial.content}"
+                  "{testimonial.content[language]}"
                 </p>
                 
                 <div className="flex items-center">
@@ -696,7 +846,7 @@ const HomePage = () => {
                   </div>
                   <div>
                     <div className="font-bold text-gray-900">{testimonial.name}</div>
-                    <div className="text-sm text-gray-600">{testimonial.role}</div>
+                    <div className="text-sm text-gray-600">{testimonial.role[language]}</div>
                   </div>
                 </div>
               </div>
@@ -710,7 +860,7 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
           <div data-scroll className="text-center opacity-0 translate-y-8 transition-all duration-700">
             <h2 className="font-bold text-gray-900 mb-4" style={{ fontSize: '35px' }}>
-              I Nostri <span className="text-[#ff7351]">Partner</span>
+              {t.partner} <span className="text-[#ff7351]">{t.partnerSpan}</span>
             </h2>
           </div>
         </div>
@@ -753,24 +903,24 @@ const HomePage = () => {
         
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="font-bold mb-6" style={{ fontSize: '35px' }}>
-            Pronto a Trasformare la Tua Presenza Digitale?
+            {t.ctaTitle}
           </h2>
           <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
-            Contattaci oggi stesso per una consulenza gratuita e scopri come possiamo aiutare il tuo business a crescere online.
+            {t.ctaDesc}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={() => navigate('/contatti')}
               className="px-8 py-4 bg-white text-[#ff7351] rounded-full font-semibold hover:bg-gray-100 transition-all inline-flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl "
             >
-              <span>Prenota una Consulenza Gratuita</span>
+              <span>{t.ctaButton1}</span>
               <ArrowRight className="w-5 h-5" />
             </button>
             <button
               onClick={() => navigate('/servizi')}
               className="px-8 py-4 bg-transparent text-white border-2 border-white rounded-full font-semibold hover:bg-white/10 transition-all"
             >
-              Scopri i Servizi
+              {t.ctaButton2}
             </button>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { LanguageProvider } from './contexts/LanguageContext';
 import ScrollToTop from './components/ScrollToTop';
 import PageTitle from './components/PageTitle';
 import CustomCursor from './components/CustomCursor';
@@ -16,13 +17,14 @@ import TerminiCondizioniPage from './pages/TerminiCondizioniPage';
 
 function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <PageTitle />
-      <CustomCursor />
-      <ScrollToTopButton />
-      <CookieBanner />
-      <Routes>
+    <LanguageProvider>
+      <Router>
+        <ScrollToTop />
+        <PageTitle />
+        <CustomCursor />
+        <ScrollToTopButton />
+        <CookieBanner />
+        <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/chi-siamo" element={<ChiSiamoPage />} />
         <Route path="/servizi" element={<ServiziPage />} />
@@ -31,8 +33,9 @@ function App() {
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/cookie-policy" element={<CookiePolicyPage />} />
         <Route path="/termini-condizioni" element={<TerminiCondizioniPage />} />
-      </Routes>
-    </Router>
+        </Routes>
+      </Router>
+    </LanguageProvider>
   );
 }
 

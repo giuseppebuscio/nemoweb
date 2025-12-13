@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { useLanguage } from '../contexts/LanguageContext';
 import {
   ArrowRight, CheckCircle2, Send, Home, Calendar, ShoppingBag,
   FileText, DollarSign, Clock, Sparkles, AlertCircle, Loader2
@@ -11,6 +12,7 @@ import { EMAILJS_CONFIG } from '../config/emailjs';
 
 const RichiediPreventivoPage = () => {
   const navigate = useNavigate();
+  const { language } = useLanguage();
   const [searchParams] = useSearchParams();
   const [formData, setFormData] = useState({
     name: '',
@@ -75,10 +77,10 @@ const RichiediPreventivoPage = () => {
         {
           from_name: formData.name,
           from_email: formData.email,
-          phone: formData.phone || 'Non fornito',
-          service: formData.service || 'Non specificato',
-          budget: formData.budget || 'Non specificato',
-          deadline: formData.deadline || 'Non specificato',
+          phone: formData.phone || (language === 'it' ? 'Non fornito' : 'Not provided'),
+          service: formData.service || (language === 'it' ? 'Non specificato' : 'Not specified'),
+          budget: formData.budget || (language === 'it' ? 'Non specificato' : 'Not specified'),
+          deadline: formData.deadline || (language === 'it' ? 'Non specificato' : 'Not specified'),
           message: formData.message,
           to_email: 'info@nemoagency.it', // Email di destinazione
         },
@@ -102,25 +104,110 @@ const RichiediPreventivoPage = () => {
       }, 5000);
     } catch (err) {
       console.error('Errore invio email:', err);
-      setError('Errore nell\'invio della richiesta. Riprova più tardi o contattaci direttamente.');
+      setError(language === 'it' 
+        ? 'Errore nell\'invio della richiesta. Riprova più tardi o contattaci direttamente.'
+        : 'Error sending request. Please try again later or contact us directly.');
       setIsLoading(false);
     }
   };
 
+  const translations = {
+    it: {
+      heroBadge: 'Preventivo Gratuito',
+      heroTitle: 'Richiedi un',
+      heroSpan: 'Preventivo',
+      heroDesc: 'Compila il form qui sotto con i dettagli del tuo progetto. Ti invieremo un preventivo personalizzato in tempi rapidi, senza impegno. La consulenza è sempre gratuita.',
+      rispostaRapida: 'Risposta Rapida',
+      rispostaRapidaDesc: 'Riceverai il preventivo entro 24-48 ore',
+      trasparente: 'Trasparente',
+      trasparenteDesc: 'Prezzi chiari senza sorprese nascoste',
+      senzaImpegno: 'Senza Impegno',
+      senzaImpegnoDesc: 'Consulenza gratuita e preventivo dettagliato',
+      errore: 'Errore',
+      successo: 'Richiesta inviata con successo!',
+      successoDesc: 'Ti contatteremo al più presto con un preventivo personalizzato. Controlla la tua email nei prossimi giorni.',
+      nomeLabel: 'Nome e Cognome *',
+      emailLabel: 'Email *',
+      telefonoLabel: 'Telefono',
+      servizioLabel: 'Tipo di Servizio *',
+      selezionaServizio: 'Seleziona un servizio',
+      budgetLabel: 'Budget Previsto',
+      selezionaRange: 'Seleziona un range',
+      deadlineLabel: 'Scadenza Progetto',
+      messaggioLabel: 'Messaggio',
+      messaggioPlaceholder: 'Raccontaci di più sul tuo progetto...',
+      inviaRichiesta: 'Invia Richiesta',
+      invioCorso: 'Invio in corso...',
+      sitoVetrina: 'Sito Vetrina',
+      sitoPrenotazione: 'Sito di Prenotazione',
+      ecommerce: 'E-commerce',
+      altro: 'Altro',
+      budget1: 'Fino a 500€',
+      budget2: '500€ - 1000€',
+      budget3: '1000€ - 2000€',
+      budget4: '2000€ - 5000€',
+      budget5: 'Oltre 5000€',
+      budget6: 'Da definire'
+    },
+    en: {
+      heroBadge: 'Free Quote',
+      heroTitle: 'Request a',
+      heroSpan: 'Quote',
+      heroDesc: 'Fill out the form below with your project details. We will send you a personalized quote quickly, with no obligation. Consultation is always free.',
+      rispostaRapida: 'Quick Response',
+      rispostaRapidaDesc: 'You will receive the quote within 24-48 hours',
+      trasparente: 'Transparent',
+      trasparenteDesc: 'Clear prices with no hidden surprises',
+      senzaImpegno: 'No Obligation',
+      senzaImpegnoDesc: 'Free consultation and detailed quote',
+      errore: 'Error',
+      successo: 'Request sent successfully!',
+      successoDesc: 'We will contact you as soon as possible with a personalized quote. Check your email in the coming days.',
+      nomeLabel: 'Full Name *',
+      emailLabel: 'Email *',
+      telefonoLabel: 'Phone',
+      servizioLabel: 'Service Type *',
+      selezionaServizio: 'Select a service',
+      budgetLabel: 'Expected Budget',
+      selezionaRange: 'Select a range',
+      deadlineLabel: 'Project Deadline',
+      messaggioLabel: 'Message',
+      messaggioPlaceholder: 'Tell us more about your project...',
+      inviaRichiesta: 'Send Request',
+      invioCorso: 'Sending...',
+      sitoVetrina: 'Showcase Website',
+      sitoPrenotazione: 'Booking Website',
+      ecommerce: 'E-commerce',
+      altro: 'Other',
+      budget1: 'Up to €500',
+      budget2: '€500 - €1000',
+      budget3: '€1000 - €2000',
+      budget4: '€2000 - €5000',
+      budget5: 'Over €5000',
+      budget6: 'To be determined',
+      ctaTitle: 'Have Questions?',
+      ctaDesc: 'Prefer to talk to us directly? Contact us by email or phone, we are always available for a consultation.',
+      ctaButton1: 'Contact Us',
+      ctaButton2: 'Discover Services'
+    }
+  };
+
+  const t = translations[language];
+
   const services = [
-    { value: 'sito-vetrina', label: 'Sito Vetrina', icon: Home },
-    { value: 'sito-prenotazione', label: 'Sito di Prenotazione', icon: Calendar },
-    { value: 'e-commerce', label: 'E-commerce', icon: ShoppingBag },
-    { value: 'altro', label: 'Altro', icon: FileText }
+    { value: 'sito-vetrina', label: { it: 'Sito Vetrina', en: 'Showcase Website' }, icon: Home },
+    { value: 'sito-prenotazione', label: { it: 'Sito di Prenotazione', en: 'Booking Website' }, icon: Calendar },
+    { value: 'e-commerce', label: { it: 'E-commerce', en: 'E-commerce' }, icon: ShoppingBag },
+    { value: 'altro', label: { it: 'Altro', en: 'Other' }, icon: FileText }
   ];
 
   const budgetRanges = [
-    'Fino a 500€',
-    '500€ - 1000€',
-    '1000€ - 2000€',
-    '2000€ - 5000€',
-    'Oltre 5000€',
-    'Da definire'
+    { it: 'Fino a 500€', en: 'Up to €500' },
+    { it: '500€ - 1000€', en: '€500 - €1000' },
+    { it: '1000€ - 2000€', en: '€1000 - €2000' },
+    { it: '2000€ - 5000€', en: '€2000 - €5000' },
+    { it: 'Oltre 5000€', en: 'Over €5000' },
+    { it: 'Da definire', en: 'To be determined' }
   ];
 
   return (
@@ -138,16 +225,15 @@ const RichiediPreventivoPage = () => {
           <div className="text-center max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full mb-6 border border-white/20">
               <DollarSign className="w-4 h-4 text-[#ff7351]" />
-              <span className="text-sm font-medium">Preventivo Gratuito</span>
+              <span className="text-sm font-medium">{t.heroBadge}</span>
             </div>
 
             <h1 className="font-bold leading-tight mb-6" style={{ fontSize: '60px' }}>
-              Richiedi un <span className="text-[#ff7351]">Preventivo</span>
+              {t.heroTitle} <span className="text-[#ff7351]">{t.heroSpan}</span>
             </h1>
 
             <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-              Compila il form qui sotto con i dettagli del tuo progetto. Ti invieremo un preventivo personalizzato 
-              in tempi rapidi, senza impegno. La consulenza è sempre gratuita.
+              {t.heroDesc}
             </p>
           </div>
         </div>
@@ -161,22 +247,22 @@ const RichiediPreventivoPage = () => {
               <div className="inline-flex items-center justify-center w-16 h-16 bg-[#ff7351]/10 rounded-2xl mb-4">
                 <Clock className="w-8 h-8 text-[#ff7351]" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Risposta Rapida</h3>
-              <p className="text-gray-600">Riceverai il preventivo entro 24-48 ore</p>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">{t.rispostaRapida}</h3>
+              <p className="text-gray-600">{t.rispostaRapidaDesc}</p>
             </div>
             <div data-scroll className="text-center opacity-0 translate-y-8 transition-all duration-700">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-[#ff7351]/10 rounded-2xl mb-4">
                 <DollarSign className="w-8 h-8 text-[#ff7351]" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Trasparente</h3>
-              <p className="text-gray-600">Prezzi chiari senza sorprese nascoste</p>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">{t.trasparente}</h3>
+              <p className="text-gray-600">{t.trasparenteDesc}</p>
             </div>
             <div data-scroll className="text-center opacity-0 translate-y-8 transition-all duration-700">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-[#ff7351]/10 rounded-2xl mb-4">
                 <CheckCircle2 className="w-8 h-8 text-[#ff7351]" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Senza Impegno</h3>
-              <p className="text-gray-600">Consulenza gratuita e preventivo dettagliato</p>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">{t.senzaImpegno}</h3>
+              <p className="text-gray-600">{t.senzaImpegnoDesc}</p>
             </div>
           </div>
         </div>
@@ -190,7 +276,7 @@ const RichiediPreventivoPage = () => {
               <div className="mb-8 p-6 bg-red-50 border border-red-200 rounded-xl flex items-start space-x-4">
                 <AlertCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-semibold text-red-900 mb-1">Errore</p>
+                  <p className="font-semibold text-red-900 mb-1">{t.errore}</p>
                   <p className="text-sm text-red-700">{error}</p>
                 </div>
               </div>
@@ -200,9 +286,9 @@ const RichiediPreventivoPage = () => {
               <div className="mb-8 p-6 bg-green-50 border border-green-200 rounded-xl flex items-start space-x-4">
                 <CheckCircle2 className="w-6 h-6 text-green-600 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-semibold text-green-900 mb-1">Richiesta inviata con successo!</p>
+                  <p className="font-semibold text-green-900 mb-1">{t.successo}</p>
                   <p className="text-sm text-green-700">
-                    Ti contatteremo al più presto con un preventivo personalizzato. Controlla la tua email nei prossimi giorni.
+                    {t.successoDesc}
                   </p>
                 </div>
               </div>
@@ -212,7 +298,7 @@ const RichiediPreventivoPage = () => {
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                    Nome e Cognome *
+                    {t.nomeLabel}
                   </label>
                   <input
                     type="text"
@@ -222,13 +308,13 @@ const RichiediPreventivoPage = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#ff7351] focus:border-transparent transition-all bg-white"
-                    placeholder="Mario Rossi"
+                    placeholder={language === 'it' ? 'Mario Rossi' : 'John Doe'}
                   />
                 </div>
 
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    Email *
+                    {t.emailLabel}
                   </label>
                   <input
                     type="email"
@@ -238,14 +324,14 @@ const RichiediPreventivoPage = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#ff7351] focus:border-transparent transition-all bg-white"
-                    placeholder="mario.rossi@esempio.com"
+                    placeholder={language === 'it' ? 'mario.rossi@esempio.com' : 'john.doe@example.com'}
                   />
                 </div>
               </div>
 
               <div>
                 <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                  Telefono
+                  {t.telefonoLabel}
                 </label>
                 <input
                   type="tel"
@@ -254,13 +340,13 @@ const RichiediPreventivoPage = () => {
                   value={formData.phone}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#ff7351] focus:border-transparent transition-all bg-white"
-                  placeholder="+39 123 456 7890"
+                  placeholder={language === 'it' ? '+39 123 456 7890' : '+1 123 456 7890'}
                 />
               </div>
 
               <div>
                 <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-2">
-                  Tipo di Servizio *
+                  {t.servizioLabel}
                 </label>
                 <select
                   id="service"
@@ -270,10 +356,10 @@ const RichiediPreventivoPage = () => {
                   required
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#ff7351] focus:border-transparent transition-all bg-white"
                 >
-                  <option value="">Seleziona un servizio</option>
+                  <option value="">{t.selezionaServizio}</option>
                   {services.map((service) => (
                     <option key={service.value} value={service.value}>
-                      {service.label}
+                      {service.label[language]}
                     </option>
                   ))}
                 </select>
@@ -282,7 +368,7 @@ const RichiediPreventivoPage = () => {
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="budget" className="block text-sm font-medium text-gray-700 mb-2">
-                    Budget Previsto
+                    {t.budgetLabel}
                   </label>
                   <select
                     id="budget"
@@ -291,10 +377,10 @@ const RichiediPreventivoPage = () => {
                     onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#ff7351] focus:border-transparent transition-all bg-white"
                   >
-                    <option value="">Seleziona un range</option>
-                    {budgetRanges.map((range) => (
-                      <option key={range} value={range}>
-                        {range}
+                    <option value="">{t.selezionaRange}</option>
+                    {budgetRanges.map((range, index) => (
+                      <option key={index} value={range[language]}>
+                        {range[language]}
                       </option>
                     ))}
                   </select>
@@ -302,7 +388,7 @@ const RichiediPreventivoPage = () => {
 
                 <div>
                   <label htmlFor="deadline" className="block text-sm font-medium text-gray-700 mb-2">
-                    Scadenza Desiderata
+                    {t.deadlineLabel}
                   </label>
                   <input
                     type="date"
@@ -317,7 +403,7 @@ const RichiediPreventivoPage = () => {
 
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  Raccontaci del Tuo Progetto *
+                  {t.messaggioLabel} *
                 </label>
                 <textarea
                   id="message"
@@ -327,7 +413,7 @@ const RichiediPreventivoPage = () => {
                   required
                   rows="6"
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#ff7351] focus:border-transparent transition-all resize-none bg-white"
-                  placeholder="Descrivi il tuo progetto, le tue esigenze, gli obiettivi che vuoi raggiungere..."
+                  placeholder={t.messaggioPlaceholder}
                 ></textarea>
               </div>
 
@@ -339,11 +425,11 @@ const RichiediPreventivoPage = () => {
                 {isLoading ? (
                   <>
                     <Loader2 className="w-5 h-5 animate-spin" />
-                    <span>Invio in corso...</span>
+                    <span>{t.invioCorso}</span>
                   </>
                 ) : (
                   <>
-                    <span>Invia Richiesta Preventivo</span>
+                    <span>{t.inviaRichiesta}</span>
                     <Send className="w-5 h-5" />
                   </>
                 )}
@@ -362,24 +448,24 @@ const RichiediPreventivoPage = () => {
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="font-bold mb-6" style={{ fontSize: '35px' }}>
-            Hai Domande?
+            {t.ctaTitle}
           </h2>
           <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
-            Preferisci parlarci direttamente? Contattaci via email o telefono, siamo sempre disponibili per una consulenza.
+            {t.ctaDesc}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <button
               onClick={() => navigate('/contatti')}
               className="px-8 py-4 bg-white text-[#ff7351] rounded-full font-semibold hover:bg-gray-100 transition-all inline-flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl"
             >
-              <span>Contattaci</span>
+              <span>{t.ctaButton1}</span>
               <ArrowRight className="w-5 h-5" />
             </button>
             <button
               onClick={() => navigate('/servizi')}
               className="px-8 py-4 bg-transparent text-white border-2 border-white rounded-full font-semibold hover:bg-white/10 transition-all"
             >
-              Scopri i Servizi
+              {t.ctaButton2}
             </button>
           </div>
         </div>

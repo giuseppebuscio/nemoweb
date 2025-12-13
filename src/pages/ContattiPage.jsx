@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { useLanguage } from '../contexts/LanguageContext';
 import { Mail, Phone, Send, CheckCircle2, Clock, AlertCircle, Loader2 } from 'lucide-react';
 import { EMAILJS_CONFIG } from '../config/emailjs';
 
 const ContattiPage = () => {
+  const { language } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -16,6 +18,87 @@ const ContattiPage = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+
+  const translations = {
+    it: {
+      heroBadge: 'Siamo Qui per Te',
+      heroTitle: 'Contattaci',
+      heroDesc: 'Siamo qui per aiutarti a realizzare il tuo progetto digitale. Compila il form o contattaci direttamente, ti risponderemo il prima possibile.',
+      infoTitle: 'Informazioni di',
+      infoSpan: 'contatto',
+      infoDesc: 'Scegli il metodo di contatto che preferisci. Siamo disponibili per rispondere a tutte le tue domande.',
+      email: 'Email',
+      telefono: 'Telefono',
+      orari: 'Orari di disponibilità',
+      orariLunVen: 'Lunedì - Venerdì: 9:00 - 18:00',
+      orariSabato: 'Sabato: Chiuso',
+      orariDomenica: 'Domenica: Chiuso',
+      formTitle: 'Invia un',
+      formSpan: 'messaggio',
+      nomeLabel: 'Nome e Cognome *',
+      emailLabel: 'Email *',
+      telefonoLabel: 'Telefono',
+      servizioLabel: 'Servizio di interesse',
+      selezionaServizio: 'Seleziona un servizio',
+      messaggioLabel: 'Messaggio *',
+      nomePlaceholder: 'Mario Rossi',
+      emailPlaceholder: 'mario.rossi@esempio.com',
+      telefonoPlaceholder: '+39 123 456 7890',
+      messaggioPlaceholder: 'Raccontaci del tuo progetto...',
+      inviaMessaggio: 'Invia messaggio',
+      invioCorso: 'Invio in corso...',
+      messaggioInviato: 'Messaggio inviato!',
+      messaggioInviatoDesc: 'Ti risponderemo il prima possibile.',
+      errore: 'Errore',
+      erroreInvio: 'Errore nell\'invio del messaggio. Riprova più tardi o contattaci direttamente.',
+      sitoVetrina: 'Sito Vetrina',
+      sitoPrenotazione: 'Sito di Prenotazione',
+      ecommerce: 'E-commerce',
+      altro: 'Altro',
+      nonFornito: 'Non fornito',
+      nonSpecificato: 'Non specificato'
+    },
+    en: {
+      heroBadge: 'We Are Here for You',
+      heroTitle: 'Contact Us',
+      heroDesc: 'We are here to help you realize your digital project. Fill out the form or contact us directly, we will respond as soon as possible.',
+      infoTitle: 'Contact',
+      infoSpan: 'Information',
+      infoDesc: 'Choose the contact method you prefer. We are available to answer all your questions.',
+      email: 'Email',
+      telefono: 'Phone',
+      orari: 'Availability Hours',
+      orariLunVen: 'Monday - Friday: 9:00 AM - 6:00 PM',
+      orariSabato: 'Saturday: Closed',
+      orariDomenica: 'Sunday: Closed',
+      formTitle: 'Send us a',
+      formSpan: 'message',
+      nomeLabel: 'Full Name *',
+      emailLabel: 'Email *',
+      telefonoLabel: 'Phone',
+      servizioLabel: 'Service of Interest',
+      selezionaServizio: 'Select a service',
+      messaggioLabel: 'Message *',
+      nomePlaceholder: 'John Doe',
+      emailPlaceholder: 'john.doe@example.com',
+      telefonoPlaceholder: '+1 123 456 7890',
+      messaggioPlaceholder: 'Tell us about your project...',
+      inviaMessaggio: 'Send Message',
+      invioCorso: 'Sending...',
+      messaggioInviato: 'Message Sent!',
+      messaggioInviatoDesc: 'We will respond as soon as possible.',
+      errore: 'Error',
+      erroreInvio: 'Error sending message. Please try again later or contact us directly.',
+      sitoVetrina: 'Showcase Website',
+      sitoPrenotazione: 'Booking Website',
+      ecommerce: 'E-commerce',
+      altro: 'Other',
+      nonFornito: 'Not provided',
+      nonSpecificato: 'Not specified'
+    }
+  };
+
+  const t = translations[language];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -59,10 +142,10 @@ const ContattiPage = () => {
         {
           from_name: formData.name,
           from_email: formData.email,
-          phone: formData.phone || 'Non fornito',
-          service: formData.service || 'Non specificato',
-          budget: 'Non specificato',
-          deadline: 'Non specificato',
+          phone: formData.phone || t.nonFornito,
+          service: formData.service || t.nonSpecificato,
+          budget: t.nonSpecificato,
+          deadline: t.nonSpecificato,
           message: formData.message,
           to_email: 'info@nemoagency.it', // Email di destinazione
         },
@@ -85,7 +168,7 @@ const ContattiPage = () => {
       }, 5000);
     } catch (err) {
       console.error('Errore invio email:', err);
-      setError('Errore nell\'invio del messaggio. Riprova più tardi o contattaci direttamente.');
+      setError(t.erroreInvio);
       setIsLoading(false);
     }
   };
@@ -105,16 +188,15 @@ const ContattiPage = () => {
           <div className="text-center max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full mb-6 border border-white/20">
               <Mail className="w-4 h-4 text-[#ff7351]" />
-              <span className="text-sm font-medium">Siamo Qui per Te</span>
+              <span className="text-sm font-medium">{t.heroBadge}</span>
             </div>
 
             <h1 className="font-bold leading-tight mb-6" style={{ fontSize: '60px' }}>
-              Contattaci
+              {t.heroTitle}
             </h1>
 
             <p className="text-xl text-gray-300 leading-relaxed">
-              Siamo qui per aiutarti a realizzare il tuo progetto digitale. 
-              Compila il form o contattaci direttamente, ti risponderemo il prima possibile.
+              {t.heroDesc}
             </p>
           </div>
         </div>
@@ -128,10 +210,10 @@ const ContattiPage = () => {
             <div data-scroll className="space-y-8 opacity-0 translate-y-8 transition-all duration-700">
               <div>
                 <h2 className="font-bold text-gray-900 mb-4" style={{ fontSize: '35px' }}>
-                  Informazioni di <span className="text-[#ff7351]">contatto</span>
+                  {t.infoTitle} <span className="text-[#ff7351]">{t.infoSpan}</span>
                 </h2>
                 <p className="text-gray-600 text-lg">
-                  Scegli il metodo di contatto che preferisci. Siamo disponibili per rispondere a tutte le tue domande.
+                  {t.infoDesc}
                 </p>
               </div>
 
@@ -144,7 +226,7 @@ const ContattiPage = () => {
                     <Mail className="w-6 h-6 text-[#ff7351] group-hover:text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg mb-1 text-gray-900">Email</h3>
+                    <h3 className="font-semibold text-lg mb-1 text-gray-900">{t.email}</h3>
                     <p className="text-gray-600 group-hover:text-[#ff7351] transition-colors">
                       info@nemoagency.it
                     </p>
@@ -159,7 +241,7 @@ const ContattiPage = () => {
                     <Phone className="w-6 h-6 text-[#ff7351] group-hover:text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg mb-1 text-gray-900">Telefono</h3>
+                    <h3 className="font-semibold text-lg mb-1 text-gray-900">{t.telefono}</h3>
                     <p className="text-gray-600 group-hover:text-[#ff7351] transition-colors">
                       +39 346 574 5184
                     </p>
@@ -171,11 +253,11 @@ const ContattiPage = () => {
                     <Clock className="w-6 h-6 text-[#ff7351]" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg mb-2 text-gray-900">Orari di disponibilità</h3>
+                    <h3 className="font-semibold text-lg mb-2 text-gray-900">{t.orari}</h3>
                     <div className="space-y-1 text-gray-600">
-                      <p>Lunedì - Venerdì: 9:00 - 18:00</p>
-                      <p>Sabato: Chiuso</p>
-                      <p>Domenica: Chiuso</p>
+                      <p>{t.orariLunVen}</p>
+                      <p>{t.orariSabato}</p>
+                      <p>{t.orariDomenica}</p>
                     </div>
                   </div>
                 </div>
@@ -185,14 +267,14 @@ const ContattiPage = () => {
             {/* Contact Form */}
             <div data-scroll className="bg-gray-50 rounded-2xl p-8 md:p-10 border border-gray-200 opacity-0 translate-y-8 transition-all duration-700">
               <h2 className="font-bold text-gray-900 mb-6" style={{ fontSize: '35px' }}>
-                Invia un <span className="text-[#ff7351]">messaggio</span>
+                {t.formTitle} <span className="text-[#ff7351]">{t.formSpan}</span>
               </h2>
               
               {error && (
                 <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl flex items-start space-x-3">
                   <AlertCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-semibold text-red-900">Errore</p>
+                    <p className="font-semibold text-red-900">{t.errore}</p>
                     <p className="text-sm text-red-700">{error}</p>
                   </div>
                 </div>
@@ -202,8 +284,8 @@ const ContattiPage = () => {
                 <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-xl flex items-center space-x-3">
                   <CheckCircle2 className="w-6 h-6 text-green-600 flex-shrink-0" />
                   <div>
-                    <p className="font-semibold text-green-900">Messaggio inviato!</p>
-                    <p className="text-sm text-green-700">Ti risponderemo il prima possibile.</p>
+                    <p className="font-semibold text-green-900">{t.messaggioInviato}</p>
+                    <p className="text-sm text-green-700">{t.messaggioInviatoDesc}</p>
                   </div>
                 </div>
               )}
@@ -211,7 +293,7 @@ const ContattiPage = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                    Nome e Cognome *
+                    {t.nomeLabel}
                   </label>
                   <input
                     type="text"
@@ -221,13 +303,13 @@ const ContattiPage = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#ff7351] focus:border-transparent transition-all bg-white"
-                    placeholder="Mario Rossi"
+                    placeholder={t.nomePlaceholder}
                   />
                 </div>
 
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    Email *
+                    {t.emailLabel}
                   </label>
                   <input
                     type="email"
@@ -237,13 +319,13 @@ const ContattiPage = () => {
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#ff7351] focus:border-transparent transition-all bg-white"
-                    placeholder="mario.rossi@esempio.com"
+                    placeholder={t.emailPlaceholder}
                   />
                 </div>
 
                 <div>
                   <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                    Telefono
+                    {t.telefonoLabel}
                   </label>
                   <input
                     type="tel"
@@ -252,13 +334,13 @@ const ContattiPage = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#ff7351] focus:border-transparent transition-all bg-white"
-                    placeholder="+39 123 456 7890"
+                    placeholder={t.telefonoPlaceholder}
                   />
                 </div>
 
                 <div>
                   <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-2">
-                    Servizio di interesse
+                    {t.servizioLabel}
                   </label>
                   <select
                     id="service"
@@ -267,17 +349,17 @@ const ContattiPage = () => {
                     onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#ff7351] focus:border-transparent transition-all bg-white"
                   >
-                    <option value="">Seleziona un servizio</option>
-                    <option value="sito-vetrina">Sito Vetrina</option>
-                    <option value="sito-prenotazione">Sito di Prenotazione</option>
-                    <option value="e-commerce">E-commerce</option>
-                    <option value="altro">Altro</option>
+                    <option value="">{t.selezionaServizio}</option>
+                    <option value="sito-vetrina">{t.sitoVetrina}</option>
+                    <option value="sito-prenotazione">{t.sitoPrenotazione}</option>
+                    <option value="e-commerce">{t.ecommerce}</option>
+                    <option value="altro">{t.altro}</option>
                   </select>
                 </div>
 
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                    Messaggio *
+                    {t.messaggioLabel}
                   </label>
                   <textarea
                     id="message"
@@ -287,7 +369,7 @@ const ContattiPage = () => {
                     required
                     rows="5"
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#ff7351] focus:border-transparent transition-all resize-none bg-white"
-                    placeholder="Raccontaci del tuo progetto..."
+                    placeholder={t.messaggioPlaceholder}
                   ></textarea>
                 </div>
 
@@ -299,11 +381,11 @@ const ContattiPage = () => {
                   {isLoading ? (
                     <>
                       <Loader2 className="w-5 h-5 animate-spin" />
-                      <span>Invio in corso...</span>
+                      <span>{t.invioCorso}</span>
                     </>
                   ) : (
                     <>
-                      <span>Invia messaggio</span>
+                      <span>{t.inviaMessaggio}</span>
                       <Send className="w-5 h-5" />
                     </>
                   )}

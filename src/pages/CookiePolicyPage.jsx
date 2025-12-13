@@ -1,9 +1,37 @@
 import React, { useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { useLanguage } from '../contexts/LanguageContext';
 import { Cookie, Mail } from 'lucide-react';
 
 const CookiePolicyPage = () => {
+  const { language } = useLanguage();
+
+  const translations = {
+    it: {
+      heroBadge: 'Cookie Policy',
+      heroTitle: 'Cookie',
+      heroSpan: 'Policy',
+      heroDesc: 'Informazioni dettagliate sull\'utilizzo dei cookie nel nostro sito web',
+      title: 'Cookie Policy',
+      domandeTitle: 'Domande sui Cookie?',
+      domandeDesc: 'Se hai domande riguardo alla nostra cookie policy, non esitare a contattarci.',
+      contattaci: 'Contattaci'
+    },
+    en: {
+      heroBadge: 'Cookie Policy',
+      heroTitle: 'Cookie',
+      heroSpan: 'Policy',
+      heroDesc: 'Detailed information on the use of cookies on our website',
+      title: 'Cookie Policy',
+      domandeTitle: 'Questions about Cookies?',
+      domandeDesc: 'If you have questions about our cookie policy, do not hesitate to contact us.',
+      contattaci: 'Contact Us'
+    }
+  };
+
+  const t = translations[language];
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -37,15 +65,15 @@ const CookiePolicyPage = () => {
           <div className="text-center max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full mb-6 border border-white/20">
               <Cookie className="w-4 h-4 text-[#ff7351]" />
-              <span className="text-sm font-medium">Cookie Policy</span>
+              <span className="text-sm font-medium">{t.heroBadge}</span>
             </div>
 
             <h1 className="font-bold leading-tight mb-6" style={{ fontSize: '60px' }}>
-              Cookie <span className="text-[#ff7351]">Policy</span>
+              {t.heroTitle} <span className="text-[#ff7351]">{t.heroSpan}</span>
             </h1>
 
             <p className="text-xl text-gray-300 leading-relaxed">
-              Informazioni dettagliate sull'utilizzo dei cookie nel nostro sito web
+              {t.heroDesc}
             </p>
           </div>
         </div>
@@ -162,7 +190,7 @@ const CookiePolicyPage = () => {
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#ff7351] to-[#ff8466] text-white rounded-full font-semibold hover:shadow-xl hover:scale-105 transition-all"
             >
               <Mail className="w-5 h-5" />
-              <span>Contattaci via mail</span>
+              <span>{t.contattaci}</span>
             </a>
           </div>
         </div>

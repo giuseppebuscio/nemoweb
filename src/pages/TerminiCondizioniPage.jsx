@@ -1,9 +1,37 @@
 import React, { useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { useLanguage } from '../contexts/LanguageContext';
 import { FileText, Mail } from 'lucide-react';
 
 const TerminiCondizioniPage = () => {
+  const { language } = useLanguage();
+
+  const translations = {
+    it: {
+      heroBadge: 'Termini e Condizioni',
+      heroTitle: 'Termini e',
+      heroSpan: 'Condizioni',
+      heroDesc: 'Termini e condizioni d\'uso del sito web di Nemo Web Agency',
+      title: 'Termini e Condizioni',
+      domandeTitle: 'Domande sui Termini?',
+      domandeDesc: 'Se hai domande riguardo ai nostri termini e condizioni, non esitare a contattarci.',
+      contattaci: 'Contattaci'
+    },
+    en: {
+      heroBadge: 'Terms and Conditions',
+      heroTitle: 'Terms and',
+      heroSpan: 'Conditions',
+      heroDesc: 'Terms and conditions of use of the Nemo Web Agency website',
+      title: 'Terms and Conditions',
+      domandeTitle: 'Questions about Terms?',
+      domandeDesc: 'If you have questions about our terms and conditions, do not hesitate to contact us.',
+      contattaci: 'Contact Us'
+    }
+  };
+
+  const t = translations[language];
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -37,15 +65,15 @@ const TerminiCondizioniPage = () => {
           <div className="text-center max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full mb-6 border border-white/20">
               <FileText className="w-4 h-4 text-[#ff7351]" />
-              <span className="text-sm font-medium">Termini e Condizioni</span>
+              <span className="text-sm font-medium">{t.heroBadge}</span>
             </div>
 
             <h1 className="font-bold leading-tight mb-6" style={{ fontSize: '60px' }}>
-              Termini e <span className="text-[#ff7351]">Condizioni</span>
+              {t.heroTitle} <span className="text-[#ff7351]">{t.heroSpan}</span>
             </h1>
 
             <p className="text-xl text-gray-300 leading-relaxed">
-              Termini e condizioni d'uso del sito web di Nemo Web Agency
+              {t.heroDesc}
             </p>
           </div>
         </div>
@@ -178,17 +206,17 @@ const TerminiCondizioniPage = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div data-scroll className="opacity-0 translate-y-8 transition-all duration-700">
             <h2 className="font-bold text-gray-900 mb-4" style={{ fontSize: '35px' }}>
-              Domande sui Termini?
+              {t.domandeTitle}
             </h2>
             <p className="text-xl text-gray-600 mb-8">
-              Se hai domande riguardo ai nostri termini e condizioni, non esitare a contattarci.
+              {t.domandeDesc}
             </p>
             <a
               href="mailto:info@nemoagency.it"
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#ff7351] to-[#ff8466] text-white rounded-full font-semibold hover:shadow-xl hover:scale-105 transition-all"
             >
               <Mail className="w-5 h-5" />
-              <span>Contattaci</span>
+              <span>{t.contattaci}</span>
             </a>
           </div>
         </div>
