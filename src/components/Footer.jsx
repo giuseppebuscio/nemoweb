@@ -12,7 +12,7 @@ const Footer = () => {
             <Link to="/">
               <img 
                 src="/Bianco-Arancio.png" 
-                alt="Nemo Web Agency" 
+                alt="Logo versione bianco e arancione Nemo Web Agency" 
                 className="h-10 w-auto hover:opacity-80 transition-opacity cursor-pointer"
               />
             </Link>

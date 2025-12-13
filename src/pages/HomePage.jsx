@@ -164,6 +164,7 @@ const HomePage = () => {
       title: 'Accademia del Gusto',
       category: 'Prenotazioni',
       image: 'https://www.accademiated.it/wp-content/uploads/2024/12/61946.jpg',
+      alt: 'Foto copertina del progetto Accademia del Gusto',
       description: 'Piattaforma di prenotazione per il ristorante didattico della scuola TED',
       url: 'https://accademiated.it'
     },
@@ -171,6 +172,7 @@ const HomePage = () => {
       title: 'Riverloop',
       category: 'Vetrina',
       image: 'https://riverloop.it/media/2025/01/1933.webp',
+      alt: 'Foto copertina del progetto Riverloop',
       description: 'Sito vetrina moderno e professionale per startup specializzata in sviluppo software e formazione tech',
       url: 'https://riverloop.it/'
     },
@@ -178,6 +180,7 @@ const HomePage = () => {
       title: 'Simone Grasso Private Banker',
       category: 'Vetrina',
       image: 'https://simonegrassopb.com/wp-content/uploads/2025/03/close-up-businesspeople-hands-discussion-business-plan-scaled.jpg',
+      alt: 'Foto copertina del progetto Simone Grasso Private Banker',
       description: 'Sito professionale ed elegante per consulente patrimoniale e private banker',
       url: 'https://simonegrassopb.com/'
     },
@@ -185,6 +188,7 @@ const HomePage = () => {
       title: 'Bar Bonventre',
       category: 'Vetrina',
       image: 'https://www.barbonventre.it/wp-content/uploads/2024/09/IMG-20240907-WA0068.jpg',
+      alt: 'Foto copertina del progetto Bar Bonventre',
       description: 'Sito vetrina accogliente e tradizionale per bar, pasticceria e gelateria',
       url: 'https://www.barbonventre.it/'
     },
@@ -192,6 +196,7 @@ const HomePage = () => {
       title: 'BeYou',
       category: 'Prenotazioni',
       image: 'https://www.beyou.it/wp-content/uploads/2024/12/slider1.png',
+      alt: 'Foto copertina del progetto BeYou',
       description: 'Sistema di prenotazione per centri beauty e benessere',
       url: 'https://www.beyou.it/'
     },
@@ -199,6 +204,7 @@ const HomePage = () => {
       title: 'Social Sail',
       category: 'Prenotazioni',
       image: 'https://socialsail.it/wp-content/uploads/2025/03/01-vacanza-alle-isole-eolie-copertina_wide.jpg',
+      alt: 'Foto copertina del progetto Social Sail',
       description: 'Piattaforma di prenotazione per esperienze di vela in Sicilia',
       url: 'https://socialsail.it/'
     },
@@ -206,6 +212,7 @@ const HomePage = () => {
       title: 'Villa Leuke',
       category: 'Vetrina',
       image: 'https://www.villaleuke.it/wp-content/uploads/2024/09/41dd4441-ceb9-4375-ad5f-91cad8112483.webp',
+      alt: 'Foto copertina del progetto Villa Leuke',
       description: 'Sito vetrina per una villa a Scopello',
       url: 'https://www.villaleuke.it/'
     },
@@ -213,6 +220,7 @@ const HomePage = () => {
       title: 'Ville Pisciotta',
       category: 'Vetrina',
       image: 'https://www.villepisciotta.com/mirascopello/1.jpg',
+      alt: 'Foto copertina del progetto Ville Pisciotta',
       description: 'Sito vetrina completo per due ville in Sicilia',
       url: 'https://villepisciotta.it'
     }
@@ -272,6 +280,25 @@ const HomePage = () => {
     'SimoneGrasso.png',
     'SocialSail.png'
   ];
+
+  const partnerAltTexts = {
+    'AccademiaDelGusto.png': 'Logo del partner Accademia del Gusto',
+    'ales.png': 'Logo del partner Alessandro Accomando',
+    'AndreaAsaro.png': 'Logo del partner Andrea Asaro',
+    'BarBonventre.png': 'Logo del partner Bar Bonventre',
+    'BeYou.png': 'Logo del partner BeYou',
+    'BonifatoCalcio.png': 'Logo del partner Bonifato',
+    'CarlaFerroni.png': 'Logo del partner Carla Ferroni',
+    'DueCLimited.png': 'Logo del partner DueCLimited',
+    'FigliDItalia.png': 'Logo del partner Figli d\'Italia',
+    'HolidaySicily.png': 'Logo del partner Holiday Sicily',
+    'LivingLab.png': 'Logo del partner Livinglab',
+    'MangiareSicano.png': 'Logo del partner Mangiare Sicano',
+    'Riverloop.png': 'Logo del partner Riverloop',
+    'Scopeltour.png': 'Logo del partner Scopeltour',
+    'SimoneGrasso.png': 'Logo del partner Simone Grasso',
+    'SocialSail.png': 'Logo del partner Social Sail'
+  };
 
   // Auto-scroll partners carousel (infinite left scroll using CSS transform like Swiper)
   useEffect(() => {
@@ -392,7 +419,7 @@ const HomePage = () => {
                 <div className="absolute inset-0 bg-gradient-to-r from-[#ff7351]/20 to-transparent rounded-3xl blur-2xl transform rotate-6"></div>
                 <img 
                   src="/manpc.png" 
-                  alt="Nemo Web Agency" 
+                  alt="Uomo che tiene un pc in mano" 
                   className="relative w-full max-w-lg h-auto z-10 drop-shadow-2xl"
                 />
               </div>
@@ -585,7 +612,7 @@ const HomePage = () => {
                       <div className="relative h-64 overflow-hidden">
                         <img
                           src={project.image}
-                          alt={project.title}
+                          alt={project.alt}
                           className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -707,7 +734,7 @@ const HomePage = () => {
                 >
                   <img
                     src={`/partner/${partner}`}
-                    alt={partner.replace('.png', '')}
+                    alt={partnerAltTexts[partner] || partner.replace('.png', '')}
                     className="max-h-20 max-w-full object-contain px-8 opacity-70 brightness-75"
                   />
                 </div>

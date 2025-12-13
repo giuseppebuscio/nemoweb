@@ -39,13 +39,13 @@ const Navbar = () => {
             {isTransparent ? (
               <img 
                 src="/Bianco-Arancio.png" 
-                alt="Nemo Web Agency" 
+                alt="Logo versione bianco e arancione Nemo Web Agency" 
                 className="h-9 w-auto"
               />
             ) : (
               <img 
                 src="/Nero-Arancio.png" 
-                alt="Nemo Web Agency" 
+                alt="Logo versione nero e arancione Nemo Web Agency" 
                 className="h-9 w-auto"
               />
             )}

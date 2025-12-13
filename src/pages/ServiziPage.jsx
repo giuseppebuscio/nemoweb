@@ -66,7 +66,8 @@ const ServiziPage = () => {
         'Velocità di caricamento ottimizzata',
         'Integrazione social media'
       ],
-      image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&q=80'
+      image: 'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&q=80',
+      alt: 'Immagine che raffigura una scrivania con dei computer'
     },
     {
       icon: Calendar,
@@ -84,7 +85,8 @@ const ServiziPage = () => {
         'Gestione cancellazioni',
         'Statistiche e report prenotazioni'
       ],
-      image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&q=80'
+      image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&q=80',
+      alt: 'Immagine che raffigura un tavolo con dei computer portatili'
     },
     {
       icon: ShoppingBag,
@@ -102,7 +104,8 @@ const ServiziPage = () => {
         'Sistema di gestione inventario',
         'Marketing e coupon system'
       ],
-      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80'
+      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80',
+      alt: 'Immagine che raffigura un uomo che vende qualcosa'
     }
   ];
 
@@ -193,7 +196,7 @@ const ServiziPage = () => {
                     <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                       <img 
                         src={service.image} 
-                        alt={service.title} 
+                        alt={service.alt || service.title} 
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
