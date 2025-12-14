@@ -67,7 +67,7 @@ const HomePage = () => {
       projects: 'Progetti',
       yearsExp: 'Anni Esperienza',
       soluzioni: 'Le Nostre',
-      soluzioniSpan: 'soluzioni',
+      soluzioniSpan: 'Soluzioni',
       soluzioniDesc: 'Offriamo servizi completi per ogni esigenza digitale, dalla vetrina al negozio online completo',
       scopriDiPiu: 'Scopri di più',
       tecnologie: 'Tecnologie',
