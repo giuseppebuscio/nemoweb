@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { LanguageProvider } from './contexts/LanguageContext';
 import ScrollToTop from './components/ScrollToTop';
-import PageTitle from './components/PageTitle';
+import SEO from './components/SEO';
 import CustomCursor from './components/CustomCursor';
 import ScrollToTopButton from './components/ScrollToTopButton';
 import CookieBanner from './components/CookieBanner';
@@ -14,13 +14,14 @@ import RichiediPreventivoPage from './pages/RichiediPreventivoPage';
 import PrivacyPage from './pages/PrivacyPage';
 import CookiePolicyPage from './pages/CookiePolicyPage';
 import TerminiCondizioniPage from './pages/TerminiCondizioniPage';
+import SitemapPage from './pages/SitemapPage';
 
 function App() {
   return (
     <LanguageProvider>
       <Router>
         <ScrollToTop />
-        <PageTitle />
+        <SEO />
         <CustomCursor />
         <ScrollToTopButton />
         <CookieBanner />
@@ -33,6 +34,7 @@ function App() {
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/cookie-policy" element={<CookiePolicyPage />} />
         <Route path="/termini-condizioni" element={<TerminiCondizioniPage />} />
+        <Route path="/sitemap" element={<SitemapPage />} />
         </Routes>
       </Router>
     </LanguageProvider>

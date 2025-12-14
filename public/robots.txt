@@ -1,0 +1,15 @@
+# robots.txt per Nemo Web Agency
+# https://www.nemoagency.it/robots.txt
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.nemoagency.it/sitemap.xml
+
+# Disallow admin/private pages if any
+# Disallow: /admin/
+# Disallow: /private/
+
+# Crawl-delay (optional)
+# Crawl-delay: 1

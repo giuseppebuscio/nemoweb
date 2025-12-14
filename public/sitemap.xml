@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  
+  <!-- Homepage -->
+  <url>
+    <loc>https://www.nemoagency.it/</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.nemoagency.it/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nemoagency.it/en" />
+  </url>
+  
+  <!-- Chi Siamo / About Us -->
+  <url>
+    <loc>https://www.nemoagency.it/chi-siamo</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.nemoagency.it/chi-siamo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nemoagency.it/en/about-us" />
+  </url>
+  
+  <!-- Servizi / Services -->
+  <url>
+    <loc>https://www.nemoagency.it/servizi</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.nemoagency.it/servizi" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nemoagency.it/en/services" />
+  </url>
+  
+  <!-- Contatti / Contact -->
+  <url>
+    <loc>https://www.nemoagency.it/contatti</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.nemoagency.it/contatti" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nemoagency.it/en/contact" />
+  </url>
+  
+  <!-- Richiedi Preventivo / Request Quote -->
+  <url>
+    <loc>https://www.nemoagency.it/richiedi-preventivo</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.nemoagency.it/richiedi-preventivo" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nemoagency.it/en/request-quote" />
+  </url>
+  
+  <!-- Privacy Policy -->
+  <url>
+    <loc>https://www.nemoagency.it/privacy</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.nemoagency.it/privacy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nemoagency.it/en/privacy" />
+  </url>
+  
+  <!-- Cookie Policy -->
+  <url>
+    <loc>https://www.nemoagency.it/cookie-policy</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.nemoagency.it/cookie-policy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nemoagency.it/en/cookie-policy" />
+  </url>
+  
+  <!-- Termini e Condizioni / Terms and Conditions -->
+  <url>
+    <loc>https://www.nemoagency.it/termini-condizioni</loc>
+    <lastmod>2025-01-27</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.nemoagency.it/termini-condizioni" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.nemoagency.it/en/terms-conditions" />
+  </url>
+  
+</urlset>

@@ -208,11 +208,17 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden fixed inset-0 top-20 bg-white transition-transform duration-300 ${
+        className={`md:hidden fixed inset-0 top-20 h-[calc(100vh-5rem)] shadow-lg transition-transform duration-300 z-40 ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
+        style={{ 
+          backgroundColor: '#ffffff',
+          opacity: 1,
+          backdropFilter: 'none',
+          WebkitBackdropFilter: 'none'
+        }}
       >
-        <div className="px-4 pt-6 pb-8 space-y-4">
+        <div className="px-4 pt-6 pb-8 space-y-4 bg-white h-full overflow-y-auto">
           {navLinks.map((link) => (
             <Link
               key={link.path}

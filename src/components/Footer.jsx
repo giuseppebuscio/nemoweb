@@ -22,6 +22,7 @@ const Footer = () => {
       privacy: 'Privacy',
       cookiePolicy: 'Cookie Policy',
       terminiCondizioni: 'Termini e Condizioni',
+      sitemap: 'Sitemap',
       copyright: `© ${new Date().getFullYear()} Nemo Web Agency. Tutti i diritti riservati.`
     },
     en: {
@@ -39,6 +40,7 @@ const Footer = () => {
       privacy: 'Privacy',
       cookiePolicy: 'Cookie Policy',
       terminiCondizioni: 'Terms and Conditions',
+      sitemap: 'Sitemap',
       copyright: `© ${new Date().getFullYear()} Nemo Web Agency. All rights reserved.`
     }
   };
@@ -185,6 +187,9 @@ const Footer = () => {
               </Link>
               <Link to="/termini-condizioni" className="text-gray-400 hover:text-primary transition-colors text-sm">
                 {t.terminiCondizioni}
+              </Link>
+              <Link to="/sitemap" className="text-gray-400 hover:text-primary transition-colors text-sm">
+                {t.sitemap}
               </Link>
             </div>
           </div>
