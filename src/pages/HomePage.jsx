@@ -401,13 +401,37 @@ const HomePage = () => {
 
   const scrollPortfolio = (direction) => {
     if (portfolioRef.current) {
-      const containerWidth = portfolioRef.current.clientWidth;
-      const cardWidth = (containerWidth - 48) / 3; // 3 cards with 2 gaps (24px each)
-      const scrollAmount = cardWidth + 24; // 1 card width + 1 gap
+      const container = portfolioRef.current;
+      const cards = container.querySelectorAll('[data-portfolio-card]');
       
-      portfolioRef.current.scrollBy({ 
-        left: direction === 'next' ? scrollAmount : -scrollAmount, 
-        behavior: 'smooth' 
+      if (cards.length === 0) return;
+      
+      // Get the first card to calculate its actual width including gap
+      const firstCard = cards[0];
+      const secondCard = cards[1];
+      
+      if (!firstCard) return;
+      
+      // Calculate scroll amount: card width + gap (24px = gap-6)
+      const cardWidth = firstCard.offsetWidth;
+      const gap = secondCard ? secondCard.offsetLeft - firstCard.offsetLeft - firstCard.offsetWidth : 24;
+      const scrollAmount = cardWidth + gap;
+      
+      // Get current scroll position
+      const currentScroll = container.scrollLeft;
+      
+      // Calculate target scroll position
+      const targetScroll = direction === 'next'
+        ? currentScroll + scrollAmount
+        : currentScroll - scrollAmount;
+      
+      // Clamp to valid range
+      const maxScroll = container.scrollWidth - container.clientWidth;
+      const clampedScroll = Math.max(0, Math.min(targetScroll, maxScroll));
+      
+      container.scrollTo({
+        left: clampedScroll,
+        behavior: 'smooth'
       });
     }
   };
@@ -460,7 +484,8 @@ const HomePage = () => {
     const partnersCount = 16; // Fixed number of partners
     
     const updateCardWidth = () => {
-      return window.innerWidth / 6; // 6 cards visible
+      const isMobile = window.innerWidth < 768; // md breakpoint
+      return isMobile ? window.innerWidth / 3 : window.innerWidth / 6; // 3 cards on mobile, 6 on desktop
     };
     
     const getOneSetWidth = () => {
@@ -489,10 +514,17 @@ const HomePage = () => {
 
     animationId = requestAnimationFrame(animate);
 
+    // Handle window resize
+    const handleResize = () => {
+      currentOffset = 0; // Reset on resize
+    };
+    window.addEventListener('resize', handleResize);
+
     return () => {
       if (animationId) {
         cancelAnimationFrame(animationId);
       }
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -670,7 +702,7 @@ const HomePage = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-4 md:grid-cols-8 gap-6">
+          <div className="grid grid-cols-3 md:grid-cols-8 gap-6">
             {technologies.map((tech, index) => {
               const Icon = tech.icon;
               return (
@@ -755,8 +787,8 @@ const HomePage = () => {
                 {portfolio.map((project, index) => (
                   <div
                     key={index}
-                    className="snap-start flex-shrink-0"
-                    style={{ width: 'calc((100% - 3rem) / 3)' }}
+                    data-portfolio-card
+                    className="snap-start flex-shrink-0 w-full md:w-[calc((100%-3rem)/3)]"
                   >
                     <div className="relative overflow-hidden rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-[#ff7351] hover:bg-white/10 hover:shadow-2xl hover:shadow-[#ff7351]/20 transition-all h-full">
                       <div className="relative h-64 overflow-hidden">
@@ -879,13 +911,12 @@ const HomePage = () => {
               {[...partners, ...partners, ...partners].map((partner, index) => (
                 <div
                   key={index}
-                  className="flex-shrink-0 flex items-center justify-center h-32"
-                  style={{ width: 'calc(100vw / 6)' }}
+                  className="flex-shrink-0 flex items-center justify-center h-32 w-[calc(100vw/3)] md:w-[calc(100vw/6)]"
                 >
                   <img
                     src={`/partner/${partner}`}
                     alt={partnerAltTexts[partner] || partner.replace('.png', '')}
-                    className="max-h-20 max-w-full object-contain px-8 opacity-70 brightness-75"
+                    className="max-h-20 md:max-h-20 max-w-full object-contain px-4 md:px-8 opacity-70 brightness-75"
                   />
                 </div>
               ))}
