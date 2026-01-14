@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useLanguage } from '../contexts/LanguageContext';
 import {
-  ArrowRight, CheckCircle2, Send, Home, Calendar, ShoppingBag,
+  CheckCircle2, Send, Home, Calendar, ShoppingBag,
   FileText, DollarSign, Clock, Sparkles, AlertCircle, Loader2
 } from 'lucide-react';
 import { EMAILJS_CONFIG } from '../config/emailjs';
@@ -184,11 +184,7 @@ const RichiediPreventivoPage = () => {
       budget3: '€1000 - €2000',
       budget4: '€2000 - €5000',
       budget5: 'Over €5000',
-      budget6: 'To be determined',
-      ctaTitle: 'Have Questions?',
-      ctaDesc: 'Prefer to talk to us directly? Contact us by email or phone, we are always available for a consultation.',
-      ctaButton1: 'Contact Us',
-      ctaButton2: 'Discover Services'
+      budget6: 'To be determined'
     }
   };
 
@@ -435,38 +431,6 @@ const RichiediPreventivoPage = () => {
                 )}
               </button>
             </form>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-r from-[#ff7351] to-[#ff8466] text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
-        </div>
-
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-bold mb-6" style={{ fontSize: '35px' }}>
-            {t.ctaTitle}
-          </h2>
-          <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
-            {t.ctaDesc}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={() => navigate('/contatti')}
-              className="px-8 py-4 bg-white text-[#ff7351] rounded-full font-semibold hover:bg-gray-100 transition-all inline-flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl"
-            >
-              <span>{t.ctaButton1}</span>
-              <ArrowRight className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => navigate('/servizi')}
-              className="px-8 py-4 bg-transparent text-white border-2 border-white rounded-full font-semibold hover:bg-white/10 transition-all"
-            >
-              {t.ctaButton2}
-            </button>
           </div>
         </div>
       </section>
