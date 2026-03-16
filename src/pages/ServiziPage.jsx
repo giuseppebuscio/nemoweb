@@ -81,7 +81,7 @@ const ServiziPage = () => {
       icon: Home,
       title: { it: 'Siti Vetrina', en: 'Showcase Websites' },
       value: 'sito-vetrina',
-      price: { it: 'da 400€', en: 'from €400' },
+      price: { it: 'da 600€', en: 'from €600' },
       description: { 
         it: 'Siti web professionali e moderni per presentare la tua attività online. Perfetti per attività locali, professionisti e artisti che vogliono una presenza digitale di qualità.',
         en: 'Professional and modern websites to present your business online. Perfect for local businesses, professionals and artists who want quality digital presence.'
@@ -115,7 +115,7 @@ const ServiziPage = () => {
       icon: Calendar,
       title: { it: 'Siti di Prenotazione', en: 'Booking Websites' },
       value: 'sito-prenotazione',
-      price: { it: 'da 1200€', en: 'from €1200' },
+      price: { it: 'da 1600€', en: 'from €1600' },
       description: { 
         it: 'Sistemi di prenotazione online completi per ristoranti, saloni, studi medici, B&B e tutte le attività che necessitano di gestione prenotazioni.',
         en: 'Complete online booking systems for restaurants, salons, medical practices, B&Bs and all businesses that need booking management.'
@@ -149,7 +149,7 @@ const ServiziPage = () => {
       icon: ShoppingBag,
       title: { it: 'E-commerce', en: 'E-commerce' },
       value: 'e-commerce',
-      price: { it: 'da 1600€', en: 'from €1600' },
+      price: { it: 'da 2100€', en: 'from €2100' },
       description: { 
         it: 'Piattaforme di vendita online complete con catalogo prodotti, sistema di pagamento sicuro, gestione ordini e spedizioni per far crescere il tuo business.',
         en: 'Complete online sales platforms with product catalog, secure payment system, order and shipping management to grow your business.'
