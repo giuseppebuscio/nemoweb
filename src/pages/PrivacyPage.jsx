@@ -98,8 +98,8 @@ const PrivacyPage = () => {
                 <p>
                   Il titolare del trattamento dei dati personali è Nemo Web Agency. 
                   Per qualsiasi domanda relativa alla privacy, è possibile contattarci all'indirizzo email: 
-                  <a href="mailto:info@nemoagency.it" className="text-[#ff7351] hover:underline ml-1">
-                    info@nemoagency.it
+                  <a href="mailto:nemowebagency@gmail.com" className="text-[#ff7351] hover:underline ml-1">
+                  nemowebagency@gmail.com
                   </a>
                 </p>
               </div>
@@ -187,7 +187,7 @@ const PrivacyPage = () => {
               {t.domandeDesc}
             </p>
             <a
-              href="mailto:info@nemoagency.it"
+              href="mailto:nemowebagency@gmail.com"
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#ff7351] to-[#ff8466] text-white rounded-full font-semibold hover:shadow-xl hover:scale-105 transition-all"
             >
               <Mail className="w-5 h-5" />

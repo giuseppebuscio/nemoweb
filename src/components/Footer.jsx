@@ -124,11 +124,11 @@ const Footer = () => {
             <h4 className="font-semibold text-lg mb-4">{t.contattiTitle}</h4>
             <div className="space-y-3">
               <a 
-                href="mailto:info@nemoagency.it" 
+                href="mailto:nemowebagency@gmail.com" 
                 className="flex items-center space-x-2 text-gray-400 hover:text-primary transition-colors text-sm"
               >
                 <Mail className="w-4 h-4" />
-                <span>info@nemoagency.it</span>
+                <span>nemowebagency@gmail.com</span>
               </a>
               <a 
                 href="tel:+393465745184" 

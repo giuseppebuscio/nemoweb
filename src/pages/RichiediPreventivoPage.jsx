@@ -82,7 +82,7 @@ const RichiediPreventivoPage = () => {
           budget: formData.budget || (language === 'it' ? 'Non specificato' : 'Not specified'),
           deadline: formData.deadline || (language === 'it' ? 'Non specificato' : 'Not specified'),
           message: formData.message,
-          to_email: 'info@nemoagency.it', // Email di destinazione
+          to_email: 'nemowebagency@gmail.com', // Email di destinazione
         },
         EMAILJS_CONFIG.PUBLIC_KEY
       );

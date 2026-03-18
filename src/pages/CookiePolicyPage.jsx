@@ -186,7 +186,7 @@ const CookiePolicyPage = () => {
               Se hai domande riguardo alla nostra cookie policy, non esitare a contattarci.
             </p>
             <a
-              href="mailto:info@nemoagency.it"
+              href="mailto:nemowebagency@gmail.com"
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#ff7351] to-[#ff8466] text-white rounded-full font-semibold hover:shadow-xl hover:scale-105 transition-all"
             >
               <Mail className="w-5 h-5" />
