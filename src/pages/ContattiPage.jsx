@@ -147,7 +147,7 @@ const ContattiPage = () => {
           budget: t.nonSpecificato,
           deadline: t.nonSpecificato,
           message: formData.message,
-          to_email: 'info@nemoagency.it', // Email di destinazione
+          to_email: 'nemowebagency@gmail.com', // Email di destinazione
         },
         EMAILJS_CONFIG.PUBLIC_KEY
       );
@@ -219,7 +219,7 @@ const ContattiPage = () => {
 
               <div className="space-y-6">
                 <a 
-                  href="mailto:info@nemoagency.it"
+                  href="mailto:nemowebagency@gmail.com"
                   className="flex items-start space-x-4 p-6 bg-gray-50 rounded-xl hover:bg-[#ff7351]/5 transition-colors group border border-gray-200 hover:border-[#ff7351]"
                 >
                   <div className="w-12 h-12 bg-[#ff7351]/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-[#ff7351] group-hover:scale-110 transition-all">
@@ -228,7 +228,7 @@ const ContattiPage = () => {
                   <div>
                     <h3 className="font-semibold text-lg mb-1 text-gray-900">{t.email}</h3>
                     <p className="text-gray-600 group-hover:text-[#ff7351] transition-colors">
-                      info@nemoagency.it
+                    nemowebagency@gmail.com
                     </p>
                   </div>
                 </a>
