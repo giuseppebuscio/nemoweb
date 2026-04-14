@@ -299,13 +299,13 @@ const HomePage = () => {
     {
       title: 'Simone Grasso Private Banker',
       category: { it: 'Vetrina', en: 'Showcase' },
-      image: 'https://simonegrassopb.com/wp-content/uploads/2025/03/close-up-businesspeople-hands-discussion-business-plan-scaled.jpg',
+      image: 'https://simonegrassopb.it/wp-content/uploads/2025/03/close-up-businesspeople-hands-discussion-business-plan-scaled.jpg',
       alt: 'Foto copertina del progetto Simone Grasso Private Banker',
       description: { 
         it: 'Sito professionale ed elegante per consulente patrimoniale e private banker',
         en: 'Professional and elegant website for wealth advisor and private banker'
       },
-      url: 'https://simonegrassopb.com/'
+      url: 'https://simonegrassopb.it/'
     },
     {
       title: 'Bar Bonventre',
